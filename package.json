@@ -1,0 +1,25 @@
+{
+  "name": "liquidswap-widget",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.4.4"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^1.9.1",
+    "vue": "^3.2.40",
+    "@pontem/aptos-wallet-adapter": "^0.6.4",
+    "@pontem/liquidswap-sdk": "^0.5.2",
+    "pinia": "2.0.22",
+    "@vueuse/core": "^8.9.4",
+    "@tsconfig/recommended": "^1.0.1",
+    "primevue": "3.17.0",
+    "decimal.js": "^10.4.1",
+    "lodash": "^4.17.21"
+  }
+}
