@@ -1,6 +1,6 @@
 import { MaybeRef } from '@vueuse/core';
 import { ref, computed, isRef, unref, watchEffect } from 'vue';
-import { useTokensStore } from '@/store';
+import { useTokensStore } from '@/store/useTokenStore';
 
 const cutTrailingZerosFromString = (numberAsString: string) => {
   if (numberAsString.length === 1) return numberAsString;

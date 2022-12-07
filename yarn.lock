@@ -110,6 +110,11 @@
     react-dom "^18.X.X || 17.X.X"
     vue "3.2.40"
 
+"@pontem/coins-registry@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@pontem/coins-registry/-/coins-registry-1.0.4.tgz#a3bad8ef4e58745b7a40cc252036acf62321d6e9"
+  integrity sha512-SyO+BaeSKemaLhl9+S0dNQuLkTyUWDv81ma5KxkXvOSp/wtFM4wezA8OlByQkMzxiOT8U0f1tUnehf1tTX/EAg==
+
 "@pontem/liquidswap-sdk@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@pontem/liquidswap-sdk/-/liquidswap-sdk-0.5.2.tgz#b10c48c987b4c83e334a1161d5b0d161269fd3f4"
@@ -268,7 +273,7 @@
     "@vue/compiler-dom" "3.2.45"
     "@vue/shared" "3.2.45"
 
-"@vue/devtools-api@^6.2.1":
+"@vue/devtools-api@^6.2.1", "@vue/devtools-api@^6.4.5":
   version "6.4.5"
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.4.5.tgz#d54e844c1adbb1e677c81c665ecef1a2b4bb8380"
   integrity sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==
@@ -977,6 +982,13 @@ vue-demi@*:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
+
+vue-router@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.1.6.tgz#b70303737e12b4814578d21d68d21618469375a1"
+  integrity sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==
+  dependencies:
+    "@vue/devtools-api" "^6.4.5"
 
 vue@3.2.40:
   version "3.2.40"

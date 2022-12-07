@@ -22,3 +22,16 @@ export const NETWORKS_MODULES = {
   CoinInfo: `${COIN_INFO}`,
   CoinStore: `${COIN_STORE}`,
 };
+
+export const MAINNET_CHAIN_ID = 1;
+export const APTOS_TESTNET_CHAIN_ID = 2;
+export const PONTEM_TESTNET_CHAIN_ID = 4;
+
+export const BUILD_CHAIN_ID =
+  process.env.VUE_APP_CORRECT_CHAIN === 'mainnet'
+    ? MAINNET_CHAIN_ID
+    : process.env.VUE_APP_CORRECT_CHAIN === 'testnet'
+      ? APTOS_TESTNET_CHAIN_ID
+      : PONTEM_TESTNET_CHAIN_ID;
+
+export const APTOS = '0x1::aptos_coin::AptosCoin';

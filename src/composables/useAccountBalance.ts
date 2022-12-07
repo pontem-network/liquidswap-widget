@@ -1,5 +1,5 @@
 import { ref, computed, isRef, unref, watch } from 'vue';
-import { useAptosClient } from '@/composables/useAptosClient';
+import { useStore } from '@/store';
 import {
   MaybeRef,
   tryOnScopeDispose,
@@ -8,7 +8,7 @@ import {
 } from '@vueuse/core';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { getFromCache } from '@/utils/cache';
-import { AptosCoinInfoResource } from '@/types/aptosResources';
+import { AptosCoinInfoResource } from '@/types';
 import { composeType } from '@/utils/contracts';
 import isEqual from 'lodash/isEqual';
 import { storeToRefs } from 'pinia';
@@ -32,7 +32,7 @@ export function useAccountBalance(
     },
   );
 
-  const client = useAptosClient();
+  const { client } = useStore();
 
   tryOnUnmounted(() => pause());
   tryOnScopeDispose(() => pause());
@@ -61,10 +61,10 @@ export function useAccountBalance(
     const resource = await getFromCache(
       cacheKey,
       () => {
-        return client.client.getAccountResource<AptosCoinInfoResource>(
+        return client.getAccountResource(
           fnAddress,
           composeType(NETWORKS_MODULES['CoinStore'], [fnToken]),
-        );
+        ) as unknown as Promise<AptosCoinInfoResource>;
       },
       { time: 5000 },
     );
