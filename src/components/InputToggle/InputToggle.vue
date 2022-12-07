@@ -4,12 +4,14 @@
     <i class="pi pi-arrow-down" />
   </p-button>
 </template>
+
 <script setup lang="ts">
-interface IProps {
-  onClick(): void;
-}
-const props = defineProps<IProps>();
+  interface IProps {
+    onClick(): void;
+  }
+  const props = defineProps<IProps>();
 </script>
+
 <style scoped lang="scss">
 .swap-toggle {
   position: absolute;

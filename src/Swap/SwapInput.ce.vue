@@ -95,14 +95,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useStore, useSwapStore, useTokensStore } from '@/store';
-import { SelectTokenDialog } from '@/components/Dialogs/SelectTokenDialog';
+  import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
-import { d, decimalsMultiplier } from '@/utils';
+import { d, decimalsMultiplier } from '@/utils/utils';
 import { InputNumberBlurEvent } from 'primevue/inputnumber';
-import { splitValue } from '../../utils/index';
-import { TokenAlert } from '@/components/UI/TokenAlert';
-import { UnverifiedTokenDialog } from '../Dialogs/UnverifiedTokenDialog';
-import { TokenIcon } from '../UI/TokenIcon';
+import { splitValue } from '@/utils/utils';
+import { TokenAlert } from '@/components/TokenAlert';
+import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
+import { TokenIcon } from '@/components//TokenIcon';
 
 interface IProps {
   mode: 'to' | 'from';

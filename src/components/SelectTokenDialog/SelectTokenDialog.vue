@@ -1,0 +1,69 @@
+<template>
+  <PDialog
+    v-model:visible="display"
+    :draggable="false"
+    :style="{ width: '480px', height: '80vh', maxHeight: '700px' }"
+    :modal="true"
+    :closable="false"
+    :show-header="false"
+    class="stepped-dialog stepped-dialog--panel"
+  >
+    <TokenList
+      v-if="view === 'root'"
+      v-model:actionToken="actionToken"
+      v-model:secondaryToken="secondaryToken"
+      :field="props.field"
+      class="stepped-dialog__item"
+      @back="onBack"
+      @navigate="onNavigate"
+      @close="onClose"
+    />
+  </PDialog>
+</template>
+
+<script setup lang="ts">
+import TokenList from './TokenList.vue';
+import { ref } from 'vue';
+
+interface IProps {
+  actionToken?: string;
+  secondaryToken?: string;
+  field?: 'to' | 'from' | 'none';
+}
+
+defineEmits(['update:actionToken', 'update:secondaryToken']);
+const props = defineProps<IProps>();
+
+const display = ref(false);
+const view = ref<'root' | 'mange-presets'>('root');
+const history = ref<string[]>([]);
+
+function onNavigate(next: string | undefined) {
+  history.value.push(view.value);
+  view.value = (next as any) || 'root';
+}
+
+function onClose() {
+  view.value = 'root';
+  history.value = [];
+  hide();
+}
+
+function onBack() {
+  const last = history.value.pop();
+  view.value = (last as any) || 'root';
+}
+
+function show() {
+  display.value = true;
+}
+
+function hide() {
+  display.value = false;
+}
+
+defineExpose({
+  show,
+  hide,
+});
+</script>

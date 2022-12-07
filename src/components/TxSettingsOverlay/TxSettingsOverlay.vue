@@ -65,11 +65,11 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { InputNumberInputEvent } from 'primevue/inputnumber';
-import { createSyncRef } from '@/utils';
+import { createSyncRef } from '@/utils/vue';
 import { useClipboard } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
-import { CopyNotification } from '../CopyNotification';
+import { CopyNotification } from '@/components/CopyNotification';
 
 interface IProps {
   isDefault?: boolean;

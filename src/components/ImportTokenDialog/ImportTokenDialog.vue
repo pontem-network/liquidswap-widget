@@ -75,19 +75,16 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref, watch } from 'vue';
-import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
+import { DialogHeader } from '@/components/DialogHeader';
 import {
-  useAddLiquidityStore,
-  useBurnLiquidityStore,
   useSwapStore,
   useTokensStore,
 } from '@/store';
-import { TokenIcon } from '@/components/UI/TokenIcon';
+import { TokenIcon } from '@/components/TokenIcon';
 
 interface IProps {
   token: string;
   mode?: 'to' | 'from';
-  store?: 'swap' | 'add' | 'burn';
   hasBack?: boolean;
 }
 
@@ -97,14 +94,7 @@ const tokenPreview = ref();
 const display = ref(false);
 const props = defineProps<IProps>();
 
-const store =
-  props.store == 'swap'
-    ? useSwapStore()
-    : props.store == 'add'
-    ? useAddLiquidityStore()
-    : props.store == 'burn'
-    ? useBurnLiquidityStore()
-    : undefined;
+const store = useSwapStore();
 
 const emits = defineEmits(['close']);
 

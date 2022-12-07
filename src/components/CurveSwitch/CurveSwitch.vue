@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, toRefs, watch } from 'vue';
+import { computed, watch } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import PToast from 'primevue/toast';
 import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants';
@@ -46,12 +46,10 @@ import {
 } from '@/store';
 
 interface IProps {
-  mode: 'swap' | 'add' | 'create' | 'burn';
   curve?: string;
 }
 
 const props = defineProps<IProps>();
-const { mode } = toRefs<IProps>(props);
 
 const store = useSwapStore();
 const tokenStore = useTokensStore();
@@ -65,9 +63,7 @@ const switchSelected = (curve: string) => {
   if (isBusy.value === true) return;
   store.curve = curve;
 };
-if (props.mode === 'burn') {
-  switchSelected(store.curve);
-}
+
 
 watch(
   [

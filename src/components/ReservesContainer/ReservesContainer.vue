@@ -43,14 +43,12 @@
 import { computed, ref, watch, onBeforeMount } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import {
-  useAddLiquidityStore,
-  useBurnLiquidityStore,
   useSwapStore,
   useTokensStore,
   usePoolsStore,
 } from '@/store';
-import { is_sorted } from '@/utils/contracts';
-import { TokenIcon } from '../TokenIcon';
+import { is_sorted } from '@/utils/utils';
+import { TokenIcon } from '@/components/TokenIcon';
 
 interface IProps {
   type: 'swap' | 'add' | 'burn';
@@ -58,13 +56,7 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const store =
-  props.type == 'swap'
-    ? useSwapStore()
-    : props.type == 'add'
-    ? useAddLiquidityStore()
-    : useBurnLiquidityStore();
-
+const store = useSwapStore();
 const poolsStore = usePoolsStore();
 const tokensStore = useTokensStore();
 
