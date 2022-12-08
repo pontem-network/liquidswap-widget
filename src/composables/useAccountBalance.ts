@@ -133,7 +133,7 @@ export function useCurrentAccountBalance(
 ) {
   const adapter = useWalletProviderStore();
   const { account } = storeToRefs(adapter);
-  const address = computed(() => account.value?.address);
+  const address = computed(() => account.value.value.address);
   const balance = useAccountBalance(address as unknown as string, token);
   const currencyFormat = useCurrencyFormat(balance.balance, token, options);
 

@@ -278,7 +278,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
     return promise;
   }
 
-  //TODO: APT-420 getTokenInfo func could save received token to store immediately
   async function getTokenInfo(
     token: string,
     remote?: boolean,
@@ -289,10 +288,10 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
     const coinInfo = composeType(COIN_INFO, [token]);
     const resource =
-      await aptos.client.getAccountResource<AptosCoinInfoResource>(
+      await client.getAccountResource(
         extractAddressFromType(token),
         coinInfo,
-      );
+      ) as unknown as PromiseLike<AptosCoinInfoResource>;
 
     if (!resource) {
       return undefined;
@@ -340,11 +339,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
       if (!network) {
         return;
       }
-      // isLoading.value = true;
       // TODO: Check tokens not valid for network
       registerCoins(coins.value, network.id);
-      // isLoading.value = false;
-      // isReady.value = true;
     },
     { immediate: true },
   );

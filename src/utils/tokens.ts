@@ -1,4 +1,4 @@
-import { IPersistedToken } from '@/types/coins';
+import { IPersistedToken } from '@/store/useTokenStore';
 
 const PREFIXES: Record<string, string> = {
   // layerzero: 'lz',
