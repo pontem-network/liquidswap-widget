@@ -5,6 +5,7 @@ import { computed, reactive, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS } from "@/constants";
+import { Network } from '@/types';
 
 type GlobalCachebleState = {
   account?: { address: string; type: string };
@@ -58,14 +59,23 @@ export const useStore = createGlobalState(() => {
     () => walletNetwork.value?.chainId || `${CORRECT_CHAIN_ID}`,
   );
 
+  const network = computed(
+    () =>
+      networks.find((network: Network) => {
+        return network.id === networkId.value;
+      }) as Network,
+  );
+
   const defaultToken = computed(() => storage.value.defaultToken);
 
   const name = computed(() => wallet.value?.adapter.name);
 
   return {
+    sdk,
     client,
     curves,
     defaultToken,
-    networkId
+    networkId,
+    network,
   }
 });

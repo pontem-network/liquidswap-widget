@@ -1,21 +1,9 @@
-export type Network = {
-  id: number;
-  title: string;
-  shortTitle: string;
-  restUrl: string;
-  defaultToken: string;
-  modules: {
-    Faucet: string;
-    Scripts: string;
-    LiquidityPool: string;
-    CoinInfo: string;
-    CoinStore: string;
-  };
-  // tokens: IPersistedToken[];
-};
+import { Network } from '@/types';
 
 export const STATS_URL =
   process.env.VUE_APP_STATS_API_URL || 'https://sentrio-api.pontem.network';
+
+export const DENOMINATOR = 10000;
 
 export const MODULES_ACCOUNT =
   process.env.VUE_APP_MODULES_ACCOUNT ||

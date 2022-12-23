@@ -2,8 +2,8 @@ import { defineCustomElement } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { SwapContainer } from './src/Swap';
-import {useWalletProviderStore} from "@pontem/aptos-wallet-adapter";
-import {walletsList} from "./src/constants/wallets";
+import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
+import { walletsList } from "./src/constants/wallets";
 
 const pinia = createPinia();
 

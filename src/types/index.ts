@@ -43,3 +43,34 @@ export interface IWallet {
 export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
 
 export type TStableSwapType = 'normal' | 'high';
+
+export type Network = {
+  id: number;
+  title: string;
+  shortTitle: string;
+  restUrl: string;
+  defaultToken: string;
+  modules: {
+    Faucet: string;
+    Scripts: string;
+    LiquidityPool: string;
+    CoinInfo: string;
+    CoinStore: string;
+  };
+  // tokens: IPersistedToken[];
+};
+
+export interface ICreateToken {
+  token?: string;
+  amount?: number;
+}
+
+export interface IStoredToken extends ICreateToken {
+  reserve: number;
+}
+
+export interface IPoolExist {
+  fromCoin: string;
+  toCoin: string;
+  curve: string;
+}
