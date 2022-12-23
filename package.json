@@ -13,7 +13,7 @@
   "dependencies": {
     "@vitejs/plugin-vue": "^1.9.1",
     "vue": "^3.2.40",
-    "@pontem/aptos-wallet-adapter": "^0.6.4",
+    "@pontem/aptos-wallet-adapter": "^0.6.8",
     "@pontem/liquidswap-sdk": "^0.5.2",
     "@pontem/coins-registry": "^1.0.4",
     "pinia": "2.0.22",

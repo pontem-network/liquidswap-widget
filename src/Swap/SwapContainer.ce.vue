@@ -128,7 +128,7 @@ import InputToggle from '@/components/InputToggle/InputToggle.vue';
 import { ReservesContainer } from '@/components/ReservesContainer';
 import { TxSettingsOverlay } from '@/components/TxSettingsOverlay';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
-import { useStore, useSwapStore, useTokensStore } from '@/store';
+import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
 import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.ce.vue';
