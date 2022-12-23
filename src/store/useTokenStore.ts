@@ -13,8 +13,8 @@ import CoinsRegistry from '@pontem/coins-registry';
 
 import { IStorageBasic, Resource, AptosCoinInfoResource } from '@/types';
 import { TCoinSource } from '@/types/coins';
-import { APTOS, COIN_INFO, BUILD_CHAIN_ID } from '@/constants';
-import { useStore } from '@/store';
+import { APTOS, COIN_INFO, CORRECT_CHAIN_ID } from '@/constants';
+import { useStore } from '@/store/useStore';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';
 
@@ -65,7 +65,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
     {
       source: 'pontem',
       name: 'Aptos Coin',
-      chainId: BUILD_CHAIN_ID,
+      chainId: CORRECT_CHAIN_ID,
       decimals: 8,
       symbol: 'APT',
       type: APTOS,

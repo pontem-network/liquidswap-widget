@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useStore, useSwapStore, useTokensStore } from '@/store';
+import { useStore, useSwapStore, useTokensStore } from '@/store/useStore';
   import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { d, decimalsMultiplier } from '@/utils/utils';

@@ -1,3 +1,19 @@
+export type Network = {
+  id: number;
+  title: string;
+  shortTitle: string;
+  restUrl: string;
+  defaultToken: string;
+  modules: {
+    Faucet: string;
+    Scripts: string;
+    LiquidityPool: string;
+    CoinInfo: string;
+    CoinStore: string;
+  };
+  // tokens: IPersistedToken[];
+};
+
 export const MODULES_ACCOUNT =
   process.env.VUE_APP_MODULES_ACCOUNT ||
   '0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12';
@@ -27,11 +43,34 @@ export const MAINNET_CHAIN_ID = 1;
 export const APTOS_TESTNET_CHAIN_ID = 2;
 export const PONTEM_TESTNET_CHAIN_ID = 4;
 
-export const BUILD_CHAIN_ID =
-  process.env.VUE_APP_CORRECT_CHAIN === 'mainnet'
-    ? MAINNET_CHAIN_ID
-    : process.env.VUE_APP_CORRECT_CHAIN === 'testnet'
-      ? APTOS_TESTNET_CHAIN_ID
-      : PONTEM_TESTNET_CHAIN_ID;
-
 export const APTOS = '0x1::aptos_coin::AptosCoin';
+
+export const NETWORKS: Network[] = [
+  {
+    id: MAINNET_CHAIN_ID,
+    title: 'Aptos Mainnet',
+    shortTitle: 'Aptos',
+    restUrl: 'https://aptos-mainnet.pontem.network/v1',
+    defaultToken: '0x1::aptos_coin::AptosCoin',
+    modules: NETWORKS_MODULES,
+  },
+  {
+    id: APTOS_TESTNET_CHAIN_ID,
+    title: 'Aptos Testnet',
+    shortTitle: 'Aptos',
+    restUrl: 'https://aptos-testnet.pontem.network/v1',
+    defaultToken: '0x1::aptos_coin::AptosCoin',
+    modules: NETWORKS_MODULES,
+  },
+];
+
+export const CORRECT_CHAIN = process.env.VUE_APP_CORRECT_CHAIN || 'mainnet'; // testnet
+
+export const CORRECT_CHAIN_ID =
+  CORRECT_CHAIN === 'mainnet'
+    ? MAINNET_CHAIN_ID
+    : CORRECT_CHAIN === 'testnet'
+      ? APTOS_TESTNET_CHAIN_ID
+      : CORRECT_CHAIN === 'testpontem'
+        ? PONTEM_TESTNET_CHAIN_ID
+        : 0;

@@ -31,7 +31,7 @@ import SwapPreview from './SwapPreview.vue';
 import SwapInfo from './SwapInfo.vue';
 import { AptosTxPayload } from '@/types/aptosResources';
 import { composeType } from '@/utils/contracts';
-import { useSwapStore } from '@/store';
+import { useSwapStore } from '@/store/useStore';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';

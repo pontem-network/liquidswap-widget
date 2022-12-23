@@ -1,5 +1,5 @@
 import { ref, computed, isRef, unref, watch } from 'vue';
-import { useStore } from '@/store';
+import { useStore } from '@/store/useStore';
 import {
   MaybeRef,
   tryOnScopeDispose,

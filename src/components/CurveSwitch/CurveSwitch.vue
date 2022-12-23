@@ -43,7 +43,7 @@ import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants';
 import {
   useSwapStore,
   useTokensStore,
-} from '@/store';
+} from '@/store/useStore';
 
 interface IProps {
   curve?: string;

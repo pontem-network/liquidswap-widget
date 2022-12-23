@@ -81,7 +81,7 @@
 
 <script lang="ts" setup>
 import { computed, ComputedRef, ref, watch } from 'vue';
-import { IPersistedTokenExtended, useTokensStore } from '@/store';
+import { IPersistedTokenExtended, useTokensStore } from '@/store/useStore';
 import ImportTokenDialog from '@/components/ImportTokenDialog/ImportTokenDialog.vue';
 import { TokenAlert } from '@/components/TokenAlert';
 import { TokenIcon } from '@/components/TokenIcon';

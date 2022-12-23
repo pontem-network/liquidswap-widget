@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { CURVE_STABLE } from '@/constants/networks';
-import { useSwapStore } from '@/store';
+import { useSwapStore } from '@/store/useStore';
 import { TStableSwapType } from '@/types';
 import { computed, ref } from 'vue-demi';
 

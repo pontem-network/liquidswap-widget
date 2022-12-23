@@ -46,7 +46,7 @@ import {
   useSwapStore,
   useTokensStore,
   usePoolsStore,
-} from '@/store';
+} from '@/store/useStore';
 import { is_sorted } from '@/utils/utils';
 import { TokenIcon } from '@/components/TokenIcon';
 

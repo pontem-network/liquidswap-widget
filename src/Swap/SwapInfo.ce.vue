@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSwapStore } from '@/store';
+import { useSwapStore } from '@/store/useStore';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 
