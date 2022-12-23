@@ -14,6 +14,9 @@ export type Network = {
   // tokens: IPersistedToken[];
 };
 
+export const STATS_URL =
+  process.env.VUE_APP_STATS_API_URL || 'https://sentrio-api.pontem.network';
+
 export const MODULES_ACCOUNT =
   process.env.VUE_APP_MODULES_ACCOUNT ||
   '0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12';

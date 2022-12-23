@@ -39,3 +39,7 @@ export interface IWallet {
     | typeof MsafeWalletAdapter;
   options?: any;
 }
+
+export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
+
+export type TStableSwapType = 'normal' | 'high';

@@ -1,11 +1,22 @@
 import { SDK } from '@pontem/liquidswap-sdk';
-import { createGlobalState } from '@vueuse/core';
+import { createGlobalState, useStorage, StorageSerializers } from '@vueuse/core';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID } from "@/constants";
+import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS } from "@/constants";
 
+type GlobalCachebleState = {
+  account?: { address: string; type: string };
+  defaultToken: string;
+  reset: boolean;
+  isMobile: boolean;
+};
+
+const handleMobileScreen = () => {
+  const mediaQueryList = window.matchMedia('screen and (max-width: 768px)');
+  return mediaQueryList.matches;
+};
 
 export const useStore = createGlobalState(() => {
   const sdk = new SDK({
@@ -18,7 +29,19 @@ export const useStore = createGlobalState(() => {
   const client = sdk.client;
   const curves = sdk.curves;
 
-  const adapter = useWalletProviderStore();
+  const storage = useStorage<GlobalCachebleState>(
+    'pontem',
+    {
+      account: undefined,
+      defaultToken: APTOS,
+      reset: false,
+      isMobile: handleMobileScreen(),
+    },
+    undefined,
+    { serializer: StorageSerializers.object },
+  );
+
+  const networkId = ref(CORRECT_CHAIN_ID);
 
   const networks = reactive(NETWORKS);
 
@@ -30,13 +53,19 @@ export const useStore = createGlobalState(() => {
   } = storeToRefs(walletAdapter);
 
   const walletAddress = computed(() => walletAccount?.value?.address);
+
   const chainId = computed(
     () => walletNetwork.value?.chainId || `${CORRECT_CHAIN_ID}`,
   );
+
+  const defaultToken = computed(() => storage.value.defaultToken);
+
   const name = computed(() => wallet.value?.adapter.name);
 
   return {
     client,
-    curves
+    curves,
+    defaultToken,
+    networkId
   }
 });

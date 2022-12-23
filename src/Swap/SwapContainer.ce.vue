@@ -135,6 +135,16 @@ import SwapInfo from './SwapInfo.ce.vue';
 import SwapInput from './SwapInput.ce.vue';
 import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants';
 
+// initialize stores
+(async () => {
+  const tokensStore = useTokensStore();
+  await tokensStore.fetchCoinsList();
+  const poolsStore = usePoolsStore();
+  poolsStore.fetchPoolsList();
+  useStore();
+})();
+
+
 const adapter = useWalletProviderStore();
 const { account } = storeToRefs(adapter);
 const mainStore = useStore();
@@ -291,7 +301,8 @@ function submitForm(e: Event) {
 }
 
 function onConnectWallet() {
-  mainStore.showDialog('connectWallet');
+  console.log('connect wallet dialog');
+  // mainStore.showDialog('connectWallet');
 }
 
 function toggleSwap() {
@@ -299,7 +310,8 @@ function toggleSwap() {
 }
 
 function showSwapDialog() {
-  mainStore.showDialog('swapConfirm');
+  console.log('swap sconfirm dialog');
+  // mainStore.showDialog('swapConfirm');
 }
 
 function toggleConfig(e: Event) {
