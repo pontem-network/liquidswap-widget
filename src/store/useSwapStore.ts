@@ -1,5 +1,5 @@
 import isFinite from 'lodash/isFinite';
-import { defineStore, storeToRefs } from 'pinia';
+import { defineStore } from 'pinia';
 import { reactive, watch, computed, ref, onMounted } from 'vue';
 import { watchDebounced } from '@vueuse/core';
 
