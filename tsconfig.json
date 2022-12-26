@@ -23,6 +23,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/**/*.ce.vue"
   ],
   "exclude": ["node_modules"]
 }

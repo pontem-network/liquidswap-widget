@@ -10,8 +10,8 @@
   >
     <TokenList
       v-if="view === 'root'"
-      v-model:actionToken="actionToken"
-      v-model:secondaryToken="secondaryToken"
+      modelValue:actionToken="actionToken"
+      modelValue:secondaryToken="secondaryToken"
       :field="props.field"
       class="stepped-dialog__item"
       @back="onBack"
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import TokenList from './TokenList.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 interface IProps {
   actionToken?: string;

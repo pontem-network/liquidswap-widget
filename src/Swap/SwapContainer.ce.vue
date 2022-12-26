@@ -122,9 +122,9 @@ import { watchDebounced } from '@vueuse/shared';
 import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 
-import CurveInfo from '@/components/CurveInfo/CurveInfo.vue';
+import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
-import InputToggle from '@/components/InputToggle/InputToggle.vue';
+import { InputToggle } from '@/components/InputToggle';
 import { ReservesContainer } from '@/components/ReservesContainer';
 import { TxSettingsOverlay } from '@/components/TxSettingsOverlay';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';

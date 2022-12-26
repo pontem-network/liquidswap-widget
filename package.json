@@ -1,29 +1,33 @@
 {
   "name": "liquidswap-widget",
   "version": "0.0.1",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-require-context": "^1.0.9",
+    "@vue/compiler-sfc": "3.2.45",
     "vite": "^2.4.4"
   },
   "dependencies": {
-    "@vitejs/plugin-vue": "^1.9.1",
-    "vue": "^3.2.40",
+    "@metamask/jazzicon": "2.0.0",
     "@pontem/aptos-wallet-adapter": "^0.6.8",
-    "@pontem/liquidswap-sdk": "^0.5.2",
     "@pontem/coins-registry": "^1.0.4",
-    "pinia": "2.0.22",
-    "@vueuse/core": "^8.9.4",
+    "@pontem/liquidswap-sdk": "file:/Users/dmitrijkuksenko/pontem/liquidswap-sdk",
     "@tsconfig/recommended": "^1.0.1",
-    "primevue": "3.17.0",
+    "@types/lodash": "4.14.182",
+    "@vitejs/plugin-vue": "^1.9.1",
+    "@vueuse/core": "^8.9.4",
     "decimal.js": "^10.4.1",
     "lodash": "^4.17.21",
-    "@types/lodash": "4.14.182",
-    "@metamask/jazzicon": "2.0.0",
+    "pinia": "2.0.22",
+    "primevue": "3.17.0",
+    "sass": "1.52.0",
+    "sass-loader": "13.0.0",
+    "tslib": "^2.3.0",
+    "vue": "^3.2.40",
     "vue-router": "^4.1.6"
   }
 }

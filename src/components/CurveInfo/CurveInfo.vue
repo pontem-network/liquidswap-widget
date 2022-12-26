@@ -22,6 +22,7 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { CURVE_STABLE } from '@/constants';
 import { computed } from 'vue';

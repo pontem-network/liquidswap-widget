@@ -69,7 +69,9 @@
 import { computed, ComputedRef, ref, watch, watchEffect } from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
-import { IPersistedTokenExtended, useTokensStore } from '@/store/useStore';
+import { useTokensStore } from '@/store';
+import { IPersistedTokenExtended } from '@/store/useTokenStore';
+
 import { checkAptosType } from '@/utils/utils';
 import { TextHighlight } from '@/components/TextHighlight';
 import { DialogHeader } from '@/components/DialogHeader';

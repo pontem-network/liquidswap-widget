@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useTokensStore } from '@/store/useStore';
+import { useTokensStore } from '@/store';
 import { toRefs } from '@vueuse/shared';
 import { computed } from 'vue-demi';
 

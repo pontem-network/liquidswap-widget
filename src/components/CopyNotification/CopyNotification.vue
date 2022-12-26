@@ -6,8 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { NOTIFICATION_DURATION } from '@/constants';
 import { computed, ref } from 'vue';
+
+const NOTIFICATION_DURATION = 1000;
 
 const display = ref(false);
 

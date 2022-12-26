@@ -79,7 +79,7 @@ import { DialogHeader } from '@/components/DialogHeader';
 import {
   useSwapStore,
   useTokensStore,
-} from '@/store/useStore';
+} from '@/store';
 import { TokenIcon } from '@/components/TokenIcon';
 
 interface IProps {
