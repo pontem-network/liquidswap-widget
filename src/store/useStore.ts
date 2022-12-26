@@ -1,11 +1,12 @@
-import { SDK } from '@pontem/liquidswap-sdk';
+import { SDK, SdkOptions } from '@pontem/liquidswap-sdk';
 import { createGlobalState, useStorage, StorageSerializers } from '@vueuse/core';
-import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import { computed, reactive, ref } from 'vue';
+import { useWalletProviderStore, WalletAdapterNetwork } from "@pontem/aptos-wallet-adapter";
+import { computed, reactive, ref, watch, readonly } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS } from "@/constants";
+import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS_TESTNET_CHAIN_ID, APTOS } from "@/constants";
 import { Network } from '@/types';
+import { restUrl } from '@/utils/networkData';
 
 type GlobalCachebleState = {
   account?: { address: string; type: string };
@@ -19,16 +20,28 @@ const handleMobileScreen = () => {
   return mediaQueryList.matches;
 };
 
-export const useStore = createGlobalState(() => {
+const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
+
   const sdk = new SDK({
-    nodeUrl: 'https://fullnode.mainnet.aptoslabs.com/v1',
+    nodeUrl: nodeUrl,
+    networkOptions: networkOptions
+  });
+
+  return sdk;
+}
+
+export const useStore = createGlobalState(() => {
+
+  const sdk = ref(createSDK({
+    nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
     networkOptions: {
       resourceAccount: RESOURCES_ACCOUNT,
       moduleAccount: MODULES_ACCOUNT
     }
-  });
-  const client = sdk.client;
-  const curves = sdk.curves;
+  }));
+
+  const client = sdk.value.client;
+  const curves = sdk.value.curves;
 
   const storage = useStorage<GlobalCachebleState>(
     'pontem',
@@ -41,6 +54,7 @@ export const useStore = createGlobalState(() => {
     undefined,
     { serializer: StorageSerializers.object },
   );
+
 
   const networkId = ref(CORRECT_CHAIN_ID);
 
@@ -67,15 +81,128 @@ export const useStore = createGlobalState(() => {
   );
 
   const defaultToken = computed(() => storage.value.defaultToken);
+  const account = computed(() => storage.value.account);
+
 
   const name = computed(() => wallet.value?.adapter.name);
+
+  function resetAccount() {
+    storage.value.defaultToken = APTOS;
+    if (walletAddress.value) {
+      if (name.value.toLowerCase() !== 'pontem') {
+        // other wallets like Petra || Martian || rise || fewcha etc...
+        if (
+          walletNetwork.value.name.toLowerCase() ===
+          WalletAdapterNetwork.Mainnet
+        ) {
+          networkId.value = CORRECT_CHAIN_ID;
+          sdk.value = createSDK({
+            nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
+            networkOptions: {
+              resourceAccount: RESOURCES_ACCOUNT,
+              moduleAccount: MODULES_ACCOUNT
+            }
+          });
+        } else if (
+          walletNetwork.value.name
+            .toLowerCase()
+            .indexOf(WalletAdapterNetwork.Testnet) !== -1
+        ) {
+          networkId.value = APTOS_TESTNET_CHAIN_ID;
+          sdk.value = createSDK({
+            nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
+            networkOptions: {
+              resourceAccount: RESOURCES_ACCOUNT,
+              moduleAccount: MODULES_ACCOUNT
+            }
+          })
+        } else {
+          networkId.value = 0;
+        }
+      } else {
+        // Pontem wallet
+        if (
+          walletNetwork.value.name
+            .toLowerCase()
+            .indexOf(WalletAdapterNetwork.Testnet) !== -1
+        ) {
+          networkId.value = APTOS_TESTNET_CHAIN_ID;
+          sdk.value = createSDK({
+            nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
+            networkOptions: {
+              resourceAccount: RESOURCES_ACCOUNT,
+              moduleAccount: MODULES_ACCOUNT
+            }
+          })
+        } else if (
+          chainId.value !== undefined &&
+          !isNaN(parseInt(chainId.value)) &&
+          networkId.value !== parseInt(chainId.value)
+        ) {
+          networkId.value = parseInt(chainId.value);
+          if (parseInt(chainId.value) === CORRECT_CHAIN_ID) {
+            sdk.value = createSDK({
+              nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
+              networkOptions: {
+                resourceAccount: RESOURCES_ACCOUNT,
+                moduleAccount: MODULES_ACCOUNT
+              }
+            })
+          }
+        }
+      }
+      if (networkId.value === CORRECT_CHAIN_ID) {
+        dialogs.invalidNetwork = false;
+      } else {
+        dialogs.invalidNetwork = true;
+      }
+      storage.value.account = {
+        address: walletAddress.value as string,
+        type: `${name.value}`,
+      };
+      storage.value.defaultToken = APTOS;
+    } else {
+      dialogs.invalidNetwork = false;
+      storage.value.account = undefined;
+    }
+  }
+
+  watch([walletAddress, walletNetwork, chainId, name], () => {
+    resetAccount();
+  });
+
+  function showDialog(alias: string) {
+    dialogs[alias] = true;
+  }
+
+  window.addEventListener('resize', () => {
+    storage.value.isMobile = handleMobileScreen();
+  });
+
+  const showTermsAndConditions = useStorage('showTermsAndConditions', true);
+
+  const dialogs = reactive<Record<string, boolean>>({
+    acceptTermsAndConditions: showTermsAndConditions.value,
+    coinList: false,
+    connectWallet: false,
+    createPoolConfirm: false,
+    invalidNetwork: false,
+    noFundsAvailable: false,
+    notifiCard: false,
+    requestTokens: false,
+    swapConfirm: false,
+  });
 
   return {
     sdk,
     client,
     curves,
     defaultToken,
-    networkId,
     network,
+    account,
+    networkId: readonly(networkId),
+    dialogs,
+    showDialog,
+    showTermsAndConditions,
   }
 });

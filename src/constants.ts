@@ -5,6 +5,8 @@ export const STATS_URL =
 
 export const DENOMINATOR = 10000;
 
+export const RECALCULATION_TIME = 2000; // 2sec
+
 export const MODULES_ACCOUNT =
   import.meta.env.VITE_APP_MODULES_ACCOUNT ||
   '0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12';

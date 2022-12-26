@@ -1,4 +1,4 @@
-import { defineCustomElement } from 'vue';
+import { defineCustomElement, createApp } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { SwapContainer } from './src/Swap';

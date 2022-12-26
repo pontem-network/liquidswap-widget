@@ -26,9 +26,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, unref, watch } from 'vue';
-import PInlineMessage from 'primevue/inlinemessage';
-
-import { SendTransaction } from '@/components/Steps';
+import { SendTransaction } from '@/components/Dialogs/Steps';
 import SwapPreview from './SwapPreview.vue';
 import SwapInfo from './SwapInfo.vue';
 import { AptosTxPayload } from '@/types/aptosResources';
@@ -37,7 +35,9 @@ import { useSwapStore } from '@/store';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
-import { CURVE_STABLE, NETWORKS_MODULES, RECALCULATION_TIME } from '@/constants';
+import { moduleAddress } from '@/utils/networkData';
+import { CURVE_STABLE } from '@/constants/networks';
+import { RECALCULATION_TIME } from '@/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
@@ -51,7 +51,7 @@ const payload = computed<AptosTxPayload>(() => {
     swapStore.curve === CURVE_STABLE && swapStore.stableSwapType === 'normal';
 
   const functionName = composeType(
-    NETWORKS_MODULES.Scripts,
+    moduleAddress('Scripts'),
     isUnchecked
       ? 'swap_unchecked'
       : swapStore.lastInteractiveField === 'from'
