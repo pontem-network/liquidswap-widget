@@ -29,9 +29,11 @@
 <script setup lang="ts">
 import { useTokensStore } from '@/store';
 import { computed, ref } from 'vue';
-import { SendTransaction } from '@/components/Dialogs/Steps';
+import { SendTransaction } from '@/components/Steps';
 import { AptosTxPayload } from '@/types/aptosResources';
-import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
+import { DialogHeader } from '@/components/DialogHeader';
+import PButton from 'primevue/button';
+
 
 interface IProps {
   token: string;

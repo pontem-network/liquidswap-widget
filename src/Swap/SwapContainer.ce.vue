@@ -139,7 +139,7 @@ import SwapInfo from './SwapInfo.ce.vue';
 import SwapInput from './SwapInput.ce.vue';
 import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants/constants';
 import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
-
+import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 
 // initialize stores
 (async () => {

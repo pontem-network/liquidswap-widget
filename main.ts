@@ -7,6 +7,9 @@ import { walletsList } from "./src/constants/wallets";
 
 const pinia = createPinia();
 
+import 'nprogress/nprogress.css';
+import '@/styles/index.scss';
+
 const adapter = useWalletProviderStore(pinia);
 
 setActivePinia(pinia);

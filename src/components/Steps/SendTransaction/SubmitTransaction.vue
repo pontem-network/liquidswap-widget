@@ -86,9 +86,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { shortAddress } from '@/utils';
+import { shortAddress } from '@/utils/hex';
 import { useClipboard } from '@vueuse/core';
-import { CopyNotification } from '@/components/UI/CopyNotification';
+import { CopyNotification } from '@/components/CopyNotification';
+import PButton from "primevue/button";
 
 type State =
   | {
