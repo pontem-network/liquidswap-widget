@@ -82,7 +82,7 @@ import {
   GAS_MIN,
   GAS_UNIT_PRICE_MAX,
   GAS_UNIT_PRICE_MIN,
-} from '@/constants';
+} from '@/constants/constants';
 
 interface IProps {
   title?: string;

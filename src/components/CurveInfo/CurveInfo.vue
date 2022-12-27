@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { CURVE_STABLE } from '@/constants';
+import { CURVE_STABLE } from '@/constants/constants';
 import { computed } from 'vue';
 
 interface IProps {

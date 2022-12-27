@@ -39,7 +39,7 @@
 import { computed, watch } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import PToast from 'primevue/toast';
-import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants';
+import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants/constants';
 import {
   useSwapStore,
   useTokensStore,
@@ -53,7 +53,6 @@ const props = defineProps<IProps>();
 
 const store = useSwapStore();
 const tokenStore = useTokensStore();
-const toast = useToast();
 
 const isBusy = computed(() =>
   store.isBusy !== undefined ? store.isBusy.value : false,
@@ -72,6 +71,8 @@ watch(
     () => store.curve,
   ],
   () => {
+    const toast = useToast();
+
     if (
       store.curve === CURVE_STABLE &&
       (tokenStore.tokens[store.fromCurrency.token as string]?.decimals > 8 ||

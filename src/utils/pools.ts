@@ -1,6 +1,6 @@
-import {CURVE_STABLE, NETWORKS_MODULES} from '@/constants';
+import {CURVE_STABLE, NETWORKS_MODULES} from '@/constants/constants';
 import { useTokensStore } from '@/store';
-import { MODULES_ACCOUNT, RESOURCES_ACCOUNT } from '@/constants';
+import { MODULES_ACCOUNT, RESOURCES_ACCOUNT } from '@/constants/constants';
 import { composeType } from './contracts';
 import { is_sorted } from './utils';
 

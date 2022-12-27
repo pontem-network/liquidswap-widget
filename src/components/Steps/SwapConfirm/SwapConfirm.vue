@@ -37,7 +37,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
 import { moduleAddress } from '@/utils/networkData';
 import { CURVE_STABLE } from '@/constants/networks';
-import { RECALCULATION_TIME } from '@/constants';
+import { RECALCULATION_TIME } from '@/constants/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 

@@ -37,7 +37,7 @@ import { useSwapStore } from '@/store';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
-import { CURVE_STABLE, NETWORKS_MODULES, RECALCULATION_TIME } from '@/constants';
+import { CURVE_STABLE, NETWORKS_MODULES, RECALCULATION_TIME } from '@/constants/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 

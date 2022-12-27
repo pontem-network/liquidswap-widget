@@ -2,11 +2,11 @@ import { ref, reactive, onBeforeMount, watch, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { STATS_URL, CORRECT_CHAIN, RESOURCES_ACCOUNT } from '@/constants';
+import { STATS_URL, CORRECT_CHAIN, RESOURCES_ACCOUNT } from '@/constants/constants';
 import CoinsRegistry from '@pontem/coins-registry';
 import { is_sorted } from '@/utils/utils';
 import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
-import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants';
+import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants/constants';
 import { IStorageBasic } from '@/types';
 
 

@@ -13,7 +13,7 @@ import CoinsRegistry from '@pontem/coins-registry';
 
 import { IStorageBasic, Resource, AptosCoinInfoResource } from '@/types';
 import { TCoinSource } from '@/types/coins';
-import { APTOS, COIN_INFO, CORRECT_CHAIN_ID } from '@/constants';
+import { APTOS, COIN_INFO, CORRECT_CHAIN_ID } from '@/constants/constants';
 import { useStore } from '@/store/useStore';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';

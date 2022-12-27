@@ -1,4 +1,4 @@
-import { defineCustomElement, createApp } from 'vue';
+import { defineCustomElement } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { SwapContainer } from './src/Swap';
@@ -7,9 +7,10 @@ import { walletsList } from "./src/constants/wallets";
 
 const pinia = createPinia();
 
+const adapter = useWalletProviderStore(pinia);
+
 setActivePinia(pinia);
 
-const adapter = useWalletProviderStore(pinia);
 setTimeout(() => {
   adapter.init({
     wallets: walletsList.map((one) => new one.adapter(one.options)),

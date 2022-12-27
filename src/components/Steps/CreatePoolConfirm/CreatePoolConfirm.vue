@@ -28,7 +28,7 @@ import CreatePoolInfo from './CreatePoolInfo.vue';
 import { TxPayloadCallFunction } from '@/types/aptosResources';
 import { composeType, withSlippage } from '@/utils/contracts';
 import { useCreatePoolStore, useStore } from '@/store';
-import { CURVE_STABLE } from '@/constants';
+import { CURVE_STABLE } from '@/constants/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 

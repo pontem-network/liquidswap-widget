@@ -4,7 +4,7 @@ import { useWalletProviderStore, WalletAdapterNetwork } from "@pontem/aptos-wall
 import { computed, reactive, ref, watch, readonly } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS_TESTNET_CHAIN_ID, APTOS } from "@/constants";
+import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS_TESTNET_CHAIN_ID, APTOS } from "@/constants/constants";
 import { Network } from '@/types';
 import { restUrl } from '@/utils/networkData';
 

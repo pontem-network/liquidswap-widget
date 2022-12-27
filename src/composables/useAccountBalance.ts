@@ -13,7 +13,7 @@ import { composeType } from '@/utils/contracts';
 import isEqual from 'lodash/isEqual';
 import { storeToRefs } from 'pinia';
 import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
-import { RECALCULATION_BALANCE_TIME, NETWORKS_MODULES } from '@/constants';
+import { RECALCULATION_BALANCE_TIME, NETWORKS_MODULES } from '@/constants/constants';
 
 export function useAccountBalance(
   address: MaybeRef<string | undefined>,

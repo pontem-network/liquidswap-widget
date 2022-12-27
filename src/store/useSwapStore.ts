@@ -8,7 +8,7 @@ import { useStore } from '@/store/useStore';
 import { is_sorted, d, decimalsMultiplier  } from '@/utils/utils';
 import { useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
-import { CURVE_STABLE, CURVE_UNCORRELATED, RESOURCES_ACCOUNT, DENOMINATOR } from '@/constants';
+import { CURVE_STABLE, CURVE_UNCORRELATED, RESOURCES_ACCOUNT, DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { IStoredToken } from '@/types';
 import {

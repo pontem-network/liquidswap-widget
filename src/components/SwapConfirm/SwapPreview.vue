@@ -55,7 +55,7 @@
 import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
 import { TokenIcon } from '@/components/UI/TokenIcon';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
-import { ANIMATION_PAUSE_TIME, LOADING_ANIMATION_TIME } from '@/constants';
+import { ANIMATION_PAUSE_TIME, LOADING_ANIMATION_TIME } from '@/constants/constants';
 import { useSwapStore, useTokensStore } from '@/store/useStore';
 import { computed, ref, watch } from 'vue';
 import SwapGasSwitch from './SwapGasSwitch.vue';

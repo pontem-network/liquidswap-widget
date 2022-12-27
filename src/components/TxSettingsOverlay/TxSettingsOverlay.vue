@@ -66,9 +66,6 @@
 import { ref, watch } from 'vue';
 import { InputNumberInputEvent } from 'primevue/inputnumber';
 import { createSyncRef } from '@/utils/vue';
-import { useClipboard } from '@vueuse/core';
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
 import { CopyNotification } from '@/components/CopyNotification';
 import PButton from 'primevue/button';
 import OverlayPanel from 'primevue/overlaypanel';
@@ -88,16 +85,6 @@ defineEmits(['update:isDefault', 'update:modelValue']);
 const op = ref();
 const dialog = ref();
 
-const route = useRoute();
-const { copy: onCopyUrl } = useClipboard();
-
-const urlToCopy = computed(() => {
-  const url = [window.location.origin, '/#', route.fullPath, '?'];
-  props.fromToken && url.push('from=' + props.fromToken);
-  props.toToken && props.fromToken && url.push('&');
-  props.toToken && url.push('to=' + props.toToken);
-  return url.join('');
-});
 const error = ref<{ message?: string; type?: string }>({
   message: undefined,
   type: undefined,
