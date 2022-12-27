@@ -86,6 +86,8 @@ import { IPersistedTokenExtended } from '@/store/useTokenStore';
 import ImportTokenDialog from '@/components/ImportTokenDialog/ImportTokenDialog.vue';
 import { TokenAlert } from '@/components/TokenAlert';
 import { TokenIcon } from '@/components/TokenIcon';
+import PButton from 'primevue/button';
+
 
 const tokensStore = useTokensStore();
 

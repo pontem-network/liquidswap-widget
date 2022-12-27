@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import PButton from 'primevue/button';
+
 interface IProps {
   title: string;
   hasBack?: boolean;

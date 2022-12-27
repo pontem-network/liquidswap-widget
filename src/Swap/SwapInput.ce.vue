@@ -103,6 +103,10 @@ import { splitValue } from '@/utils/utils';
 import { TokenAlert } from '@/components/TokenAlert';
 import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 import { TokenIcon } from '@/components//TokenIcon';
+import InputNumber from 'primevue/inputnumber';
+import PButton from 'primevue/button';
+
+
 
 interface IProps {
   mode: 'to' | 'from';

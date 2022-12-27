@@ -30,6 +30,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import PDialog from 'primevue/dialog';
+import PButton from 'primevue/button';
+
 import { useUnverifiedCoins } from '@/composables/useUnverifiedCoins';
 
 const uc = useUnverifiedCoins();

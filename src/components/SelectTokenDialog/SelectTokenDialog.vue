@@ -23,7 +23,9 @@
 
 <script setup lang="ts">
 import TokenList from './TokenList.vue';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
+import PDialog from 'primevue/dialog';
+
 
 interface IProps {
   actionToken?: string;

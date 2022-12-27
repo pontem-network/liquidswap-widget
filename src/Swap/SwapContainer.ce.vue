@@ -121,6 +121,8 @@ import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 import { watchDebounced } from '@vueuse/shared';
 import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
+import PInlineMessage from 'primevue/inlinemessage';
+import PButton from 'primevue/button';
 
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';

@@ -24,6 +24,9 @@
 
 <script lang="ts" setup>
 import { computed, ref, toRefs } from 'vue';
+import PMenu from 'primevue/menu';
+import PInputSwitch from 'primevue/inputswitch';
+
 
 interface IProps {
   preset: {

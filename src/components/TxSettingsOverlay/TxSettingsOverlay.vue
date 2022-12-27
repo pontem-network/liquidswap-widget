@@ -70,6 +70,10 @@ import { useClipboard } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { CopyNotification } from '@/components/CopyNotification';
+import PButton from 'primevue/button';
+import OverlayPanel from 'primevue/overlaypanel';
+import InputNumber from 'primevue/inputnumber';
+
 
 interface IProps {
   isDefault?: boolean;

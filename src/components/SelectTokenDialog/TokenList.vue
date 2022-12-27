@@ -71,6 +71,9 @@ import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
 import { useTokensStore } from '@/store';
 import { IPersistedTokenExtended } from '@/store/useTokenStore';
+import PButton from 'primevue/button';
+import ProgressSpinner from 'primevue/progressspinner';
+import InputText from 'primevue/inputtext';
 
 import { checkAptosType } from '@/utils/utils';
 import { TextHighlight } from '@/components/TextHighlight';

@@ -22,14 +22,13 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { SendTransaction } from '@/components/Dialogs/Steps';
+import { SendTransaction } from '@/components/Steps';
 import CreatePoolPreview from './CreatePoolPreview.vue';
 import CreatePoolInfo from './CreatePoolInfo.vue';
 import { TxPayloadCallFunction } from '@/types/aptosResources';
 import { composeType, withSlippage } from '@/utils/contracts';
-import { useCreatePoolStore } from '@/store';
-import { moduleAddress } from '@/utils/networkData';
-import { CURVE_STABLE } from '@/constants/networks';
+import { useCreatePoolStore, useStore } from '@/store';
+import { CURVE_STABLE } from '@/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
@@ -37,9 +36,11 @@ const createPoolStore = useCreatePoolStore();
 
 const view = ref<'root' | 'tx'>('root');
 
+const { modules } = useStore();
+
 const payload = computed<TxPayloadCallFunction>((): TxPayloadCallFunction => {
   const functionName = composeType(
-    moduleAddress('Scripts'),
+      modules.Scripts,
     'register_pool_and_add_liquidity',
   );
 

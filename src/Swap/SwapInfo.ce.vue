@@ -73,6 +73,9 @@ import { useSwapStore } from '@/store';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 
+import PAccordion from 'primevue/accordion';
+import PAccordionTab from 'primevue/accordiontab';
+
 const swap = useSwapStore();
 
 const slippageAmount = computed(() => swap.slippageAmount);

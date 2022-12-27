@@ -81,6 +81,9 @@ import {
   useTokensStore,
 } from '@/store';
 import { TokenIcon } from '@/components/TokenIcon';
+import PDialog from 'primevue/dialog';
+import PButton from 'primevue/button';
+
 
 interface IProps {
   token: string;
