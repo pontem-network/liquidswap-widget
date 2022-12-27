@@ -28,6 +28,8 @@
     "sass-loader": "13.0.0",
     "tslib": "^2.3.0",
     "vue": "^3.2.40",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "primeflex": "3.2.1",
+    "primeicons": "5.0.0"
   }
 }

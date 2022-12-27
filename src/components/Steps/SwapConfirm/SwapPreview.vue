@@ -52,8 +52,8 @@
 </template>
 
 <script lang="ts" setup>
-import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
-import { TokenIcon } from '@/components/UI/TokenIcon';
+import { DialogHeader } from '@/components/DialogHeader';
+import { TokenIcon } from '@/components/TokenIcon';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { ANIMATION_PAUSE_TIME, LOADING_ANIMATION_TIME } from '@/constants/constants';
 import { useSwapStore, useTokensStore } from '@/store';

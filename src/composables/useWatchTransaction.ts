@@ -1,7 +1,7 @@
 import { MaybeRef, useTimeoutPoll } from '@vueuse/core';
 import { computed, isRef, unref, watch, WatchStopHandle, ref } from 'vue';
-import { RECALCULATION_TX_TIME } from '@/constants';
-import {useStore} from "@/store";
+import { RECALCULATION_TX_TIME } from '@/constants/constants';
+import { useStore } from "@/store";
 
 export function useWatchTransaction(
   txHash: MaybeRef<string | undefined>,
@@ -9,7 +9,7 @@ export function useWatchTransaction(
 ) {
   const mainStore = useStore();
   const aptos = mainStore.client;
-  const state = ref(undefined);
+  const state = ref();
   const error = ref<unknown | undefined>(undefined);
   const isStopped = ref(false);
   const isLoading = computed(() => !isStopped.value && isActive);
@@ -40,7 +40,7 @@ export function useWatchTransaction(
     }
 
     try {
-      const data = await aptos.client.getTx(hash);
+      const data = await aptos.waitForTransactionWithResult(hash);
 
       state.value = data;
 

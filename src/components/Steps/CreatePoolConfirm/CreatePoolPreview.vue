@@ -43,8 +43,8 @@
 </template>
 
 <script lang="ts" setup>
-import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
-import { TokenIcon } from '@/components/UI/TokenIcon';
+import { DialogHeader } from '@/components/DialogHeader';
+import { TokenIcon } from '@/components/TokenIcon';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { useCreatePoolStore, useTokensStore } from '@/store';
 import { computed } from 'vue';

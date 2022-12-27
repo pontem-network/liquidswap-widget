@@ -5,7 +5,10 @@ export const STATS_URL =
 
 export const DENOMINATOR = 10000;
 
+export const RECALCULATION_TX_TIME = 1000;
 export const RECALCULATION_TIME = 2000; // 2sec
+export const LOADING_ANIMATION_TIME = 3000;
+export const ANIMATION_PAUSE_TIME = 3000;
 
 export const MODULES_ACCOUNT =
   import.meta.env.VITE_APP_MODULES_ACCOUNT ||

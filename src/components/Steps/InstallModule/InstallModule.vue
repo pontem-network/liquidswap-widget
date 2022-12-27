@@ -27,10 +27,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { SendTransaction } from '@/components/Dialogs/Steps';
+import { SendTransaction } from '@/components/Steps';
 import { AptosTxPayload } from '@/types/aptosResources';
-import { addHexPrefix } from '@/utils';
-import DialogHeader from '@/components/UI/DialogHeader/DialogHeader.vue';
+import { addHexPrefix } from '@/utils/hex';
+import { DialogHeader } from '@/components/DialogHeader/';
+import PButton from "primevue/button";
 
 interface IProps {
   modules: string[];
