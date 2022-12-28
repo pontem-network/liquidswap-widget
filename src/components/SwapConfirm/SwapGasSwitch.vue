@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts" setup>
-import { CURVE_STABLE } from '@/constants/networks';
-import { useSwapStore } from '@/store/useStore';
+import { CURVE_STABLE } from '@/constants/constants';
+import { useSwapStore } from '@/store';
 import { TStableSwapType } from '@/types';
 import { computed, ref } from 'vue-demi';
 

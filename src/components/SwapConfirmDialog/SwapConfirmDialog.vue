@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { RegisterToken, SwapConfirm } from '@/components/Steps';
+import { RegisterToken } from '@/components/Steps';
+import { SwapConfirm } from '@/components/SwapConfirm';
 import { useSwapStore } from '@/store';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
-
 import PDialog from 'primevue/dialog';
 
 

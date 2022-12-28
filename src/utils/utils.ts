@@ -184,3 +184,41 @@ export const splitValue = (value: string) => {
     lastIndex: Number(decimalLength) - 1,
   };
 };
+
+export function camelCaseKeysToUnderscore(obj: any) {
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+
+  for (const oldName in obj) {
+    // Camel to underscore
+    const newName = oldName.replace(/([A-Z])/g, function ($1) {
+      return '_' + $1.toLowerCase();
+    });
+
+    // Only process if names are different
+    if (newName != oldName) {
+      // Check for the old property name to avoid a ReferenceError in strict mode.
+      // eslint-disable-next-line
+      if (obj.hasOwnProperty(oldName)) {
+        obj[newName] = obj[oldName];
+        delete obj[oldName];
+      }
+    }
+
+    // Recursion
+    if (typeof obj[newName] == 'object') {
+      obj[newName] = camelCaseKeysToUnderscore(obj[newName]);
+    }
+  }
+  return obj;
+}
+
+export function getFormattedValidationCode(error: Error) {
+  return JSON.parse(error.message)
+    .message.split('Validation Code:')
+    .pop()
+    .split('_')
+    .join(' ')
+    .toLowerCase();
+}
