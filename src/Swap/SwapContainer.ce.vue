@@ -114,8 +114,6 @@
       @close="routeToToken = false"
     />
   </div>
-  <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />
-  <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />
 </template>
 
 <script setup lang="ts">
@@ -138,17 +136,6 @@ import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.ce.vue';
 import SwapInput from './SwapInput.ce.vue';
 import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants/constants';
-import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
-import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
-
-// initialize stores
-(async () => {
-  const tokensStore = useTokensStore();
-  await tokensStore.fetchCoinsList();
-  const poolsStore = usePoolsStore();
-  poolsStore.fetchPoolsList();
-  useStore();
-})();
 
 
 const adapter = useWalletProviderStore();
@@ -329,7 +316,7 @@ swapStore.check();
 </script>
 
 <style scoped lang="scss">
-::v-deep(.curve-warning) {
+::v-deep(.curve-warning) {yar
   .p-inline-message-icon {
     display: none;
   }

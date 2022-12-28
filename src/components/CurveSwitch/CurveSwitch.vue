@@ -51,6 +51,8 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
+const toast = useToast();
+
 const store = useSwapStore();
 const tokenStore = useTokensStore();
 
@@ -71,8 +73,6 @@ watch(
     () => store.curve,
   ],
   () => {
-    const toast = useToast();
-
     if (
       store.curve === CURVE_STABLE &&
       (tokenStore.tokens[store.fromCurrency.token as string]?.decimals > 8 ||

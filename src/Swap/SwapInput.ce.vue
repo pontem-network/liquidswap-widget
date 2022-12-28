@@ -105,7 +105,6 @@ import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 import { TokenIcon } from '@/components//TokenIcon';
 import InputNumber from 'primevue/inputnumber';
 import PButton from 'primevue/button';
-import Tooltip from 'primevue/tooltip';
 
 
 interface IProps {

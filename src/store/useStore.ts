@@ -32,6 +32,8 @@ const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
 
 export const useStore = createGlobalState(() => {
 
+  console.log('1');
+
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
     networkOptions: {

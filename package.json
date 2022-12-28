@@ -4,14 +4,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "build:serve": "yarn build; yarn serve"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@originjs/vite-plugin-require-context": "^1.0.9",
     "@vue/compiler-sfc": "3.2.45",
     "vite": "^2.4.4"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@metamask/jazzicon": "2.0.0",
     "@pontem/aptos-wallet-adapter": "^0.6.8",
     "@pontem/coins-registry": "^1.0.4",
@@ -23,13 +27,14 @@
     "decimal.js": "^10.4.1",
     "lodash": "^4.17.21",
     "pinia": "2.0.22",
+    "primeflex": "3.2.1",
+    "primeicons": "5.0.0",
     "primevue": "3.17.0",
-    "sass": "1.52.0",
+    "sass": "^1.57.1",
     "sass-loader": "13.0.0",
     "tslib": "^2.3.0",
-    "vue": "^3.2.40",
-    "vue-router": "^4.1.6",
-    "primeflex": "3.2.1",
-    "primeicons": "5.0.0"
+    "vite-plugin-package-version": "^1.0.2",
+    "vite-plugin-require-transform": "^1.0.4",
+    "vue": "^3.2.40"
   }
 }

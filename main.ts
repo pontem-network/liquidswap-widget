@@ -1,17 +1,27 @@
-import { defineCustomElement } from 'vue';
+import { defineCustomElement, createApp } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { SwapContainer } from './src/Swap';
+import App from './src/App.vue';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
 import { walletsList } from "./src/constants/wallets";
+import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
+import Tooltip from 'primevue/tooltip';
 
 const pinia = createPinia();
 
-import '@/styles/index.scss';
+const app = createApp(App);
+
+app.use(PrimeVue);
+app.use(ToastService);
+app.use(pinia);
+app.directive('tooltip', Tooltip);
+
 
 const adapter = useWalletProviderStore(pinia);
 
-setActivePinia(pinia);
+import '@/styles/index.scss';
 
 setTimeout(() => {
   adapter.init({
@@ -21,6 +31,8 @@ setTimeout(() => {
   });
 }, 300);
 
-const SwapComponent = defineCustomElement(SwapContainer);
+// const SwapComponent = defineCustomElement(SwapContainer);
+//
+// customElements.define('swap-component', SwapComponent);
 
-customElements.define('swap-component', SwapComponent);
+app.mount('#app');

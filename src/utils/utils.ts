@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import {Buffer} from "buffer";
+import { Buffer } from "buffer";
 
 export function d(value?: Decimal.Value): Decimal.Instance {
   if (Decimal.isDecimal(value)) {
