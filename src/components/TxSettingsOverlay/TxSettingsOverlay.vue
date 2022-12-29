@@ -50,12 +50,6 @@
             class="settings-overlay__divider my-2"
           />
         </div>
-        <p-button
-          v-show="props.fromToken || props.toToken"
-          label="Copy Pool URL"
-          class="slippage-options__button w-full mt-1"
-          @click="copyUrl"
-        />
       </div>
     </div>
   </overlay-panel>
@@ -95,12 +89,6 @@ const size = ref<number | undefined>(
 
 const slippageIsDefault = createSyncRef('isDefault');
 const slippage = createSyncRef('modelValue');
-
-function copyUrl() {
-  onCopyUrl(urlToCopy.value);
-  hide();
-  dialog.value.show();
-}
 
 watch(
   () => slippageIsDefault.value,

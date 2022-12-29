@@ -23,8 +23,6 @@ const adapter = useWalletProviderStore(pinia);
 
 import '@/styles/index.scss';
 
-console.log('main 1');
-
 setTimeout(() => {
   adapter.init({
     wallets: walletsList.map((one) => new one.adapter(one.options)),
@@ -36,7 +34,5 @@ setTimeout(() => {
 // const SwapComponent = defineCustomElement(SwapContainer);
 //
 // customElements.define('swap-component', SwapComponent);
-
-console.log('main 2');
 
 app.mount('#app');
