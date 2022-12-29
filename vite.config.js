@@ -19,6 +19,19 @@ export default defineConfig({
     include: ['vue', '@vueuse/core'],
   },
 
+  css: {
+    devSourcemap: true // this one
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.sass$/,
+        loaders: ['style', 'css', 'sass']
+      }
+    ]
+  },
+
   build: {
     rollupOptions: {
       plugins: [

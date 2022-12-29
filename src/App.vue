@@ -1,7 +1,7 @@
 <template>
   <swap-container class="swap"></swap-container>
-  <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />
-  <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />
+<!--  <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />-->
+<!--  <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />-->
 </template>
 
 <script setup lang="ts">
@@ -12,14 +12,13 @@ import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 
 // initialize stores
 (async () => {
+  console.log('a');
   const tokensStore = useTokensStore();
   await tokensStore.fetchCoinsList();
   const poolsStore = usePoolsStore();
   await poolsStore.fetchPoolsList();
   useStore();
 })();
-
-const mainStore = useStore();
 
 </script>
 

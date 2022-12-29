@@ -177,10 +177,9 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
     return (symbol: string) => {
       try {
-        return images(`./${symbol.toLowerCase()}.svg`);
+        return images(`./${symbol.toLowerCase()}.svg`).default;
       } catch (_e) {
         return undefined;
-        // return require('@/assets/tokens/unknown.svg');
       }
     };
   });
