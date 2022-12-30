@@ -225,7 +225,7 @@ function showSelectCurrencyModal() {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .swap-input {
   border: 1px solid transparent;
   background-color: #31314e;

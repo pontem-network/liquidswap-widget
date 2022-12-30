@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { useTokensStore } from '@/store';
 import { toRefs } from '@vueuse/shared';
-import { computed } from 'vue-demi';
+import { computed } from 'vue';
 
 const tokensStore = useTokensStore();
 

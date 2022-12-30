@@ -1,4 +1,4 @@
-import { SDK, SdkOptions } from '@pontem/liquidswap-sdk';
+import SDK, { SdkOptions } from '@pontem/liquidswap-sdk';
 import { createGlobalState, useStorage, StorageSerializers } from '@vueuse/core';
 import { useWalletProviderStore, WalletAdapterNetwork } from "@pontem/aptos-wallet-adapter";
 import { computed, reactive, ref, watch, readonly } from 'vue';

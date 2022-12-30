@@ -33,7 +33,7 @@
 import { CURVE_STABLE } from '@/constants/constants';
 import { useSwapStore } from '@/store';
 import { TStableSwapType } from '@/types';
-import { computed, ref } from 'vue-demi';
+import { computed, ref } from 'vue';
 
 const swapStore = useSwapStore();
 const isAvailable = computed(() => swapStore.curve === CURVE_STABLE);
