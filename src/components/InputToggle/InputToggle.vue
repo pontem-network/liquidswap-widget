@@ -15,7 +15,7 @@ import PButton from 'primevue/button';
 
 <style scoped lang="scss">
 .swap-toggle {
-  position: absolute;
+  position: relative;
   padding: 4px;
   border-radius: 12px;
   height: 32px;

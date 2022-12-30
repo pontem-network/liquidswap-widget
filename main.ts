@@ -21,7 +21,7 @@ app.directive('tooltip', Tooltip);
 
 const adapter = useWalletProviderStore(pinia);
 
-import '@/styles/index.scss';
+import './src/styles/index.scss';
 
 setTimeout(() => {
   adapter.init({

@@ -9,7 +9,7 @@ import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 import requireTransform from 'vite-plugin-require-transform';
 
 export default defineConfig({
-  plugins: [vue({ customElement: true }), ViteRequireContext(), requireTransform()],
+  plugins: [vue(), ViteRequireContext(), requireTransform()],
   resolve:{
     alias:{
       '@' : path.resolve(__dirname, './src')

@@ -133,8 +133,8 @@ import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
 import { ImportTokenDialog } from '@/components/ImportTokenDialog';
-import SwapInfo from './SwapInfo.ce.vue';
-import SwapInput from './SwapInput.ce.vue';
+import SwapInfo from './SwapInfo.vue';
+import SwapInput from './SwapInput.vue';
 import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants/constants';
 
 
@@ -316,7 +316,7 @@ swapStore.check();
 </script>
 
 <style scoped lang="scss">
-::v-deep(.curve-warning) {yar
+::v-deep(.curve-warning) {
   .p-inline-message-icon {
     display: none;
   }

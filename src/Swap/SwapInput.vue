@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useStore, useSwapStore, useTokensStore } from '@/store';
-  import { SelectTokenDialog } from '@/components/SelectTokenDialog';
+import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { d, decimalsMultiplier } from '@/utils/utils';
 import { InputNumberBlurEvent } from 'primevue/inputnumber';
@@ -225,7 +225,7 @@ function showSelectCurrencyModal() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .swap-input {
   border: 1px solid transparent;
   background-color: #31314e;
