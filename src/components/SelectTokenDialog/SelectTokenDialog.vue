@@ -10,8 +10,8 @@
   >
     <TokenList
       v-if="view === 'root'"
-      modelValue:actionToken="actionToken"
-      modelValue:secondaryToken="secondaryToken"
+      v-model:actionToken="localActionToken"
+      v-model:secondaryToken="localSecondaryToken"
       :field="props.field"
       class="stepped-dialog__item"
       @back="onBack"
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import TokenList from './TokenList.vue';
-import { ref } from 'vue';
+import { ref, watch, computed } from 'vue';
 import PDialog from 'primevue/dialog';
 
 
@@ -33,12 +33,22 @@ interface IProps {
   field?: 'to' | 'from' | 'none';
 }
 
-defineEmits(['update:actionToken', 'update:secondaryToken']);
+const emits = defineEmits(['update:actionToken', 'update:secondaryToken']);
 const props = defineProps<IProps>();
 
 const display = ref(false);
 const view = ref<'root' | 'mange-presets'>('root');
 const history = ref<string[]>([]);
+
+const localActionToken = computed({
+  get: () => props.actionToken,
+  set: (value) => emits('update:actionToken', value),
+});
+
+const localSecondaryToken = computed({
+  get: () => props.secondaryToken,
+  set: (value) => emits('update:secondaryToken', value),
+});
 
 function onNavigate(next: string | undefined) {
   history.value.push(view.value);
@@ -63,6 +73,10 @@ function show() {
 function hide() {
   display.value = false;
 }
+
+watch([props], () => {
+  console.log('selectTokenDialogs props', props.actionToken, props.secondaryToken);
+})
 
 defineExpose({
   show,

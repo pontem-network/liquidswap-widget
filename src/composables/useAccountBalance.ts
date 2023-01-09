@@ -58,26 +58,28 @@ export function useAccountBalance(
     firstFetchFlag = true;
     const cacheKey = `${fnAddress}-${fnToken}`;
 
-    const resource = await getFromCache(
-      cacheKey,
-      () => {
-        return client.getAccountResource(
-          fnAddress,
-          composeType(NETWORKS_MODULES['CoinStore'], [fnToken]),
-        ) as unknown as Promise<AptosCoinInfoResource>;
-      },
-      { time: 5000 },
-    );
+    try {
+      const resource = await getFromCache(
+        cacheKey,
+        () => {
+          return client.getAccountResource(
+            fnAddress,
+            composeType(NETWORKS_MODULES.CoinStore, [fnToken]),
+          ) as unknown as Promise<AptosCoinInfoResource>;
+        },
+        { time: 5000 },
+      );
 
-    if (cacheKey === `${unref(address)}-${unref(token)}`) {
-      if (resource) {
-        isExists.value = true;
-        balance.value = +resource.data.coin.value;
-      } else {
-        isExists.value = false;
-        balance.value = 0;
+      if (cacheKey === `${unref(address)}-${unref(token)}`) {
+        if (resource) {
+          isExists.value = true;
+          balance.value = +resource.data.coin.value;
+        } else {
+          isExists.value = false;
+          balance.value = 0;
+        }
       }
-    }
+    } catch (_e) {}
 
     return {
       balance: balance.value,

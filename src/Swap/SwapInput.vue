@@ -122,9 +122,8 @@ const state = swapStore[props.mode === 'to' ? 'toCurrency' : 'fromCurrency'];
 const dialog = ref();
 const cautionAlert = ref();
 const token = computed(() => state.token);
-const secondaryToken = computed(
-  () => swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurrency'],
-);
+const secondaryToken = swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurrency'];
+
 const tokenBalance = useCurrentAccountBalance(token, { useSuffix: false });
 
 const isUpdating = computed(() => {

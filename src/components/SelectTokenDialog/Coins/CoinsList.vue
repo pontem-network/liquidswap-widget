@@ -88,7 +88,6 @@ import { TokenAlert } from '@/components/TokenAlert';
 import { TokenIcon } from '@/components/TokenIcon';
 import PButton from 'primevue/button';
 
-
 const tokensStore = useTokensStore();
 
 const addressImportStr = ref<string>('');
@@ -253,9 +252,5 @@ function removeToken(toRemove: IPersistedTokenExtended) {
   max-height: calc(100% - 75px);
   overflow-x: hidden;
   overflow-y: auto;
-
-  .list-wrap {
-    //
-  }
 }
 </style>

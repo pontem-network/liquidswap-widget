@@ -133,8 +133,8 @@ const rawTokenList = async () => {
         selected,
         command: () => {
           if (!selected) {
-            onClose();
             selectToken(token.type);
+            onClose();
           }
         },
       };
