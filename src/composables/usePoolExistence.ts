@@ -15,7 +15,7 @@ export function usePoolExistence() {
   async function checkExistence(params: IPoolExist): Promise<boolean> {
     isFetching.value = true;
     try {
-      const {liquidityPoolResource} = await sdk.Swap.getLiquidityPoolResource({
+      const { liquidityPoolResource } = await sdk.Swap.getLiquidityPoolResource({
         fromToken: params.fromCoin,
         toToken: params.toCoin,
         curveType: params.curve as CurveType,
@@ -27,6 +27,8 @@ export function usePoolExistence() {
       return !!liquidityPoolResource;
     } catch (error) {
       return false;
+    } finally {
+      isFetching.value = false;
     }
   }
 

@@ -24,11 +24,7 @@ const mainStore = useStore();
 </script>
 
 <style scoped lang="scss">
-.page {
-  width: 100%;
-
-  .swap {
-    margin: 3rem auto 1rem;
-  }
+.swap {
+  margin: 0 auto;
 }
 </style>

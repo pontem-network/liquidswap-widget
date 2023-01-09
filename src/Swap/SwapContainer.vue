@@ -294,7 +294,6 @@ function submitForm(e: Event) {
 }
 
 function onConnectWallet() {
-  console.log('connect wallet dialog');
   mainStore.showDialog('connectWallet');
 }
 
@@ -303,7 +302,6 @@ function toggleSwap() {
 }
 
 function showSwapDialog() {
-  console.log('swap sconfirm dialog');
   mainStore.showDialog('swapConfirm');
 }
 

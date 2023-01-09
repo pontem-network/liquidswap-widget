@@ -111,8 +111,6 @@ onBeforeMount(() => {
 });
 
 async function getToken() {
-  console.log(props.token);
-
   let firstPart = props.token;
   if (props.token.indexOf('<') !== -1) {
     firstPart = props.token.substring(0, props.token.indexOf('<'));

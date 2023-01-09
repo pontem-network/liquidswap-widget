@@ -156,8 +156,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
       return undefined;
     }
 
-    console.log('useTokenStore', resource.data);
-
     tokens[token.type].name = resource.data.name;
     tokens[token.type].symbol = resource.data.symbol;
     tokens[token.type].decimals = +resource.data.decimals;

@@ -74,10 +74,6 @@ function hide() {
   display.value = false;
 }
 
-watch([props], () => {
-  console.log('selectTokenDialogs props', props.actionToken, props.secondaryToken);
-})
-
 defineExpose({
   show,
   hide,
