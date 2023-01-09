@@ -52,16 +52,6 @@
         </template>
       </div>
     </div>
-
-    <div class="dialog-step__footer">
-      <div class="dialog-step__divider mb-3" />
-      <p-button
-        class="p-button-outlined justify-content-center w-full"
-        @click="onManageCoinLists"
-      >
-        Manage Coin Lists
-      </p-button>
-    </div>
   </div>
 </template>
 
@@ -71,7 +61,6 @@ import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
 import { useTokensStore } from '@/store';
 import { IPersistedTokenExtended } from '@/store/useTokenStore';
-import PButton from 'primevue/button';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext';
 
@@ -109,10 +98,6 @@ const isLoadingTokensList = ref<boolean>(false);
 
 function onClose() {
   emits('close');
-}
-
-function onManageCoinLists() {
-  emits('navigate', 'manage-presets');
 }
 
 const tokensStore = useTokensStore();
