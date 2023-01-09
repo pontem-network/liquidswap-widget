@@ -8,7 +8,7 @@ import { useStore } from '@/store/useStore';
 import { is_sorted, d, decimalsMultiplier  } from '@/utils/utils';
 import { useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
-import { CURVE_STABLE, CURVE_UNCORRELATED, RESOURCES_ACCOUNT, DENOMINATOR } from '@/constants/constants';
+import { DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { IStoredToken } from '@/types';
 import {
@@ -33,10 +33,12 @@ export const useSwapStore = defineStore('swapStore', () => {
     reserve: 0,
   });
 
-  const curve = ref<string>(CURVE_UNCORRELATED);
+  const mainStore = useStore();
+  const { curves, networkOptions, sdk } = mainStore;
+
+  const curve = ref<string>(curves.uncorrelated);
   const stableSwapType = ref<'high' | 'normal'>('normal');
   const poolExistence = usePoolExistence();
-  // poolExistence.watch(from, to, curve);
 
   const slippageIsDefault = ref(true);
   const slippage = ref(DEFAULT_SLIPPAGE);
@@ -49,7 +51,6 @@ export const useSwapStore = defineStore('swapStore', () => {
   const convertError = ref<string>();
   const isUpdatingRate = ref(false);
 
-  const mainStore = useStore();
   const tokensStore = useTokensStore();
   const aptos = mainStore.client;
 
@@ -131,8 +132,8 @@ export const useSwapStore = defineStore('swapStore', () => {
       const resourceType = getPoolStr(fromToken, toToken, curve.value);
 
       const response = await getFromCache(
-        ['calc', RESOURCES_ACCOUNT, resourceType].join('-'),
-        () => aptos.getAccountResource(RESOURCES_ACCOUNT, resourceType),
+        ['calc', networkOptions.resourceAccount, resourceType].join('-'),
+        () => aptos.getAccountResource(networkOptions.resourceAccount, resourceType),
         { time: 2000 },
       );
 
@@ -158,7 +159,24 @@ export const useSwapStore = defineStore('swapStore', () => {
         }
         return;
       }
-      if (curve.value === CURVE_STABLE) {
+
+      try {
+        const sdkRate = await sdk.value.Swap.calculateRates({
+          fromToken: from.token,
+          toToken: to.token,
+          interactiveToken: mode,
+          curveType: curve.value === curves.stable ? 'stable' : 'uncorrelated',
+          amount: mode === 'from' ? from.amount! : to.amount!
+        });
+        console.log('sdkRate', sdkRate);
+
+      } catch(_e) {
+
+      }
+
+
+
+      if (curve.value === curves.stable) {
         if (mode === 'from') {
           rate = getCoinsOutWithFeesStable(
             d(from.amount as number),
@@ -245,7 +263,7 @@ export const useSwapStore = defineStore('swapStore', () => {
     await poolExistence.check({
       fromCoin: from.token,
       toCoin: to.token,
-      curve: curve.value,
+      curve: curve.value === curves.stable ? 'stable' : 'uncorrelated'
     });
   }
 

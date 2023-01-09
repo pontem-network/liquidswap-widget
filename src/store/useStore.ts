@@ -42,7 +42,8 @@ export const useStore = createGlobalState(() => {
 
   const client = sdk.value.client;
   const curves = sdk.value.curves;
-  const modules = sdk.value.networkOptions.modules;
+  const networkOptions = sdk.value.networkOptions;
+  const modules = networkOptions.modules;
 
   const storage = useStorage<GlobalCachebleState>(
     'pontem',
@@ -206,5 +207,6 @@ export const useStore = createGlobalState(() => {
     showDialog,
     showTermsAndConditions,
     modules,
+    networkOptions,
   }
 });
