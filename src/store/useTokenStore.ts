@@ -285,7 +285,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       return tokens[token];
     }
 
-    const coinInfo = composeType(COIN_INFO, [token]);
+    const coinInfo = composeType(modules.CoinInfo, [token]);
     const resource =
       await client.getAccountResource(
         extractAddressFromType(token),

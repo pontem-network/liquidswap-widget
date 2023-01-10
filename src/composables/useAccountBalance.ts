@@ -13,7 +13,7 @@ import { composeType } from '@/utils/contracts';
 import isEqual from 'lodash/isEqual';
 import { storeToRefs } from 'pinia';
 import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
-import { RECALCULATION_BALANCE_TIME, NETWORKS_MODULES } from '@/constants/constants';
+import { RECALCULATION_BALANCE_TIME } from '@/constants/constants';
 
 export function useAccountBalance(
   address: MaybeRef<string | undefined>,
@@ -32,7 +32,7 @@ export function useAccountBalance(
     },
   );
 
-  const { client } = useStore();
+  const { client, modules } = useStore();
 
   tryOnUnmounted(() => pause());
   tryOnScopeDispose(() => pause());
@@ -64,7 +64,7 @@ export function useAccountBalance(
         () => {
           return client.getAccountResource(
             fnAddress,
-            composeType(NETWORKS_MODULES.CoinStore, [fnToken]),
+            composeType(modules.CoinStore, [fnToken]),
           ) as unknown as Promise<AptosCoinInfoResource>;
         },
         { time: 5000 },

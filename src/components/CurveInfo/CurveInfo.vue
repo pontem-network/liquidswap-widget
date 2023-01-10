@@ -4,7 +4,7 @@
 
     <div class="curve-container__curve">
       <img
-        v-if="props.type == CURVE_STABLE"
+        v-if="props.type == curves.stable"
         :style="{ marginTop: '-2px', marginBottom: '2px' }"
         src="@/assets/curves/stable.svg"
         alt="stable curve"
@@ -14,7 +14,7 @@
         src="@/assets/curves/uncorrelated.svg"
         alt="uncorrelated curve"
       />
-      <p>{{ props.type == CURVE_STABLE ? 'Stable' : 'Uncorrelated' }}</p>
+      <p>{{ props.type == curves.stable ? 'Stable' : 'Uncorrelated' }}</p>
       <i
         v-tooltip="`Using formula optimized for ${curve} coins swaps`"
         class="pi pi-info-circle"
@@ -24,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { CURVE_STABLE } from '@/constants/constants';
 import { computed } from 'vue';
+import { useStore } from "@/store";
+
+const { curves } = useStore();
 
 interface IProps {
   type: string;
@@ -34,7 +36,7 @@ interface IProps {
 const props = defineProps<IProps>();
 
 const curve = computed(() =>
-  props.type === CURVE_STABLE ? 'stable' : 'uncorrelated',
+  props.type === curves.stable ? 'stable' : 'uncorrelated',
 );
 </script>
 <style scoped lang="scss">

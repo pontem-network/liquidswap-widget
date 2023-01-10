@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ComputedRef, onMounted, ref, watch, watchEffect} from 'vue';
+import {computed, ComputedRef, ref, watch, watchEffect} from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
 import { useTokensStore } from '@/store';

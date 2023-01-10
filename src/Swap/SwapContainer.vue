@@ -135,8 +135,6 @@ import { d } from '@/utils/utils';
 import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
-import { CURVE_STABLE, CURVE_UNCORRELATED } from '@/constants/constants';
-
 
 const adapter = useWalletProviderStore();
 const { account } = storeToRefs(adapter);
@@ -144,6 +142,8 @@ const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
+
+const { curves } = mainStore;
 
 const curveType = computed(() =>
   poolsStore.getCurveType(
@@ -157,9 +157,9 @@ watch(
   (curve) => {
     if (curve) {
       swapStore.curve =
-        curve === CURVE_STABLE || curve === 'stable'
-          ? CURVE_STABLE
-          : CURVE_UNCORRELATED;
+        curve === curves.stable || curve === 'stable'
+          ? curves.stable
+          : curves.uncorrelated;
     }
   },
   {

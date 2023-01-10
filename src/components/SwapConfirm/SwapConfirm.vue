@@ -33,25 +33,26 @@ import SwapPreview from './SwapPreview.vue';
 import SwapInfo from './SwapInfo.vue';
 import { AptosTxPayload } from '@/types/aptosResources';
 import { composeType } from '@/utils/contracts';
-import { useSwapStore } from '@/store';
+import { useSwapStore, useStore } from '@/store';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
-import { CURVE_STABLE, NETWORKS_MODULES, RECALCULATION_TIME } from '@/constants/constants';
+import { CURVE_STABLE, RECALCULATION_TIME } from '@/constants/constants';
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
 const swapStore = useSwapStore();
+const { modules, curves } = useStore();
 
 const view = ref<'root' | 'tx'>('root');
 const ratesHasChanged = ref(false);
 const cachedPayload = ref<AptosTxPayload>();
 const payload = computed<AptosTxPayload>(() => {
   const isUnchecked =
-    swapStore.curve === CURVE_STABLE && swapStore.stableSwapType === 'normal';
+    swapStore.curve === curves.stable && swapStore.stableSwapType === 'normal';
 
   const functionName = composeType(
-    NETWORKS_MODULES.Scripts,
+      modules.Scripts,
     isUnchecked
       ? 'swap_unchecked'
       : swapStore.lastInteractiveField === 'from'
@@ -105,7 +106,7 @@ useTimeoutPoll(() => swapStore.refetchRates(true), RECALCULATION_TIME, {
   immediate: true,
 });
 
-const isCurveStabe = computed(() => swapStore.curve === CURVE_STABLE);
+const isCurveStabe = computed(() => swapStore.curve === curves.stable);
 
 function onSwapConfirm() {
   cachedPayload.value = cloneDeep(unref(payload.value));

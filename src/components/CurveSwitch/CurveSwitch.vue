@@ -3,10 +3,10 @@
     <div
       class="stable-switch-container__switch"
       :class="{
-        isSelected: store.curve === CURVE_UNCORRELATED,
+        isSelected: store.curve === curves.uncorrelated,
         busy: isBusy,
       }"
-      @click="switchSelected(CURVE_UNCORRELATED)"
+      @click="switchSelected(curves.uncorrelated)"
     >
       <img src="@/assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
       <p>Uncorrelated</p>
@@ -15,11 +15,11 @@
 
     <div
       :class="{
-        isSelected: store.curve === CURVE_STABLE,
+        isSelected: store.curve === curves.stable,
         busy: isBusy,
       }"
       class="stable-switch-container__switch"
-      @click="switchSelected(CURVE_STABLE)"
+      @click="switchSelected(curves.stable)"
     >
       <img
         :style="{ marginTop: '-2px', marginBottom: '2px' }"
@@ -41,6 +41,7 @@ import { useToast } from 'primevue/usetoast';
 import PToast from 'primevue/toast';
 import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants/constants';
 import {
+  useStore,
   useSwapStore,
   useTokensStore,
 } from '@/store';
@@ -52,7 +53,7 @@ interface IProps {
 const props = defineProps<IProps>();
 
 const toast = useToast();
-
+const { curves } = useStore();
 const store = useSwapStore();
 const tokenStore = useTokensStore();
 
@@ -74,7 +75,7 @@ watch(
   ],
   () => {
     if (
-      store.curve === CURVE_STABLE &&
+      store.curve === curves.stable &&
       (tokenStore.tokens[store.fromCurrency.token as string]?.decimals > 8 ||
         tokenStore.tokens[store.toCurrency.token as string]?.decimals > 8)
     ) {

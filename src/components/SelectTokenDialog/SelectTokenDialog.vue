@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import TokenList from './TokenList.vue';
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import PDialog from 'primevue/dialog';
 
 
