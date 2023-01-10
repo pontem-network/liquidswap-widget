@@ -2,7 +2,7 @@ import { ref, reactive, onBeforeMount, watch, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { STATS_URL, CORRECT_CHAIN, RESOURCES_ACCOUNT } from '@/constants/constants';
+import { STATS_URL, CORRECT_CHAIN } from '@/constants/constants';
 import CoinsRegistry from '@pontem/coins-registry';
 import { is_sorted } from '@/utils/utils';
 import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
@@ -25,7 +25,7 @@ interface IStorage extends IStorageBasic {
 
 export const usePoolsStore = defineStore('poolsStore', () => {
   const mainStore = useStore();
-  const aptos = mainStore.client;
+  const { client: aptos, networkOptions, curves } = mainStore;
   const isLoading = ref(true);
   const poolsMap = reactive<Record<string, IPersistedPool>>({});
   const poolsTitleMap = reactive<Record<string, string>>({});
@@ -146,7 +146,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
   async function fetchReserves(liquidityPool: string, pool: IPersistedPool) {
     const response = await aptos.getAccountResource(
-      RESOURCES_ACCOUNT,
+      networkOptions.resourceAccount,
       liquidityPool,
     );
 
@@ -159,7 +159,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   async function fetchLp(lpCoin: string, pool: IPersistedPool) {
     try {
       const response = await aptos.getAccountResource(
-        RESOURCES_ACCOUNT,
+        networkOptions.resourceAccount,
         lpCoin,
       );
 
@@ -334,9 +334,9 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       : [coinY, coinX];
     const tokenPair = `${sortedX}-${sortedY}`;
     return predefinedCurves.stable.has(tokenPair)
-      ? CURVE_STABLE
+      ? curves.stable
       : predefinedCurves.uncorrelated.has(tokenPair)
-      ? CURVE_UNCORRELATED
+      ? curves.uncorrelated
       : false;
   }
 

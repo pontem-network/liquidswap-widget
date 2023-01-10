@@ -11,12 +11,6 @@ import { getFromCache } from '@/utils/cache';
 import { DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { IStoredToken } from '@/types';
-import {
-  getCoinOutWithFees,
-  getCoinInWithFees,
-  getCoinsInWithFeesStable,
-  getCoinsOutWithFeesStable,
-} from '@pontem/liquidswap-sdk';
 
 const DEFAULT_SLIPPAGE = 0.005;
 
@@ -161,63 +155,20 @@ export const useSwapStore = defineStore('swapStore', () => {
       }
 
       try {
-        const sdkRate = await sdk.value.Swap.calculateRates({
+        rate = await sdk.value.Swap.calculateRates({
           fromToken: from.token,
           toToken: to.token,
           interactiveToken: mode,
           curveType: curve.value === curves.stable ? 'stable' : 'uncorrelated',
           amount: mode === 'from' ? from.amount! : to.amount!
         });
-        console.log('sdkRate', sdkRate);
-
       } catch(_e) {
-
-      }
-
-
-
-      if (curve.value === curves.stable) {
-        if (mode === 'from') {
-          rate = getCoinsOutWithFeesStable(
-            d(from.amount as number),
-            d(from.reserve),
-            d(to.reserve),
-            d(Math.pow(10, tokensStore.tokens[fromToken].decimals)),
-            d(Math.pow(10, tokensStore.tokens[toToken].decimals)),
-            d(fee.value),
-          );
-        } else {
-          rate = getCoinsInWithFeesStable(
-            d(to.amount as number),
-            d(to.reserve),
-            d(from.reserve),
-            d(Math.pow(10, tokensStore.tokens[toToken].decimals)),
-            d(Math.pow(10, tokensStore.tokens[fromToken].decimals)),
-            d(fee.value),
-          );
-        }
-      } else {
-        if (mode === 'from') {
-          rate = getCoinOutWithFees(
-            d(from.amount as number),
-            d(from.reserve),
-            d(to.reserve),
-            d(fee.value),
-          );
-        } else {
-          rate = getCoinInWithFees(
-            d(to.amount as number),
-            d(to.reserve),
-            d(from.reserve),
-            d(fee.value),
-          );
-        }
       }
       convertError.value =
         to.amount && to.reserve < to.amount
           ? 'Insufficient funds in Liquidity Pool'
           : undefined;
-      if (rate.lessThanOrEqualTo(0) || !isFinite(Number(rate))) {
+      if (d(rate).lessThanOrEqualTo(0) || !isFinite(Number(rate))) {
         if (!silent) {
           isUpdatingRate.value = false;
         }

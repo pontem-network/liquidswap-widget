@@ -13,7 +13,7 @@ import CoinsRegistry from '@pontem/coins-registry';
 
 import { IStorageBasic, Resource, AptosCoinInfoResource } from '@/types';
 import { TCoinSource } from '@/types/coins';
-import { APTOS, COIN_INFO, CORRECT_CHAIN_ID } from '@/constants/constants';
+import { APTOS, CORRECT_CHAIN_ID } from '@/constants/constants';
 import { useStore } from '@/store/useStore';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';
@@ -47,7 +47,7 @@ const PERSISTING_SOURCES = ['import', 'pool'];
 
 export const useTokensStore = defineStore('tokensStore', () => {
   const mainStore = useStore();
-  const { client } =  useStore();
+  const { client, modules } =  useStore();
 
   const tokens = reactive<Record<string, IPersistedTokenExtended>>({});
   const isReady = ref(false);
@@ -144,7 +144,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
   const loadToken = async (token: IPersistedToken) => {
     // - - fetch coinInfo from URL
-    const coinInfo = composeType(COIN_INFO, [token.type]);
+    const coinInfo = composeType(modules.CoinInfo, [token.type]);
     const resource =
       await client.getAccountResource(
         extractAddressFromType(token.type),
@@ -237,7 +237,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
     const promise = client.getAccountResource(
       extractAddressFromType(type),
-      composeType(COIN_INFO, [type]),
+      composeType(modules.CoinInfo, [type]),
       {
         cancelToken: !!withCancel,
       },

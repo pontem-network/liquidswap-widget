@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef, ref, watch, watchEffect } from 'vue';
+import {computed, ComputedRef, onMounted, ref, watch, watchEffect} from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
 import { useTokensStore } from '@/store';
@@ -102,7 +102,6 @@ function onClose() {
 
 const tokensStore = useTokensStore();
 const search = ref<string>('');
-// TODO: Process search string with address
 const searchLoading = ref(false);
 const searchRegexp = computed(() => {
   return new RegExp(escapeRegExp(search.value), 'gi');
