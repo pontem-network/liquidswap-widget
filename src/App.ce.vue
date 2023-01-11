@@ -1,7 +1,7 @@
 <template>
   <swap-container class="swap"></swap-container>
-  <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />
-  <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />
+<!--  <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />-->
+<!--  <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />-->
 </template>
 
 <script setup lang="ts">

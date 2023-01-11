@@ -7,9 +7,19 @@ import path from 'path';
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 
 import requireTransform from 'vite-plugin-require-transform';
+import ToastService from 'primevue/toastservice';
+import PrimeVue from 'primevue/config';
+
 
 export default defineConfig({
-  plugins: [vue(), ViteRequireContext(), requireTransform()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('liquid-swap')
+        }
+      }
+  }), ViteRequireContext(), requireTransform(), ToastService.setup, PrimeVue.setup],
   resolve:{
     alias:{
       '@' : path.resolve(__dirname, './src')
@@ -35,5 +45,6 @@ export default defineConfig({
 
   define: {
     'process.env': {}
-  }
+  },
+
 });

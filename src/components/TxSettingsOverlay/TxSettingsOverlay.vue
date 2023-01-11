@@ -61,9 +61,6 @@ import { ref, watch } from 'vue';
 import { InputNumberInputEvent } from 'primevue/inputnumber';
 import { createSyncRef } from '@/utils/vue';
 import { CopyNotification } from '@/components/CopyNotification';
-import PButton from 'primevue/button';
-import OverlayPanel from 'primevue/overlaypanel';
-import InputNumber from 'primevue/inputnumber';
 
 
 interface IProps {
