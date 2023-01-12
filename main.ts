@@ -1,5 +1,5 @@
-import { defineCustomElement, createApp, h, getCurrentInstance } from 'vue';
-import { createPinia } from 'pinia';
+import { defineCustomElement, h, getCurrentInstance, createApp } from 'vue';
+import {createPinia, setActivePinia} from 'pinia';
 
 import App from './src/App.ce.vue';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
@@ -8,79 +8,41 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 
-import PButton from 'primevue/button';
-import Pconfirm from 'primevue/confirmpopup';
-import InputNumber from 'primevue/inputnumber';
-import InputText from 'primevue/inputtext';
-import OverlayPanel from 'primevue/overlaypanel';
-import PMenu from 'primevue/menu';
-import SelectButton from 'primevue/selectbutton';
-import PDialog from 'primevue/dialog';
-import BlockUI from 'primevue/blockui';
-import PToast from 'primevue/toast';
-import ProgressSpinner from 'primevue/progressspinner';
-import PAccordion from 'primevue/accordion';
-import PAccordionTab from 'primevue/accordiontab';
-import PMessage from 'primevue/message';
-import PInlineMessage from 'primevue/inlinemessage';
-import PInputSwitch from 'primevue/inputswitch';
-import PFileUpload from 'primevue/fileupload';
-import Carousel from 'primevue/carousel';
-import Checkbox from 'primevue/checkbox';
-
-// const pinia = createPinia();
-
-// const app = createApp(App);
-
-// app.use(PrimeVue);
-// app.use(ToastService);
-// app.use(pinia);
-// app.directive('tooltip', Tooltip);
-
-
-// const adapter = useWalletProviderStore(pinia);
-
 import './src/styles/index.scss';
 
-// setTimeout(() => {
-//   adapter.init({
-//     wallets: walletsList.map((one) => new one.adapter(one.options)),
-//     localStorageKey: 'pontem_widget',
-//     autoConnect: true,
-//   });
-// }, 300);
-
-// const SwapComponent = defineCustomElement(SwapContainer);
-//
-// customElements.define('swap-component', SwapComponent);
-
-// app.mount('#app');
-
-const app = createApp(App);
-
 interface ICreateElementInstance {
-  app: App<Element>;
+  component: Element;
   props?: any;
   plugins?: Array<any>;
+  components?: Record<string, any>;
   directives?: Record<string, any>;
 }
 
 const config = {
-  app: app,
+  component: App,
   plugins: [PrimeVue, ToastService],
   directives: {'tooltip': Tooltip},
   props: {}
 }
 
-const createElementInstance = ({ app, props = {}, plugins = [], directives = {} }: ICreateElementInstance) => {
+const getNearestElementParent = (el) => {
+  while (el?.nodeType !== 1 /* ELEMENT */) {
+    el = el.parentElement
+  }
+  return el
+}
+
+const createElementInstance = ({ component, props = {}, plugins = [], directives = {}, components = [] }: ICreateElementInstance) => {
   return defineCustomElement({
+    render: () => h(component),
     props: props,
     setup() {
+      const app = createApp();
       const pinia = createPinia();
-      app.use(pinia);
+      setActivePinia(pinia);
       const adapter = useWalletProviderStore(pinia);
-      app.use(PrimeVue);
-      app.use(ToastService);
+
+      plugins.forEach(plugin => app.use(plugin));
 
       setTimeout(() => {
         adapter.init({
@@ -89,39 +51,41 @@ const createElementInstance = ({ app, props = {}, plugins = [], directives = {} 
           autoConnect: true,
         });
       }, 300);
-      // plugins.forEach(plugin => app.use(plugin));
 
       for (const [name, directive] of Object.entries(directives)) {
         app.directive(name, directive)
       }
-      app.component('PButton', PButton);
-      app.component('InputNumber', InputNumber);
-      app.component('InputText', InputText);
-      app.component('OverlayPanel', OverlayPanel);
-      app.component('PMenu', PMenu);
-      app.component('SelectButton', SelectButton);
-      app.component('PConfirm', Pconfirm);
-      app.component('PDialog', PDialog);
-      app.component('BlockUI', BlockUI);
-      app.component('PToast', PToast);
-      app.component('ProgressSpinner', ProgressSpinner);
-      app.component('PAccordion', PAccordion);
-      app.component('PAccordionTab', PAccordionTab);
-      app.component('PMessage', PMessage);
-      app.component('PCarousel', Carousel);
-      app.component('PInlineMessage', PInlineMessage);
-      app.component('PInputSwitch', PInputSwitch);
-      app.component('PFileUpload', PFileUpload);
-      app.component('PCheckbox', Checkbox);
+
+      app.mixin({
+        mounted() {
+          const insertStyles = (styles) => {
+            if (styles?.length) {
+              this.__style = document.createElement('style')
+              this.__style.innerText = styles.join().replace(/\n/g, '')
+              getNearestElementParent(this.$el).prepend(this.__style)
+            }
+          }
+
+          // load own styles
+          insertStyles(this.$?.type.styles)
+
+          // load styles of child components
+          if (this.$options.components) {
+            for (const comp of Object.values(this.$options.components)) {
+              insertStyles(comp.styles)
+            }
+          }
+        },
+        unmounted() {
+          this.__style?.remove()
+        },
+      })
 
       const inst = getCurrentInstance();
       if (inst === null) return;
-      Object.assign(inst.appContext, app._context);
-      Object.assign(inst.appContext.provides, app._context.provides);
-
-      // app.mount("#app");
+      Object.assign(inst.appContext, app._context)
+      Object.assign(inst.provides, app._context.provides)
     },
-    render: () => h(app)
   });
 }
 
