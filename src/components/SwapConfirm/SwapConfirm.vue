@@ -37,60 +37,31 @@ import { useSwapStore, useStore } from '@/store';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
-import { CURVE_STABLE, RECALCULATION_TIME } from '@/constants/constants';
+import { RECALCULATION_TIME } from '@/constants/constants';
+import {TAptosTxPayload} from "@pontem/liquidswap-sdk/src/types/aptos";
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
 const swapStore = useSwapStore();
-const { modules, curves } = useStore();
+const { modules, curves, sdk } = useStore();
 
 const view = ref<'root' | 'tx'>('root');
 const ratesHasChanged = ref(false);
 const cachedPayload = ref<AptosTxPayload>();
-const payload = computed<AptosTxPayload>(() => {
-  const isUnchecked =
-    swapStore.curve === curves.stable && swapStore.stableSwapType === 'normal';
 
-  const functionName = composeType(
-      modules.Scripts,
-    isUnchecked
-      ? 'swap_unchecked'
-      : swapStore.lastInteractiveField === 'from'
-      ? 'swap'
-      : 'swap_into',
-  );
-  const typeArguments = [
-    swapStore.fromCurrency.token as string,
-    swapStore.toCurrency.token as string,
-    swapStore.curve,
-  ];
-  if (
-    (!swapStore.fromCurrency?.amount &&
-      swapStore.lastInteractiveField === 'from') ||
-    (!swapStore.toCurrency?.amount && swapStore.lastInteractiveField === 'to')
-  )
-    return;
-  const fromAmount =
-    swapStore.lastInteractiveField === 'from'
-      ? (swapStore.fromCurrency.amount as number).toString()
-      : swapStore.slippageAmount?.toFixed(0);
-  const toAmount =
-    swapStore.lastInteractiveField === 'to'
-      ? (swapStore.toCurrency.amount as number).toString()
-      : swapStore.slippageAmount?.toFixed(0);
-
-  const args = [fromAmount, toAmount];
-
-  return {
-    type: 'entry_function_payload',
-    function: functionName,
-    typeArguments: typeArguments,
-    arguments: args,
-  };
-});
+const payload = computed<AptosTxPayload>(() => sdk.value.Swap.createSwapTransactionPayload({
+  fromToken: swapStore.fromCurrency.token as string,
+  toToken: swapStore.toCurrency.token as string,
+  fromAmount: swapStore.fromCurrency.amount as number,
+  toAmount: swapStore.toCurrency.amount as number,
+  interactiveToken: swapStore.lastInteractiveField,
+  slippage: swapStore.slippage,
+  stableSwapType: swapStore.stableSwapType,
+  curveType: swapStore.curve === curves.stable ? 'stable' : 'uncorrelated',
+}));
 
 watch(
-  [payload, cachedPayload],
+  [cachedPayload, payload],
   () => {
     if (!payload.value || !cachedPayload.value) {
       ratesHasChanged.value = false;

@@ -40,6 +40,9 @@ import { AptosCreateTx } from '@/types/aptosResources';
 import { useSendTransaction } from '@/composables/useSendTransaction';
 import { useTimeout } from '@vueuse/core';
 
+import ProgressSpinner from 'primevue/progressspinner';
+import PButton from "primevue/button";
+
 interface IProps {
   tx: AptosCreateTx;
   description?: string;
