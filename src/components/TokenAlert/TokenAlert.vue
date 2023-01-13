@@ -29,11 +29,5 @@ const isNotDefaultCoin = computed<boolean>(
 );
 </script>
 <style lang="scss" scoped>
-img.token-alert {
-  margin-left: 4px;
-  width: 16px !important;
-  height: 16px !important;
-  display: inline-block;
-  margin-bottom: -2px;
-}
+
 </style>

@@ -90,5 +90,3 @@ watch(displayModal, async (visible) => {
   view.value = result?.isExists ? 'swap' : 'register';
 });
 </script>
-
-<style lang="scss" scoped></style>

@@ -1,5 +1,5 @@
 <template>
-  <swap-container class="swap"></swap-container>
+  <swap-container class="swap__container"></swap-container>
   <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />
   <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />
 </template>
@@ -22,9 +22,3 @@ import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 const mainStore = useStore();
 
 </script>
-
-<style scoped lang="scss">
-.swap {
-  margin: 0 auto;
-}
-</style>

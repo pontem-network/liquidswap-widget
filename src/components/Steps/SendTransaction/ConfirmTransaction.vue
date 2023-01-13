@@ -77,35 +77,3 @@ function onClose() {
   emits('close');
 }
 </script>
-
-<style scoped lang="scss">
-.confirmation {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  &__title {
-    font-size: 20px;
-    margin-top: 24px;
-    margin-bottom: 0px;
-    color: var(--text-color);
-    font-weight: 800;
-  }
-
-  &__description {
-    color: var(--text-color);
-    opacity: 0.7;
-    font-size: 17px;
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
-
-  &__help {
-    margin-top: 24px;
-    margin-bottom: 24px;
-    color: var(--text-color);
-    opacity: 0.4;
-    font-size: 13px;
-  }
-}
-</style>

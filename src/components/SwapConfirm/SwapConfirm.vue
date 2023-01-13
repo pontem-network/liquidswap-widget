@@ -102,5 +102,3 @@ function onRejected() {
   emits('reject');
 }
 </script>
-
-<style scoped lang="scss"></style>

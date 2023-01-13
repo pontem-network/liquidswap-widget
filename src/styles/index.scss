@@ -1,2 +1,22 @@
+//general styles
 @import './theme.scss';
-@import './components/SteppedDialog.scss';
+@import '../app.scss';
+
+//components styles
+@import 'components/steppedDialog';
+@import '../Swap/styles';
+@import '../components/ConnectWalletDialog/connectWalletDialog';
+@import '../components/CopyNotification/copyNotification';
+@import '../components/CurveInfo/curveInfo';
+@import '../components/CurveSwitch/curveSwitch';
+@import '../components/DialogHeader/dialogHeader';
+@import '../components/ImportTokenDialog/importTokenDialog';
+@import '../components/ReservesContainer/reservesContainer';
+@import '../components/SelectTokenDialog/selectTokenDialog';
+@import '../components/SelectTokenDialog/Coins/coinList';
+@import '../components/Steps/SendTransaction/confirmTransaction';
+@import '../components/Steps/SendTransaction/submitTransaction';
+@import '../components/SwapConfirm/styles';
+@import '../components/TokenAlert/tokenAlert';
+@import '../components/TxSettingsOverlay/txSettingsOverlay';
+@import '../components/UnverifiedTokenDialog/unverifiedTokenDialog';

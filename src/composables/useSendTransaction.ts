@@ -10,7 +10,7 @@ type TxParams = MaybeRef<
       payload: MaybeRef<{
         type: MaybeRef<string>;
         function: MaybeRef<string>;
-        typeArguments: MaybeRef<string[]>;
+        type_arguments: MaybeRef<string[]>;
         arguments: MaybeRef<string[]>;
       }>;
     }

@@ -51,7 +51,7 @@ const token = computed(() => {
 const tx = computed<AptosTxPayload>(() => ({
   type: 'entry_function_payload',
   function: '0x1::managed_coin::register',
-  typeArguments: [props.token],
+  type_arguments: [props.token],
   arguments: [],
 }));
 
@@ -78,5 +78,3 @@ function onRejected() {
   view.value = 'root';
 }
 </script>
-
-<style scoped></style>

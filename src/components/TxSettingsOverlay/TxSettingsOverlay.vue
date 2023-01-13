@@ -61,7 +61,9 @@ import { ref, watch } from 'vue';
 import { InputNumberInputEvent } from 'primevue/inputnumber';
 import { createSyncRef } from '@/utils/vue';
 import { CopyNotification } from '@/components/CopyNotification';
-
+import OverlayPanel from "primevue/overlaypanel";
+import PButton from "primevue/button";
+import InputNumber from "primevue/inputnumber";
 
 interface IProps {
   isDefault?: boolean;
@@ -172,118 +174,3 @@ function toggle(e: Event, target?: any) {
 
 defineExpose({ show, hide, toggle });
 </script>
-
-<style scoped lang="scss">
-.settings-overlay {
-  &__title {
-    display: flex;
-    flex-direction: row;
-    grid-gap: 12px;
-    font-size: 1rem;
-    color: var(--surface-200);
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  &__divider {
-    border-bottom: 1px solid #303035;
-    margin: 0 -20px;
-  }
-
-  &__content {
-    padding-top: 12px;
-  }
-}
-
-.slippage-options {
-  display: flex;
-  grid-gap: 12px;
-
-  &__button {
-    height: 32px;
-    padding: 3px 16px;
-    font-size: 0.875rem;
-  }
-
-  &__input {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-
-    &:after {
-      content: '%';
-      font-weight: 600;
-      color: var(--surface-600);
-      font-size: 1rem;
-      position: absolute;
-      right: 0;
-      margin-right: 8px;
-    }
-
-    ::v-deep(.p-inputnumber-input) {
-      height: 32px;
-      padding: 3px 24px 3px 10px;
-      width: 100%;
-      text-align: right;
-    }
-  }
-}
-
-.common-label {
-  width: 100%;
-  display: flex;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-
-  label {
-    margin-right: auto;
-  }
-
-  & > div {
-    color: var(--surface-600);
-    font-size: 0.8rem;
-
-    margin-left: 5px;
-    cursor: pointer;
-    &:hover {
-      color: var(--surface-500);
-    }
-  }
-}
-
-.slippage-label {
-  background: #24243a;
-  padding: 0.75rem 0.75rem;
-  border: 1px solid var(--surface-card);
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
-    box-shadow 0.2s;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 6px;
-  margin-right: 3px;
-}
-.slippage-radio:checked + .slippage-label:not(.-uncheck) {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem rgb(196 181 253 / 50%);
-  border-color: #c4b5fd;
-}
-
-.slippage-comment {
-  text-align: right;
-  height: 24px;
-  font-size: 0.875rem;
-  padding-top: 6px;
-
-  &.is-error {
-    color: var(--pink-600);
-  }
-
-  &.is-warning {
-    color: var(--orange-600);
-  }
-}
-</style>

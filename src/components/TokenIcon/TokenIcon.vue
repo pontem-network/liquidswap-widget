@@ -23,4 +23,3 @@ const tokenImageProps = computed(() =>
     : { size: props.size, address: props.type, class: props.class },
 );
 </script>
-<style lang="scss" scoped></style>

@@ -102,5 +102,3 @@ function mergeRange([...ranges]) {
   return merged;
 }
 </script>
-
-<style scoped></style>

@@ -1,0 +1,114 @@
+.swap-input {
+  border: 1px solid transparent;
+  background-color: #31314e;
+  border-radius: 20px;
+
+  &:hover {
+    border: 1px solid rgba(#e5e4fa, 0.15);
+  }
+}
+
+.insufficient-reserves {
+  border: 1px solid rgba(#e74c3c, 1) !important;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: row;
+
+  padding: 0 1rem 1rem;
+  font-size: 14px;
+  height: 38px;
+
+  &__right {
+    margin-left: auto;
+  }
+}
+
+.currency-input {
+  padding: 0 1rem 0 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  &.is-loading {
+    .currency-input__input {
+      ::v-deep(.p-inputtext) {
+        color: var(--surface-400) !important;
+
+        ::placeholder {
+          color: var(--surface-400) !important;
+        }
+      }
+    }
+  }
+
+  &__input {
+    position: relative;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    flex: 1 1 auto;
+    font-size: 28px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    appearance: textfield;
+    -webkit-appearance: none;
+
+    ::v-deep(.p-inputtext) {
+      background: transparent;
+      -webkit-appearance: none;
+      border: 0;
+      padding: 1rem;
+      font-size: 28px;
+      box-shadow: none;
+      color: var(--surface-0) !important;
+      width: 0;
+
+      ::placeholder {
+        color: var(--surface-400);
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &__select {
+    font-size: 16px;
+    height: 2.4rem;
+    padding: 0 12px;
+    box-shadow: rgb(0 0 0 / 8%) 0 6px 10px;
+    background: linear-gradient(90deg, #016875 0%, #04b78a 100%);
+    border: none;
+    color: white;
+
+    &:hover {
+      background: linear-gradient(90deg, #015c68 0%, #04a57d 100%);
+      color: white;
+    }
+
+    span {
+      white-space: nowrap;
+      font-weight: normal !important;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    &.is-selected {
+      color: var(--surface-0) !important;
+      background: #1c1c33 !important;
+      border-color: transparent !important;
+
+      &:hover {
+        background: #16162a !important;
+      }
+    }
+  }
+}

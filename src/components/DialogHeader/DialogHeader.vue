@@ -37,15 +37,3 @@ const onBack = () => {
   emits('back');
 };
 </script>
-
-<style scoped>
-.dialog-step__title--position {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
-
-.dialog-step__back-btn-placeholder {
-  width: 22px;
-}
-</style>

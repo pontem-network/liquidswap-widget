@@ -61,5 +61,3 @@ watch(
   { immediate: true, flush: 'post' },
 );
 </script>
-
-<style scoped lang="scss"></style>
