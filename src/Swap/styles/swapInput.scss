@@ -34,7 +34,7 @@
 
   &.is-loading {
     .currency-input__input {
-      ::v-deep(.p-inputtext) {
+      .p-inputtext {
         color: var(--surface-400) !important;
 
         ::placeholder {
@@ -45,6 +45,7 @@
   }
 
   &__input {
+    display: inline-flex;
     position: relative;
     font-weight: 500;
     outline: none;
@@ -57,7 +58,7 @@
     appearance: textfield;
     -webkit-appearance: none;
 
-    ::v-deep(.p-inputtext) {
+    .p-inputtext {
       background: transparent;
       -webkit-appearance: none;
       border: 0;
@@ -66,6 +67,7 @@
       box-shadow: none;
       color: var(--surface-0) !important;
       width: 0;
+      flex: 1 1 auto;
 
       ::placeholder {
         color: var(--surface-400);

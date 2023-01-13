@@ -21,8 +21,6 @@ export function usePoolExistence() {
         curveType: params.curve as CurveType,
       });
       isFetching.value = false;
-
-      console.log('liquidityPoolResource', response);
       return !!response.liquidityPoolResource;
     } catch (error) {
 
