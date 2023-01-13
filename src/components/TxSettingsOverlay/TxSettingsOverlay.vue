@@ -2,9 +2,9 @@
   <overlay-panel
     id="swap_settings"
     ref="op"
-    append-to="body"
+    :append-to="swapForm"
     :show-close-icon="false"
-    style="width: 310px"
+    style="width: 310px; position: absolute"
     :breakpoints="{ '520px': '100vw' }"
   >
     <div class="settings-overlay">
@@ -82,12 +82,24 @@ const error = ref<{ message?: string; type?: string }>({
   message: undefined,
   type: undefined,
 });
+
 const size = ref<number | undefined>(
   props.isDefault ? undefined : (props.modelValue || 0) * 100,
 );
 
 const slippageIsDefault = createSyncRef('isDefault');
 const slippage = createSyncRef('modelValue');
+
+const swapForm = ref();
+
+setTimeout(() => {
+  swapForm.value = document.querySelector('liquid-swap-widget')?.shadowRoot?.querySelector(".swap__header");
+
+  // fix error with scrollable element
+
+  console.log('swapForm.value.parentNode', swapForm.value.parentNode.nodeType);
+
+}, 100)
 
 watch(
   () => slippageIsDefault.value,
