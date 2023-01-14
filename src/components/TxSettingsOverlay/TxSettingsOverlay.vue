@@ -93,13 +93,14 @@ const slippage = createSyncRef('modelValue');
 const swapForm = ref();
 
 setTimeout(() => {
-  swapForm.value = document.querySelector('liquid-swap-widget')?.shadowRoot?.querySelector(".swap__header");
+  swapForm.value = document.querySelector('body');
+      //?.shadowRoot?.querySelector(".swap__header");
 
   // fix error with scrollable element
 
   console.log('swapForm.value.parentNode', swapForm.value.parentNode.nodeType);
 
-}, 100)
+}, 100);
 
 watch(
   () => slippageIsDefault.value,

@@ -31,13 +31,6 @@
                 />
               </svg>
             </button>
-            <TxSettingsOverlay
-              ref="settingsOverlay"
-              v-model:isDefault="swapStore.slippageIsDefault"
-              v-model="swapStore.slippage"
-              :to-token="swapStore.toCurrency.token"
-              :from-token="swapStore.fromCurrency.token"
-            />
           </div>
         </div>
         <div class="swap__row">
@@ -113,6 +106,14 @@
       mode="to"
       @close="routeToToken = false"
     />
+    <TxSettingsDialog
+      ref="txSettingsDialog"
+      v-model:isDefault="swapStore.slippageIsDefault"
+      v-model="swapStore.slippage"
+      :to-token="swapStore.toCurrency.token"
+      :from-token="swapStore.fromCurrency.token"
+      @close="txSettingsDialogDisplay = false"
+    />
   </div>
 </template>
 
@@ -128,7 +129,7 @@ import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
 import { InputToggle } from '@/components/InputToggle';
 import { ReservesContainer } from '@/components/ReservesContainer';
-import { TxSettingsOverlay } from '@/components/TxSettingsOverlay';
+import { TxSettingsDialog } from '@/components/TxSettingsDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
@@ -173,7 +174,8 @@ const fromBalance = useCurrentAccountBalance(
 const toBalance = useCurrentAccountBalance(
   computed(() => swapStore.toCurrency?.token),
 );
-const settingsOverlay = ref();
+const txSettingsDialog = ref();
+const txSettingsDialogDisplay = ref(false);
 const overlayAnchor = ref();
 const importToDialog = ref();
 const importFromDialog = ref();
@@ -305,9 +307,14 @@ function showSwapDialog() {
   mainStore.showDialog('swapConfirm');
 }
 
-function toggleConfig(e: Event) {
-  settingsOverlay?.value &&
-    settingsOverlay.value.toggle(e, overlayAnchor.value);
+function toggleConfig() {
+  if (!txSettingsDialogDisplay.value) {
+    txSettingsDialog.value.show();
+    txSettingsDialogDisplay.value = true;
+  } else {
+    txSettingsDialogDisplay.value = false;
+    txSettingsDialog.value.hide();
+  }
 }
 
 swapStore.check();

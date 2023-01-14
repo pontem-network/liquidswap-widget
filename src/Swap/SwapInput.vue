@@ -105,6 +105,7 @@ import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 import { TokenIcon } from '@/components//TokenIcon';
 import InputNumber from 'primevue/inputnumber';
 import PButton from 'primevue/button';
+import TxSettingsDialog from "@/components/TxSettingsDialog/TxSettingsDialog.vue";
 
 
 interface IProps {
