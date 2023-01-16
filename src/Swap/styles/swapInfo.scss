@@ -66,6 +66,12 @@
       padding: 0 5px;
     }
   }
+  .p-accordion-header-action {
+    display: flex;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .list {
