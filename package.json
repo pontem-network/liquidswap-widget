@@ -8,7 +8,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "build:serve": "yarn build; yarn serve",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d docs"
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",

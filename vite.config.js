@@ -41,6 +41,7 @@ export default defineConfig({
         rollupNodePolyFill(),
       ],
     },
+    outDir: 'docs',
   },
 
   define: {
