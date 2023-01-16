@@ -6,6 +6,7 @@
     :modal="true"
     :position="'top'"
     :content-style="{ overflowY: 'hidden' }"
+    class="connect__wrapper"
   >
     <template #header>
       <h3 class="modal__title">Connect a Wallet</h3>

@@ -30,60 +30,62 @@
   margin: 0 0 0 16px;
 }
 
-.connect {
-  width: min-content;
-  margin: 0;
-  border-radius: 12px;
-  background-color: #28253e;
-  min-height: 64px;
-  font-size: 17px;
-  line-height: 24px;
-  font-weight: 600;
-  animation: fade ease-in-out 0.15s;
-  &:hover {
-    background-color: #33284f;
+.connect__wrapper {
+  .connect {
+    width: min-content;
+    margin: 0;
+    border-radius: 12px;
+    background-color: #28253e;
+    min-height: 64px;
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 600;
+    animation: fade ease-in-out 0.15s;
+    &:hover {
+      background-color: #33284f;
+      border: none;
+      outline: none;
+      color: white;
+    }
+    &:focus {
+      box-shadow: 0 0 0 2px #1c2127, 0 0 0 2px rgb(196 181 253 / 70%) inset,
+      0 1px 2px 0 rgb(0 0 0 / 0%);
+    }
     border: none;
     outline: none;
-    color: white;
-  }
-  &:focus {
-    box-shadow: 0 0 0 2px #1c2127, 0 0 0 2px rgb(196 181 253 / 70%) inset,
-    0 1px 2px 0 rgb(0 0 0 / 0%);
-  }
-  border: none;
-  outline: none;
-  &__description {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-  }
-  &__title {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  &__caption {
-    font-size: 13px;
-    line-height: 24px;
-    color: #9594aa;
-    font-weight: 400;
-    text-align: left;
-    display: flex;
-    align-items: center;
-  }
-  &__badge {
-    width: 109px;
-  }
-  &__wallet-image {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-  &__auditor {
-    width: 82px;
-    margin-left: 0.25em;
+    &__description {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+    &__title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    &__caption {
+      font-size: 13px;
+      line-height: 24px;
+      color: #9594aa;
+      font-weight: 400;
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+    &__badge {
+      width: 109px;
+    }
+    &__wallet-image {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    &__auditor {
+      width: 82px;
+      margin-left: 0.25em;
+    }
   }
 }
 
