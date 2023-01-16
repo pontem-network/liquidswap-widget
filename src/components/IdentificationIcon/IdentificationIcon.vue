@@ -6,7 +6,6 @@
       width: `${size}px`,
       height: `${size}px`,
       maxWidth: `${size}px`,
-      maxWidth: `${size}px`,
     }"
   />
 </template>
