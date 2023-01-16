@@ -36,5 +36,3 @@ defineExpose({
   hide,
 });
 </script>
-<style lang="scss">
-</style>

@@ -10,7 +10,7 @@
   }
 
   &__divider {
-    border-bottom: 1px solid #303035;
+    border-bottom: 1px solid rgba(255,255,255, 0.1);
     margin: 0 -20px;
   }
 
@@ -21,6 +21,17 @@
 
 .stepped-dialog .dialog-step__header {
   padding-bottom: 8px;
+  padding-top: 0;
+}
+
+.copy-button {
+  margin-top: 7px;
+  margin-bottom: 16px;
+}
+
+.disconnect-button {
+  margin-top: 16px;
+  margin-bottom: -4px;
 }
 
 .slippage-options {
@@ -31,6 +42,13 @@
     height: 32px;
     padding: 3px 16px;
     font-size: 0.875rem;
+    &--action {
+      height: 32px;
+      padding: 3px 16px;
+      font-size: 0.875rem;
+      background: #43395B;
+      border: none;
+    }
   }
 
   &__input {

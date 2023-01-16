@@ -3,7 +3,8 @@
     v-if="view === 'root'"
     @confirm="onSwapConfirm"
     @close="onClose"
-  ></SwapPreview>
+  >
+  </SwapPreview>
   <SendTransaction
     v-if="view === 'tx'"
     title="Swap Coins"
@@ -32,13 +33,11 @@ import { SendTransaction } from '@/components/Steps';
 import SwapPreview from './SwapPreview.vue';
 import SwapInfo from './SwapInfo.vue';
 import { AptosTxPayload } from '@/types/aptosResources';
-import { composeType } from '@/utils/contracts';
 import { useSwapStore, useStore } from '@/store';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
 import { RECALCULATION_TIME } from '@/constants/constants';
-import {TAptosTxPayload} from "@pontem/liquidswap-sdk/src/types/aptos";
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 

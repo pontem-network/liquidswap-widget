@@ -20,5 +20,4 @@ import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 })();
 
 const mainStore = useStore();
-
 </script>

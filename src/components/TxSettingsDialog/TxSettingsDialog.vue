@@ -53,19 +53,37 @@
                 class="settings-overlay__divider my-2"
             />
           </div>
+          <p-button
+              v-show="props.fromToken || props.toToken"
+              label="Copy Pool URL"
+              class="slippage-options__button slippage-options__button--action copy-button p-button-primary w-full"
+              @click="copyUrl"
+          />
+          <div class="settings-overlay__divider" />
+          <p-button
+              label="Disconnect"
+              v-show="connected"
+              class="slippage-options__button slippage-options__button--action disconnect-button p-button-primary w-full"
+              @click="disconnect"
+          />
         </div>
       </div>
   </PDialog>
+  <CopyNotification ref="dialog" />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { InputNumberInputEvent } from 'primevue/inputnumber';
 import { createSyncRef } from '@/utils/vue';
+import { useClipboard } from '@vueuse/core';
+import { CopyNotification } from '@/components/CopyNotification';
 import PButton from "primevue/button";
 import InputNumber from "primevue/inputnumber";
 import PDialog from 'primevue/dialog';
 import { DialogHeader } from '@/components/DialogHeader';
+import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
+import {storeToRefs} from "pinia";
 
 interface IProps {
   isDefault?: boolean;
@@ -76,6 +94,10 @@ interface IProps {
 
 const props = defineProps<IProps>();
 const emits = defineEmits(['update:isDefault', 'update:modelValue', 'close']);
+
+const adapter = useWalletProviderStore();
+const { connected } = storeToRefs(adapter);
+const { copy: onCopyUrl } = useClipboard();
 
 const display = ref(false);
 const dialog = ref();
@@ -170,6 +192,25 @@ function show() {
 function hide() {
   display.value = false;
   emits('close');
+}
+
+const urlToCopy = computed(() => {
+  const url = ['https://liquidswap.com/#/?'];
+  props.fromToken && url.push('from=' + props.fromToken);
+  props.toToken && props.fromToken && url.push('&');
+  props.toToken && url.push('to=' + props.toToken);
+  return url.join('');
+});
+
+function copyUrl() {
+  onCopyUrl(urlToCopy.value);
+  hide();
+  dialog.value.show();
+}
+
+function disconnect() {
+  adapter?.disconnect();
+  hide();
 }
 
 defineExpose({ show, hide });

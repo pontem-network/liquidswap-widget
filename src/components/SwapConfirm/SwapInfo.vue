@@ -85,7 +85,3 @@ const outputTokens = useCurrencyFormat(
 const slippageOutputTokens = useCurrencyFormat(slippageAmount, slippageToken);
 const convertRateTokens = useCurrencyFormat(convertRate, toToken);
 </script>
-
-<style scoped lang="scss">
-
-</style>
