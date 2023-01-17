@@ -27,17 +27,22 @@ $gray: #495057;
     font-family: Helvetica, sans-serif;
     text-align: center;
 
-    min-width: 3em;
-    max-width: 21em;
-    white-space: nowrap;
+    z-index: 1000;
+    color: var(--surface-300);
+    line-height: 1.4;
+    background: var(--surface-card);
+    font-size: 0.875rem;
+
+    min-width: 4em;
+    max-width: 18em;
+    width: max-content;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0.5rem;
     border-radius: 0.3rem;
     box-shadow: 0 1em 2em -0.5em rgba(0, 0, 0, 0.35);
     background: $gray;
-    color: #fff;
-    z-index: 1000;
   }
   &:hover:before,
   &:hover:after {
@@ -132,14 +137,14 @@ $gray: #495057;
 /* KEYFRAMES */
 @keyframes tooltips-vert {
   to {
-    opacity: 0.9;
+    opacity: 0.96;
     transform: translate(-50%, 0);
   }
 }
 
 @keyframes tooltips-horz {
   to {
-    opacity: 0.9;
+    opacity: 0.96;
     transform: translate(0, -50%);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <span :tooltip="tooltipText" :position="position"><slot /></span>
+  <span :tooltip="tooltipText" :position="position" class="tooltip__custom"><slot /></span>
 </template>
 
 <script lang="ts">

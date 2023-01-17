@@ -336,15 +336,8 @@ p {
   padding: 0.9375rem 0.9375rem;
 }
 
-.p-tooltip {
-  //background: red;
-  z-index: 1000;
-  .p-tooltip-text {
-    color: var(--surface-300);
-    line-height: 1.4;
-    background: var(--surface-card);
-    font-size: 0.875rem;
-  }
+.tooltip__custom {
+
 }
 
 .p-toast-detail {
