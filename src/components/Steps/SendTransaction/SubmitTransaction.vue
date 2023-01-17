@@ -38,12 +38,13 @@
               <div class="tx-result__value">
                 <div class="tx-hash" :title="txState.hash">
                   <span>{{ shortAddress(txState.hash, 10, 10) }}</span>
-                  <PButton
-                    v-tooltip="'Click to copy'"
-                    icon="pi pi-copy"
-                    class="p-button-sm p-button-rounded p-button-text"
-                    @click="copyAddress"
-                  />
+                  <ToolTip position="top" :tooltipText="'Click to copy'">
+                    <PButton
+                        icon="pi pi-copy"
+                        class="p-button-sm p-button-rounded p-button-text"
+                        @click="copyAddress"
+                    />
+                  </ToolTip>
                 </div>
               </div>
             </div>
@@ -90,6 +91,7 @@ import { shortAddress } from '@/utils/hex';
 import { useClipboard } from '@vueuse/core';
 import { CopyNotification } from '@/components/CopyNotification';
 import PButton from "primevue/button";
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
 
 type State =
   | {

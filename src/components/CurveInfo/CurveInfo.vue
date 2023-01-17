@@ -15,10 +15,9 @@
         alt="uncorrelated curve"
       />
       <p>{{ props.type == curves.stable ? 'Stable' : 'Uncorrelated' }}</p>
-      <i
-        v-tooltip="`Using formula optimized for ${curve} coins swaps`"
-        class="pi pi-info-circle"
-      />
+      <ToolTip position="top" :tooltip-text="`Using formula optimized for ${curve} coins swaps`">
+        <i class="pi pi-info-circle"/>
+      </ToolTip>
     </div>
   </div>
 </template>
@@ -26,6 +25,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useStore } from "@/store";
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
+
 
 const { curves } = useStore();
 

@@ -1,6 +1,5 @@
 //general styles
 @import './theme.scss';
-@import '../app.scss';
 
 //components styles
 @import 'components/steppedDialog';
@@ -21,3 +20,5 @@
 @import '../components/TxSettingsDialog/txSettingsDialog';
 @import '../components/UnverifiedTokenDialog/unverifiedTokenDialog';
 @import '../components/InputToggle/inputToggle';
+@import '../components/ToolTip/tooltip';
+

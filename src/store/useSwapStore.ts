@@ -11,6 +11,7 @@ import { getFromCache } from '@/utils/cache';
 import { DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { IStoredToken } from '@/types';
+import {last} from "lodash";
 
 const DEFAULT_SLIPPAGE = 0.005;
 
@@ -125,25 +126,24 @@ export const useSwapStore = defineStore('swapStore', () => {
 
       const resourceType = getPoolStr(fromToken, toToken, curve.value);
 
-      const response = await getFromCache(
-        ['calc', networkOptions.resourceAccount, resourceType].join('-'),
-        () => aptos.getAccountResource(networkOptions.resourceAccount, resourceType),
-        { time: 2000 },
-      );
+      try {
+        const response = await getFromCache(
+          ['calc', networkOptions.resourceAccount, resourceType].join('-'),
+          () => aptos.getAccountResource(networkOptions.resourceAccount, resourceType),
+          { time: 2000 },
+        );
+        const coinXReserve = +response.data.coin_x_reserve.value;
+        const coinYReserve = +response.data.coin_y_reserve.value;
+        fee.value = response.data.fee;
+        from.reserve = isSorted ? coinXReserve : coinYReserve;
+        to.reserve = isSorted ? coinYReserve : coinXReserve;
 
-      if (!response?.data) {
+      } catch (e) {
         from.reserve = 0;
         to.reserve = 0;
         fee.value = 0;
         isUpdatingRate.value = false;
         return;
-      } else {
-        const coinXReserve = +response.data.coin_x_reserve.value;
-        const coinYReserve = +response.data.coin_y_reserve.value;
-        fee.value = response.data.fee;
-
-        from.reserve = isSorted ? coinXReserve : coinYReserve;
-        to.reserve = isSorted ? coinYReserve : coinXReserve;
       }
 
       let rate;
@@ -218,11 +218,15 @@ export const useSwapStore = defineStore('swapStore', () => {
     });
   }
 
+  const skipDoubleRender = () => {
+
+  }
+
   watchDebounced(
-    () => [from, to, curve],
+    () => [interactiveField.value === 'from' ? from : to, curve],
     async () => {
       await check();
-      refetchRates(false);
+      await refetchRates(false);
     },
     {
       debounce: 500,

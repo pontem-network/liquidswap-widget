@@ -181,10 +181,8 @@ export const useStore = createGlobalState(() => {
     storage.value.isMobile = handleMobileScreen();
   });
 
-  const showTermsAndConditions = useStorage('showTermsAndConditions', true);
 
   const dialogs = reactive<Record<string, boolean>>({
-    acceptTermsAndConditions: showTermsAndConditions.value,
     coinList: false,
     connectWallet: false,
     createPoolConfirm: false,
@@ -205,7 +203,6 @@ export const useStore = createGlobalState(() => {
     networkId: readonly(networkId),
     dialogs,
     showDialog,
-    showTermsAndConditions,
     modules,
     networkOptions,
   }

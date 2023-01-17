@@ -70,15 +70,16 @@
                 tokenBalance.formatted.value
               }}</span></span
             >
-            <span
-              v-else
-              v-tooltip.right="
-                'This token is not registered in your account. Before swap, you must register this token.'
-              "
+            <ToolTip
+                v-else
+                position="bottom"
+                :tooltipText="'This token is not registered in your account. Before swap, you must register this token.'"
             >
-              Token not registered
-              <i class="pi pi-bolt" />
-            </span>
+              <span>
+                Token not registered
+                <i class="pi pi-bolt" />
+              </span>
+            </ToolTip>
           </template>
         </div>
       </div>
@@ -105,8 +106,7 @@ import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 import { TokenIcon } from '@/components//TokenIcon';
 import InputNumber from 'primevue/inputnumber';
 import PButton from 'primevue/button';
-import TxSettingsDialog from "@/components/TxSettingsDialog/TxSettingsDialog.vue";
-
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
 
 interface IProps {
   mode: 'to' | 'from';

@@ -10,7 +10,9 @@
     >
       <img src="@/assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
       <p>Uncorrelated</p>
-      <i v-tooltip="'Using x*y=K formula'" class="pi pi-info-circle" />
+      <ToolTip position="top" :tooltipText="'Using x*y=K formula'">
+        <i class="pi pi-info-circle" />
+      </ToolTip>
     </div>
 
     <div
@@ -27,10 +29,9 @@
         alt="stable curve"
       />
       <p>Stable</p>
-      <i
-        v-tooltip="'Using formula optimized for stable coins swaps'"
-        class="pi pi-info-circle"
-      />
+      <ToolTip position="top" :tooltipText="'Using formula optimized for stable coins swaps'">
+        <i class="pi pi-info-circle"/>
+      </ToolTip>
     </div>
     <PToast position="top-right" group="tr" />
   </div>
@@ -39,7 +40,7 @@
 import { computed, watch } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import PToast from 'primevue/toast';
-import { CURVE_UNCORRELATED, CURVE_STABLE } from '@/constants/constants';
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import {
   useStore,
   useSwapStore,

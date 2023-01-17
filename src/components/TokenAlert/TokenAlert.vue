@@ -1,19 +1,23 @@
 <template>
-  <img
-    v-if="isNotDefaultCoin"
-    v-tooltip.right="
-      'Warning: This coin may be unaudited or contain critical vulnerabilities'
-    "
-    class="token-alert"
-    src="@/assets/alert.svg"
-    alt="alert"
-  />
+  <ToolTip
+      v-if="isNotDefaultCoin"
+      position="top"
+      :tooltipText="'Warning: This coin may be unaudited or contain critical vulnerabilities'"
+  >
+    <img
+        class="token-alert"
+        src="@/assets/alert.svg"
+        alt="alert"
+    />
+  </ToolTip>
+
 </template>
 
 <script lang="ts" setup>
 import { useTokensStore } from '@/store';
 import { toRefs } from '@vueuse/shared';
 import { computed } from 'vue';
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
 
 const tokensStore = useTokensStore();
 
