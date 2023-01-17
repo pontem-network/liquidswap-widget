@@ -1,4 +1,4 @@
-$gray: #495057;
+$gray: var(--surface-card);
 
 [tooltip] {
   & > * {
@@ -30,7 +30,7 @@ $gray: #495057;
     z-index: 1000;
     color: var(--surface-300);
     line-height: 1.4;
-    background: var(--surface-card);
+    background: $gray;
     font-size: 0.875rem;
 
     min-width: 4em;
@@ -42,7 +42,6 @@ $gray: #495057;
     padding: 0.5rem;
     border-radius: 0.3rem;
     box-shadow: 0 1em 2em -0.5em rgba(0, 0, 0, 0.35);
-    background: $gray;
   }
   &:hover:before,
   &:hover:after {
