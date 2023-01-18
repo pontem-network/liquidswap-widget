@@ -4,9 +4,9 @@
     :draggable="false"
     :style="{ width: '480px', height: '80vh', alignSelf: 'flex-start', marginTop: '61px', maxHeight: '700px' }"
     :modal="true"
-    :closable="false"
     :show-header="false"
     class="stepped-dialog stepped-dialog--panel"
+    :dismissableMask="true"
   >
     <TokenList
       v-if="view === 'root'"
