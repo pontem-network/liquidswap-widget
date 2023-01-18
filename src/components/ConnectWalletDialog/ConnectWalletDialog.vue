@@ -5,14 +5,16 @@
     :style="{ width: '483px', marginTop: '61px' }"
     :modal="true"
     :position="'top'"
+    :closable="true"
     :content-style="{ overflowY: 'hidden' }"
     class="connect__wrapper"
+    @hide="onHide"
   >
     <template #header>
       <h3 class="modal__title">Connect a Wallet</h3>
     </template>
     <div class="connect__wallet-image">
-      <img class="" src="@/assets/connect.svg" alt="wallet" />
+      <img src="@/assets/connect.svg" alt="wallet" />
     </div>
     <p class="mb-4 text-center">
       To continue working with the site, you need to connect a wallet and allow
@@ -108,7 +110,7 @@ const handleToggle = () => {
 };
 
 const props = defineProps<IProps>();
-const emits = defineEmits(['update:visible']);
+const emits = defineEmits(['update:visible', 'hide']);
 
 const otherWallets = computed(() => {
   return walletsList.filter(({ key }) => key !== 'Pontem');
@@ -123,15 +125,15 @@ const displayModal = computed({
   set: (v) => emits('update:visible', v),
 });
 
+
 const isLoading = ref(false);
 const error = ref(undefined);
 
-onBeforeUnmount(() => {
+const onHide = () => {
   isLoading.value = false;
   error.value = undefined;
   isToggled.value = false;
-});
-
+};
 
 async function onConnect(wallet: IWallet) {
   const { account } = storeToRefs(adapter);
