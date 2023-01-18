@@ -11,7 +11,6 @@ import { getFromCache } from '@/utils/cache';
 import { DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { IStoredToken } from '@/types';
-import {last} from "lodash";
 
 const DEFAULT_SLIPPAGE = 0.005;
 
@@ -223,10 +222,10 @@ export const useSwapStore = defineStore('swapStore', () => {
   }
 
   watchDebounced(
-    () => [interactiveField.value === 'from' ? from : to, curve],
+    () => [from, to, curve],
     async () => {
       await check();
-      await refetchRates(false);
+      refetchRates(false);
     },
     {
       debounce: 500,
