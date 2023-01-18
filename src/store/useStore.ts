@@ -185,11 +185,7 @@ export const useStore = createGlobalState(() => {
   const dialogs = reactive<Record<string, boolean>>({
     coinList: false,
     connectWallet: false,
-    createPoolConfirm: false,
     invalidNetwork: false,
-    noFundsAvailable: false,
-    notifiCard: false,
-    requestTokens: false,
     swapConfirm: false,
   });
 

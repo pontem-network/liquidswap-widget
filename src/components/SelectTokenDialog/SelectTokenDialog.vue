@@ -2,7 +2,7 @@
   <PDialog
     v-model:visible="display"
     :draggable="false"
-    :style="{ width: '480px', height: '80vh', maxHeight: '700px' }"
+    :style="{ width: '480px', height: '80vh', alignSelf: 'flex-start', marginTop: '61px', maxHeight: '700px' }"
     :modal="true"
     :closable="false"
     :show-header="false"

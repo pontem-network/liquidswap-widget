@@ -2,7 +2,7 @@
   <PDialog
     v-model:visible="displayModal"
     :draggable="false"
-    :style="{ width: '483px', marginTop: '91px' }"
+    :style="{ width: '483px', marginTop: '61px' }"
     :modal="true"
     :position="'top'"
     :content-style="{ overflowY: 'hidden' }"
@@ -132,6 +132,7 @@ onBeforeUnmount(() => {
   isToggled.value = false;
 });
 
+
 async function onConnect(wallet: IWallet) {
   const { account } = storeToRefs(adapter);
   try {
@@ -152,7 +153,3 @@ async function onConnect(wallet: IWallet) {
   }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

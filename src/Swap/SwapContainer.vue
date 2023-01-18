@@ -66,7 +66,7 @@
         </div>
         <div class="swap__row">
           <p-button
-            v-if="!account"
+            v-if="!connected"
             type="submit"
             tabindex="5"
             class="swap__button is-connect"
@@ -114,6 +114,8 @@
       :from-token="swapStore.fromCurrency.token"
       @close="txSettingsDialogDisplay = false"
     />
+<!--    <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />-->
+<!--    <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />-->
   </div>
 </template>
 
@@ -125,6 +127,8 @@ import { computed, ref, watch } from 'vue';
 import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
 
+import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
+import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
 import { InputToggle } from '@/components/InputToggle';
@@ -138,7 +142,7 @@ import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 
 const adapter = useWalletProviderStore();
-const { account } = storeToRefs(adapter);
+const { account, connected } = storeToRefs(adapter);
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
@@ -285,13 +289,12 @@ const buttonState = computed(() => {
 function submitForm(e: Event) {
   const isNextButton = (e.target as HTMLElement)?.enterKeyHint === 'next';
   const isSubmitDisabled = buttonState.value.disabled;
-  const accountValue = account.value;
   const cancelEvent = Boolean(
-    (isNextButton || isSubmitDisabled) && accountValue,
+    (isNextButton || isSubmitDisabled) && connected.value,
   );
   if (cancelEvent) return;
 
-  const handler = !accountValue ? onConnectWallet : showSwapDialog;
+  const handler = !connected.value ? onConnectWallet : showSwapDialog;
   handler();
 }
 
