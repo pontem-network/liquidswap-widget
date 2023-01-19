@@ -1,0 +1,71 @@
+import { IPersistedPool } from '../types/pools';
+export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore", import("pinia")._UnwrapAll<Pick<{
+    isLoading: import("vue").Ref<boolean>;
+    isReady: import("vue").Ref<boolean>;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    fetchPoolsList: () => Promise<void>;
+    pools: import("vue").Ref<{
+        title: string;
+        reserveX: number;
+        reserveY: number;
+        addedX: number;
+        addedY: number;
+        lp: number;
+        isDefault: boolean;
+        apr?: number | undefined;
+        coinX: string;
+        coinY: string;
+        curve: import('../types').TCurveType;
+        networkId: number;
+    }[]>;
+    poolsMap: Record<string, IPersistedPool>;
+    poolsTitleMap: Record<string, string>;
+    defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
+}, "isLoading" | "isReady" | "pools" | "poolsMap" | "poolsTitleMap">>, Pick<{
+    isLoading: import("vue").Ref<boolean>;
+    isReady: import("vue").Ref<boolean>;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    fetchPoolsList: () => Promise<void>;
+    pools: import("vue").Ref<{
+        title: string;
+        reserveX: number;
+        reserveY: number;
+        addedX: number;
+        addedY: number;
+        lp: number;
+        isDefault: boolean;
+        apr?: number | undefined;
+        coinX: string;
+        coinY: string;
+        curve: import('../types').TCurveType;
+        networkId: number;
+    }[]>;
+    poolsMap: Record<string, IPersistedPool>;
+    poolsTitleMap: Record<string, string>;
+    defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
+}, "getPool" | "defaultPools">, Pick<{
+    isLoading: import("vue").Ref<boolean>;
+    isReady: import("vue").Ref<boolean>;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    fetchPoolsList: () => Promise<void>;
+    pools: import("vue").Ref<{
+        title: string;
+        reserveX: number;
+        reserveY: number;
+        addedX: number;
+        addedY: number;
+        lp: number;
+        isDefault: boolean;
+        apr?: number | undefined;
+        coinX: string;
+        coinY: string;
+        curve: import('../types').TCurveType;
+        networkId: number;
+    }[]>;
+    poolsMap: Record<string, IPersistedPool>;
+    poolsTitleMap: Record<string, string>;
+    defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
+}, "getCurveType" | "fetchPoolsList">>;
