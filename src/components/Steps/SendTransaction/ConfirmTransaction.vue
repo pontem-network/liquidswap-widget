@@ -55,6 +55,14 @@ const { state, error, execute } = useSendTransaction();
 
 const timeout = useTimeout(30000, { immediate: true });
 
+const tx = computed(() => {
+  return props.tx;
+});
+
+const description = computed(() => {
+  return props.description;
+});
+
 onMounted(() => execute(tx));
 
 watch(error, () => {
@@ -65,13 +73,7 @@ watch(state, () => {
   emits('submitted', state.value);
 });
 
-const tx = computed(() => {
-  return props.tx;
-});
 
-const description = computed(() => {
-  return props.description;
-});
 
 function onClose() {
   emits('close');

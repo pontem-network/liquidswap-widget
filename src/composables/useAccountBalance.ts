@@ -11,8 +11,6 @@ import { getFromCache } from '@/utils/cache';
 import { AptosCoinInfoResource } from '@/types';
 import { composeType } from '@/utils/contracts';
 import isEqual from 'lodash/isEqual';
-import { storeToRefs } from 'pinia';
-import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 import { RECALCULATION_BALANCE_TIME } from '@/constants/constants';
 
 export function useAccountBalance(
@@ -133,9 +131,10 @@ export function useCurrentAccountBalance(
   token: MaybeRef<string | undefined>,
   options?: { useSuffix?: boolean; _decimals?: number },
 ) {
-  const adapter = useWalletProviderStore();
-  const { account } = storeToRefs(adapter);
+  const { account } = useStore();
   const address = computed(() => account.value?.address);
+
+  console.log('useCurrentAccountBalance', address);
   const balance = useAccountBalance(address as unknown as string, token);
   const currencyFormat = useCurrencyFormat(balance.balance, token, options);
 

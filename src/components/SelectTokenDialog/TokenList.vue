@@ -113,7 +113,7 @@ const rawTokenList = async () => {
   const tokens_ = Object.values(tokensStore.tokens).map(async (token) => {
     return computed(() => tokensStore.getToken(token.type));
   });
-  tokens = await Promise.all(tokens_);
+  tokens = await Promise.all(tokens_) as unknown as ComputedRef<IPersistedTokenExtended>[];
 
   const alreadySelected: string[] = [];
   const list: TokenInList[] = tokens

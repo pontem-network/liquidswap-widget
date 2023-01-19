@@ -149,7 +149,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       await client.getAccountResource(
         extractAddressFromType(token.type),
         coinInfo,
-      );
+      )  as unknown as Promise<Resource | undefined> | any;
 
     if (!resource) {
       // TODO: Process error
@@ -238,10 +238,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
     const promise = client.getAccountResource(
       extractAddressFromType(type),
       composeType(modules.CoinInfo, [type]),
-      {
-        cancelToken: !!withCancel,
-      },
-    );
+    ) as unknown as any;
     const request = withCancel ? promise.request : promise;
 
     request.then((resource?: Resource<AptosCoinInfoResource>) => {
@@ -290,7 +287,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       await client.getAccountResource(
         extractAddressFromType(token),
         coinInfo,
-      ) as unknown as PromiseLike<AptosCoinInfoResource>;
+      )  as unknown as any;
 
     if (!resource) {
       return undefined;

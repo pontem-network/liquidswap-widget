@@ -1,5 +1,5 @@
 import { defineCustomElement, h, getCurrentInstance, createApp } from 'vue';
-import {createPinia, setActivePinia} from 'pinia';
+import { createPinia, setActivePinia } from 'pinia';
 
 import App from './src/App.ce.vue';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
@@ -49,5 +49,8 @@ const createElementInstance = ({ component, props = {}, plugins = [] }: ICreateE
     styles: [appStyles],
   });
 }
+
+export default createElementInstance;
+export { config };
 
 customElements.define('liquid-swap-widget', createElementInstance(config));

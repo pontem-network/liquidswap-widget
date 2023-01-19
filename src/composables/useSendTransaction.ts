@@ -4,18 +4,7 @@ import { AptosCreateTx } from '@/types/aptosResources';
 import { camelCaseKeysToUnderscore, getFormattedValidationCode } from '@/utils/utils';
 import { unref } from 'vue';
 
-type TxParams = MaybeRef<
-  | {
-      sender: MaybeRef<string>;
-      payload: MaybeRef<{
-        type: MaybeRef<string>;
-        function: MaybeRef<string>;
-        type_arguments: MaybeRef<string[]>;
-        arguments: MaybeRef<string[]>;
-      }>;
-    }
-  | undefined
->;
+type TxParams = MaybeRef<AptosCreateTx | undefined>;
 
 export function useSendTransaction() {
   const adapter = useWalletProviderStore();

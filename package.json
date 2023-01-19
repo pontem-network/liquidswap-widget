@@ -3,30 +3,47 @@
   "version": "0.0.1",
   "private": true,
   "homepage": "https://pontem-network.github.io/liquidswap-widget/",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/liquidswap-widget.umd.js",
+  "module": "./dist/liquidswap-widget.mjs",
+  "types": ",./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/liquidswap-widget.mjs",
+      "require": "./dist/liquidswap-widget.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "rm -rf dist; vite build",
     "serve": "vite preview",
     "build:serve": "yarn build; yarn serve",
-    "deploy": "yarn build; gh-pages -d docs"
+    "deploy": "yarn build; gh-pages -d dist"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@originjs/vite-plugin-require-context": "^1.0.9",
     "@tsconfig/recommended": "^1.0.1",
+    "@types/webpack-env": "^1.18.0",
+    "@vitejs/plugin-vue": "^4.0.0",
     "gh-pages": "^4.0.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
-    "vite-plugin-require-transform": "^1.0.4"
+    "vite-plugin-dts": "^1.7.1",
+    "vite-plugin-package-version": "^1.0.2",
+    "vite-plugin-require-transform": "^1.0.4",
+    "vue-tsc": "^1.0.11"
   },
   "dependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@metamask/jazzicon": "2.0.0",
     "@pontem/aptos-wallet-adapter": "^0.6.8",
     "@pontem/coins-registry": "^1.0.4",
     "@pontem/liquidswap-sdk": "0.5.4",
     "@types/lodash": "4.14.182",
-    "@vitejs/plugin-vue": "^4.0.0",
     "@vueuse/core": "^8.9.4",
     "@vueuse/shared": "^9.9.0",
     "decimal.js": "^10.4.1",
@@ -40,8 +57,6 @@
     "tslib": "^2.3.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
-    "vite-plugin-package-version": "^1.0.2",
-    "vue": "^3.2.40",
-    "vue-tsc": "^1.0.11"
+    "vue": "^3.2.40"
   }
 }

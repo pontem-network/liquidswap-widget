@@ -67,7 +67,7 @@ export const useStore = createGlobalState(() => {
     account: walletAccount,
     network: walletNetwork,
     wallet,
-  } = storeToRefs(walletAdapter);
+  } = storeToRefs(walletAdapter) as unknown as any;
 
   const walletAddress = computed(() => walletAccount?.value?.address);
 

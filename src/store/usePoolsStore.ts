@@ -23,6 +23,11 @@ interface IStorage extends IStorageBasic {
   pools: IPersistedPool[];
 }
 
+type Resource<T = any> = {
+  type: string;
+  data: T;
+};
+
 export const usePoolsStore = defineStore('poolsStore', () => {
   const mainStore = useStore();
   const { client: aptos, networkOptions, curves } = mainStore;
@@ -148,7 +153,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     const response = await aptos.getAccountResource(
       networkOptions.resourceAccount,
       liquidityPool,
-    );
+    ) as unknown as Promise<Resource | undefined> | any;
 
     if (!response) return;
 
@@ -161,7 +166,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       const response = await aptos.getAccountResource(
         networkOptions.resourceAccount,
         lpCoin,
-      );
+      )  as unknown as Promise<Resource | undefined> | any;
 
       if (!response || !response?.data?.supply?.vec[0]) return;
 

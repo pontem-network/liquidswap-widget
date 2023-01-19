@@ -217,10 +217,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     });
   }
 
-  const skipDoubleRender = () => {
-
-  }
-
   watchDebounced(
     () => [from, to, curve],
     async () => {
