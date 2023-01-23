@@ -11,12 +11,12 @@
       <div class="submit">
         <img
           v-if="isSuccess"
-          src="@/assets/success.svg"
+          src="../../../assets/success.svg"
           :style="{ width: '60px', height: '60px' }"
         />
         <img
           v-else
-          src="@/assets/rejected.svg"
+          src="../../../assets/rejected.svg"
           :style="{ width: '60px', height: '60px' }"
         />
         <h3 class="submit__title">

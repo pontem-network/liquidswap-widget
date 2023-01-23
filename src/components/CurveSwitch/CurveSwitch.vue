@@ -8,7 +8,7 @@
       }"
       @click="switchSelected(curves.uncorrelated)"
     >
-      <img src="@/assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
+      <img src="../../assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
       <p>Uncorrelated</p>
       <ToolTip position="top" :tooltipText="'Using x*y=K formula'">
         <i class="pi pi-info-circle" />
@@ -25,7 +25,7 @@
     >
       <img
         :style="{ marginTop: '-2px', marginBottom: '2px' }"
-        src="@/assets/curves/stable.svg"
+        src="../../assets/curves/stable.svg"
         alt="stable curve"
       />
       <p>Stable</p>

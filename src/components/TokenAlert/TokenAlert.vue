@@ -6,7 +6,7 @@
   >
     <img
         class="token-alert"
-        src="@/assets/alert.svg"
+        src="../../assets/alert.svg"
         alt="alert"
     />
   </ToolTip>

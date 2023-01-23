@@ -1,6 +1,6 @@
 <template>
   <div v-show="display" class="notifications-dialog" :style="animation">
-    <img src="@/assets/check.svg" />
+    <img src="../../assets/check.svg" />
     <p>Copied</p>
   </div>
 </template>

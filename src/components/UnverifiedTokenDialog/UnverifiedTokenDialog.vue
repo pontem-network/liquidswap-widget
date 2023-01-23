@@ -9,7 +9,7 @@
     class="stepped-dialog stepped-dialog--panel"
   >
     <div class="warning-container">
-      <img src="@/assets/alert.svg" alt="" />
+      <img src="../../assets/alert.svg" alt="" />
       <div class="warning-container-content">
         <span>Use at your own risk!</span>
         <span

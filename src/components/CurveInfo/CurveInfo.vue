@@ -6,12 +6,12 @@
       <img
         v-if="props.type == curves.stable"
         :style="{ marginTop: '-2px', marginBottom: '2px' }"
-        src="@/assets/curves/stable.svg"
+        src="../../assets/curves/stable.svg"
         alt="stable curve"
       />
       <img
         v-else
-        src="@/assets/curves/uncorrelated.svg"
+        src="../../assets/curves/uncorrelated.svg"
         alt="uncorrelated curve"
       />
       <p>{{ props.type == curves.stable ? 'Stable' : 'Uncorrelated' }}</p>

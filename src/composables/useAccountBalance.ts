@@ -134,7 +134,6 @@ export function useCurrentAccountBalance(
   const { account } = useStore();
   const address = computed(() => account.value?.address);
 
-  console.log('useCurrentAccountBalance', address);
   const balance = useAccountBalance(address as unknown as string, token);
   const currencyFormat = useCurrencyFormat(balance.balance, token, options);
 

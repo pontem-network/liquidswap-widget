@@ -17,6 +17,7 @@ import { APTOS, CORRECT_CHAIN_ID } from '@/constants/constants';
 import { useStore } from '@/store/useStore';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';
+import { tokensList } from "@/constants/tokensList";
 
 
 export interface IPersistedToken {
@@ -171,11 +172,11 @@ export const useTokensStore = defineStore('tokensStore', () => {
   );
 
   const getLogoUrl = computed(() => {
-    const images = require.context('../assets/tokens', false, /\.svg|.png$/);
 
     return (symbol: string) => {
       try {
-        return images(`./${symbol.toLowerCase()}.svg`).default;
+        const token = tokensList.find(token => token.symbol === symbol.toLowerCase());
+        return token?.logo as any;
       } catch (_e) {
         return undefined;
       }

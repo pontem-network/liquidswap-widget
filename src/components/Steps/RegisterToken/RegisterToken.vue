@@ -2,7 +2,7 @@
   <div v-if="view === 'root'" class="dialog-step">
     <DialogHeader :title="`Register ${token.symbol} token`" @close="onClose" />
     <div class="dialog-step__content">
-      <img src="@/assets/connect.svg" alt="" />
+      <img src="../../../assets/connect.svg" alt="" />
       <p>
         Before you can receive {{ token.symbol }}, you need to register them on
         your account.

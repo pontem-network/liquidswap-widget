@@ -14,7 +14,7 @@
       <h3 class="modal__title">Connect a Wallet</h3>
     </template>
     <div class="connect__wallet-image">
-      <img src="@/assets/connect.svg" alt="wallet" />
+      <img src="../../assets/connect.svg" alt="wallet" />
     </div>
     <p class="mb-4 text-center">
       To continue working with the site, you need to connect a wallet and allow
@@ -38,14 +38,14 @@
             Audited by:
             <img
               class="connect__auditor"
-              src="@/assets/auditors/halborn.svg"
+              src="../../assets/auditors/halborn.svg"
               alt="Halborn"
             />
           </div>
         </div>
         <img
           class="connect__badge"
-          src="@/assets/wallets/recommended.svg"
+          src="../../assets/wallets/recommended.svg"
           alt="recommended"
         />
       </div>

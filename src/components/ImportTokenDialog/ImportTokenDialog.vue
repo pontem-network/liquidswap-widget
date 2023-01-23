@@ -29,14 +29,14 @@
         <span class="token-info-address">{{ tokenPreview.address }} </span>
       </div>
       <div v-else class="warning-container">
-        <img src="@/assets/warning.svg" alt="" />
+        <img src="../../assets/warning.svg" alt="" />
         <div class="warning-container-content">
           <span>Token not found!</span>
           <span>Token you're trying to trade doesn't exist in our record</span>
         </div>
       </div>
       <div v-if="tokenPreview" class="warning-container">
-        <img src="@/assets/warning.svg" alt="" />
+        <img src="../../assets/warning.svg" alt="" />
         <div class="warning-container-content">
           <span>Import at your own risk!</span>
           <span
