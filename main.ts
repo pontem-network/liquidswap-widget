@@ -50,7 +50,4 @@ const createElementInstance = ({ component, props = {}, plugins = [] }: ICreateE
   });
 }
 
-export default createElementInstance;
-export { config };
-
-customElements.define('liquid-swap-widget', createElementInstance(config));
+export const LiquidSwapWidget = createElementInstance(config);

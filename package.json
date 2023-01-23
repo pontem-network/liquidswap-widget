@@ -1,18 +1,17 @@
 {
   "name": "liquidswap-widget",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "private": true,
   "homepage": "https://pontem-network.github.io/liquidswap-widget/",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/liquidswap-widget.umd.js",
-  "module": "./dist/liquidswap-widget.mjs",
-  "types": ",./dist/main.d.ts",
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/liquidswap-unpkg/liquidswap-widget.esm.js",
   "exports": {
     ".": {
-      "import": "./dist/liquidswap-widget.mjs",
-      "require": "./dist/liquidswap-widget.umd.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./dist/style.css": "./dist/style.css"
   },
@@ -28,7 +27,6 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@originjs/vite-plugin-require-context": "^1.0.9",
-    "@tsconfig/recommended": "^1.0.1",
     "@types/webpack-env": "^1.18.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "gh-pages": "^4.0.0",
@@ -40,6 +38,7 @@
   },
   "dependencies": {
     "@metamask/jazzicon": "2.0.0",
+    "@tsconfig/recommended": "^1.0.1",
     "@pontem/aptos-wallet-adapter": "^0.6.8",
     "@pontem/coins-registry": "^1.0.4",
     "@pontem/liquidswap-sdk": "0.5.4",

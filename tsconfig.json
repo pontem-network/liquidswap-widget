@@ -2,7 +2,7 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "es2020",
     "strict": true,
     "jsx": "preserve",
     "moduleResolution": "node",
@@ -22,17 +22,17 @@
     "importHelpers": true,
     "outDir": "./dist/tsc",
     "types": ["node", "webpack-env"],
-    "lib": ["ES6", "DOM", "esnext"],
+    "lib": ["ES7", "DOM", "esnext"],
     "paths": {
       "@/*": ["./src/*"]
-    },
+    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.vue",
     "src/**/*.ce.vue",
-    "./.d.ts"
+    "./index.d.ts",
   ],
   "exclude": ["node_modules", "dist", "docs"],
-  "files": ["./.d.ts"]
+  "files": ["./index.d.ts"]
 }
