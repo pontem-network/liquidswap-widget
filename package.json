@@ -19,9 +19,10 @@
   "scripts": {
     "dev": "vite",
     "build": "rm -rf dist; vite build",
+    "build:gh-pages": "rm -rf docs; vite build -c 'vite.github.config.js'",
     "serve": "vite preview",
     "build:serve": "yarn build; yarn serve",
-    "deploy": "yarn build; gh-pages -d dist"
+    "deploy": "yarn build:gh-pages; gh-pages -d docs"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
