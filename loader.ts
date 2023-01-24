@@ -16,7 +16,6 @@ export const LoadWidget = (tagName = 'liquidswap-widget') => {
         el.type = 'text/css';
         el.textContent = styles;
         document.head.appendChild(el);
-        console.log('style tag should be inserted');
       }
     });
   }
