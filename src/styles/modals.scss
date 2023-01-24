@@ -1,0 +1,11 @@
+@import '../components/ConnectWalletDialog/connectWalletDialog';
+@import '../components/CopyNotification/copyNotification';
+@import '../components/SelectTokenDialog/selectTokenDialog';
+@import '../components/SelectTokenDialog/Coins/coinList';
+@import '../components/TxSettingsDialog/txSettingsDialog';
+@import '../components/UnverifiedTokenDialog/unverifiedTokenDialog';
+@import '../components/Steps/SendTransaction/confirmTransaction';
+@import '../components/Steps/SendTransaction/submitTransaction';
+@import '../components/DialogHeader/dialogHeader';
+@import '../components/ImportTokenDialog/importTokenDialog';
+@import 'components/steppedDialog';

@@ -3,8 +3,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 
-import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
-
 import svgLoader from 'vite-svg-loader'
 
 import dts from 'vite-plugin-dts'
@@ -21,7 +19,7 @@ export default defineConfig({
     }),
     dts(),
     svgLoader({
-      defaultImport: 'url' // or 'raw'
+      defaultImport: 'url'
     })
   ],
   resolve:{

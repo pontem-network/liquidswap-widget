@@ -5,7 +5,7 @@
       :modal="false"
       :closable="false"
       :show-header="false"
-      :style="{ maxWidth: '483px' }"
+      :style="{ maxWidth: '483px', marginTop: '61px'}"
       position="top"
       class="stepped-dialog stepped-dialog--panel"
   >

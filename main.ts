@@ -3,11 +3,11 @@ import { createPinia, setActivePinia } from 'pinia';
 
 import App from './src/App.ce.vue';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import { walletsList } from "./src/constants/wallets";
+import { walletsList } from "@/constants/wallets";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 
-import appStyles from './src/styles/index.scss';
+import appStyles from './src/styles/index.scss?inline';
 
 interface ICreateElementInstance {
   component: Element;

@@ -32,6 +32,9 @@
     "src/**/*.vue",
     "src/**/*.ce.vue",
     "./index.d.ts",
+    "main.ts",
+    "loader.ts",
+    "index.ts"
   ],
   "exclude": ["node_modules", "dist", "docs"],
   "files": ["./index.d.ts"]
