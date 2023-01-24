@@ -276,7 +276,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
             iconRef: import("vue").Ref<HTMLElement | undefined>;
             address: import("vue").Ref<string>;
             hashCode: (s?: string | undefined) => number;
-            icon: ComputedRef<HTMLElement>;
+            icon: ComputedRef<any>;
         }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
             address: {
                 type: StringConstructor;
