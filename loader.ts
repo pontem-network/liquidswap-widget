@@ -20,5 +20,4 @@ export const LoadWidget = (tagName = 'liquidswap-widget') => {
       }
     });
   }
-
 }
