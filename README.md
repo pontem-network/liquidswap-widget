@@ -13,7 +13,7 @@ npm install @pontem/liquidswap-widget
 ```
 
 ## Usage
-Function loadWidget accepts widget HTML tag name. It can be custom name but should be in kebab case. 
+Function `loadWidget` accepts widgets HTML tag name. It can be custom name but should be in kebab case. 
 We recommend to use 'liquidswap-widget' name. Passed name should be exactly the same as tag name.
 
 ### React
@@ -52,12 +52,12 @@ export const Widget = () => {
 
 ### Any other framework / lib.
 
-1) Make sure you added html tag 'liquidswap-widget' into app.  
+1) Make sure you added html tag `liquidswap-widget` into app.  
 ```html
 <liquidswap-widget></liquidswap-widget>
 ```
 
-2) Import loadWidget function from npm and run with passing html tag name in kebab case;
+2) Import `loadWidget` function from npm and run with passing html tag name in kebab case;
 
 ```js
 import { loadWidget } from '@pontem/liquidswap-widget';

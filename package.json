@@ -1,6 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "files": [
     "src",
