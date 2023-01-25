@@ -9,6 +9,7 @@
     :content-style="{ overflowY: 'hidden' }"
     class="connect__wrapper"
     @hide="onHide"
+    :dismissableMask="true"
   >
     <template #header>
       <h3 class="modal__title">Connect a Wallet</h3>

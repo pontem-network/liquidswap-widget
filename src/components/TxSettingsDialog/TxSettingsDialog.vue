@@ -3,11 +3,11 @@
       v-model:visible="display"
       :draggable="false"
       :modal="false"
-      :closable="false"
       :show-header="false"
       :style="{ maxWidth: '483px', marginTop: '61px'}"
       position="top"
       class="stepped-dialog stepped-dialog--panel"
+      :dismissableMask="true"
   >
     <div class="dialog-step settings-overlay">
         <DialogHeader title="Settings" @close="hide" />
