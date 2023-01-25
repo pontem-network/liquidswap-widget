@@ -91,6 +91,7 @@ loadWidget('liquidswap-widget');
 - [ ] Add example with plain JS.
 - [ ] Expand token list. 
 - [ ] Add MSafe wallet support.
+- [ ] Integrate widget to Pontem wallet. 
 
 See the [open issues](https://github.com/pontem-network/liquidswap-sdk/issues) for a full list of proposed features (and known issues).
 
