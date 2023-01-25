@@ -5,7 +5,6 @@ import {
   PontemWalletAdapter,
   FewchaWalletAdapter,
   RiseWalletAdapter,
-  MsafeWalletAdapter,
   WalletName,
 } from '@pontem/aptos-wallet-adapter';
 
@@ -14,7 +13,7 @@ import petraLogo from '../assets/wallets/petra.png';
 import martianLogo from '../assets/wallets/martians.svg';
 import riseLogo from '../assets/wallets/rise.svg';
 import fewchaLogo from '../assets/wallets/fewcha.svg';
-import msafeLogo from '../assets/wallets/msafe.svg';
+// import msafeLogo from '../assets/wallets/msafe.svg';
 
 
 export const walletsList: IWallet[] = [
@@ -48,11 +47,11 @@ export const walletsList: IWallet[] = [
     logo: fewchaLogo,
     adapter: FewchaWalletAdapter,
   },
-  {
-    key: 'Msafe' as WalletName<'Msafe'>,
-    label: 'Msafe Wallet',
-    logo: msafeLogo,
-    adapter: MsafeWalletAdapter,
-    options: 'https://partner.m-safe.io/',
-  },
+  // {
+  //   key: 'Msafe' as WalletName<'Msafe'>,
+  //   label: 'Msafe Wallet',
+  //   logo: msafeLogo,
+  //   adapter: MsafeWalletAdapter,
+  //   options: 'https://app.m-safe.io/',
+  // },
 ];
