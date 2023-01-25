@@ -1,7 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
   "version": "0.1.0",
-  "private": true,
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "files": [
     "src",
@@ -17,7 +16,6 @@
     "url": "https://github.com/pontem-network/liquidswap-widget/issues"
   },
   "license": "MIT",
-
   "main": "./dist/index.js",
   "type": "module",
   "module": "./dist/index.js",
