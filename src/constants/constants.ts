@@ -53,7 +53,7 @@ export const NETWORKS: Network[] = [
   },
 ];
 
-export const CORRECT_CHAIN = import.meta.env.VITE_APP_CORRECT_CHAIN || 'mainnet'; // testnet
+export const CORRECT_CHAIN = 'mainnet';
 
 export const CORRECT_CHAIN_ID =
   CORRECT_CHAIN === 'mainnet'
