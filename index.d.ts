@@ -26,7 +26,3 @@ declare global {
     "liquid-swap-widget": typeof Widget,
   }
 }
-
-export const LiquidSwapWidget: VueElementConstructor<{}>;
-
-export const LoadWidget: (tagName: string) => void;

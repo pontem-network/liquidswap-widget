@@ -4,7 +4,7 @@ import './src/styles/index.scss';
 
 import styles from './src/styles/index.scss';
 
-export const LoadWidget = (tagName = 'liquidswap-widget') => {
+export const loadWidget = (tagName = 'liquidswap-widget') => {
   const el = customElements.get(tagName);
 
   if (!el) {

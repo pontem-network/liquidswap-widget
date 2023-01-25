@@ -1,8 +1,8 @@
-import { LoadWidget } from "./loader";
+import { loadWidget } from "./loader";
 export { LiquidSwapWidget } from './main';
 
 import widgetStyles from './src/styles/index.scss?inline';
 
-LoadWidget('liquidswap-widget');
+loadWidget('liquidswap-widget');
 
-export { LoadWidget, widgetStyles };
+export { loadWidget, widgetStyles };
