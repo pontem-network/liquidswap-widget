@@ -1,1 +1,1 @@
-export declare const LoadWidget: (tagName?: string) => void;
+export declare const loadWidget: (tagName?: string) => void;
