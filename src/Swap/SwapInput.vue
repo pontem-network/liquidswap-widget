@@ -2,7 +2,7 @@
   <div
     class="swap-input"
     :class="{
-      'insufficient-reserves': props.mode === 'to' && swapStore.convertError,
+      'insufficient-input-reserves': props.mode === 'to' && swapStore.convertError,
     }"
   >
     <div class="swap-input__row">
