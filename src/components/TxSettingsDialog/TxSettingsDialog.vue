@@ -83,7 +83,8 @@ import InputNumber from "primevue/inputnumber";
 import PDialog from 'primevue/dialog';
 import { DialogHeader } from '@/components/DialogHeader';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import {storeToRefs} from "pinia";
+import { useStore } from '@/store';
+import { storeToRefs } from "pinia";
 
 interface IProps {
   isDefault?: boolean;
@@ -96,7 +97,10 @@ const props = defineProps<IProps>();
 const emits = defineEmits(['update:isDefault', 'update:modelValue', 'close']);
 
 const adapter = useWalletProviderStore();
-const { connected } = storeToRefs(adapter);
+
+const { insideNativeWallet } = useStore();
+const connected = computed(() => insideNativeWallet.value ? false : storeToRefs(adapter).connected.value )
+
 const { copy: onCopyUrl } = useClipboard();
 
 const display = ref(false);

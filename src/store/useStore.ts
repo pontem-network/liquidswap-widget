@@ -32,6 +32,8 @@ const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
 
 export const useStore = createGlobalState(() => {
 
+  const insideNativeWallet = ref(false);
+
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
     networkOptions: {
@@ -57,7 +59,6 @@ export const useStore = createGlobalState(() => {
     { serializer: StorageSerializers.object },
   );
 
-
   const networkId = ref(CORRECT_CHAIN_ID);
 
   const networks = reactive(NETWORKS);
@@ -65,15 +66,25 @@ export const useStore = createGlobalState(() => {
   const walletAdapter = useWalletProviderStore();
   const {
     account: walletAccount,
-    network: walletNetwork,
+    network: adapterNetwork,
     wallet,
   } = storeToRefs(walletAdapter) as unknown as any;
+  const nativeWalletAccount = ref();
+  const nativeNetworkData = ref<{ name?: string; chainId?: string }>()
 
-  const walletAddress = computed(() => walletAccount?.value?.address);
+  const walletAddress = computed(() => insideNativeWallet ? nativeWalletAccount.value : walletAccount.value.address);
 
   const chainId = computed(
-    () => walletNetwork.value?.chainId || `${CORRECT_CHAIN_ID}`,
+    () => {
+      if (insideNativeWallet) {
+        return nativeNetworkData.value?.chainId;
+      } else {
+        return adapterNetwork.value?.chainId || `${CORRECT_CHAIN_ID}`;
+      }
+    }
   );
+
+  const networkName = computed(() => insideNativeWallet ? nativeNetworkData.value?.name : adapterNetwork.value.name);
 
   const network = computed(
     () =>
@@ -85,16 +96,16 @@ export const useStore = createGlobalState(() => {
   const defaultToken = computed(() => storage.value.defaultToken);
   const account = computed(() => storage.value.account);
 
-
-  const name = computed(() => wallet.value?.adapter.name);
+  const name = computed(() => insideNativeWallet.value ? 'Pontem' : wallet.value?.adapter.name);
 
   function resetAccount() {
     storage.value.defaultToken = APTOS;
+
     if (walletAddress.value) {
       if (name.value.toLowerCase() !== 'pontem') {
         // other wallets like Petra || Martian || rise || fewcha etc...
         if (
-          walletNetwork.value.name.toLowerCase() ===
+          networkName.value.toLowerCase() ===
           WalletAdapterNetwork.Mainnet
         ) {
           networkId.value = CORRECT_CHAIN_ID;
@@ -106,7 +117,7 @@ export const useStore = createGlobalState(() => {
             }
           });
         } else if (
-          walletNetwork.value.name
+          networkName.value
             .toLowerCase()
             .indexOf(WalletAdapterNetwork.Testnet) !== -1
         ) {
@@ -124,7 +135,7 @@ export const useStore = createGlobalState(() => {
       } else {
         // Pontem wallet
         if (
-          walletNetwork.value.name
+          networkName.value
             .toLowerCase()
             .indexOf(WalletAdapterNetwork.Testnet) !== -1
         ) {
@@ -153,6 +164,7 @@ export const useStore = createGlobalState(() => {
           }
         }
       }
+
       if (networkId.value === CORRECT_CHAIN_ID) {
         dialogs.invalidNetwork = false;
       } else {
@@ -169,7 +181,7 @@ export const useStore = createGlobalState(() => {
     }
   }
 
-  watch([walletAddress, walletNetwork, chainId, name], () => {
+  watch([walletAddress, networkName, chainId, name, nativeNetworkData, nativeWalletAccount], () => {
     resetAccount();
   });
 
@@ -201,5 +213,8 @@ export const useStore = createGlobalState(() => {
     showDialog,
     modules,
     networkOptions,
+    insideNativeWallet,
+    nativeWalletAccount,
+    nativeNetworkData
   }
 });

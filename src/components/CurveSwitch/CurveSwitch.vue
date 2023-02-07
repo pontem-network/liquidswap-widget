@@ -53,10 +53,10 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const toast = useToast();
 const { curves } = useStore();
 const store = useSwapStore();
 const tokenStore = useTokensStore();
+// const toast = useToast();
 
 const isBusy = computed(() =>
   store.isBusy !== undefined ? store.isBusy.value : false,

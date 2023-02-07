@@ -1,0 +1,23 @@
+.send-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.step {
+  ::v-deep(.p-blockui) {
+    opacity: 0;
+  }
+}
+
+.p-dialog-content {
+  p {
+    margin-top: 0;
+    line-height: 1.4;
+  }
+}
+
+.account-exit {
+  font-weight: 500;
+  font-size: 17px;
+  padding: 15px 24px;
+}

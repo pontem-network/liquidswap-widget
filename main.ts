@@ -21,18 +21,13 @@ const config = {
   props: {}
 }
 
-const createElementInstance = ({ component, props = {}, plugins = [] }: ICreateElementInstance) => {
+const createElementInstance = ({ component, plugins = [] }: ICreateElementInstance) => {
   return defineCustomElement({
-    render: () => h(component),
-    props: props,
-    setup() {
+    props: component.props,
+    setup(props) {
       const app = createApp();
       const pinia = createPinia();
-      setActivePinia(pinia);
       const adapter = useWalletProviderStore(pinia);
-
-      plugins.forEach(plugin => app.use(plugin));
-
       setTimeout(() => {
         adapter.init({
           wallets: walletsList.map((one) => new one.adapter(one.options)),
@@ -41,10 +36,16 @@ const createElementInstance = ({ component, props = {}, plugins = [] }: ICreateE
         });
       }, 300);
 
+      setActivePinia(pinia);
+
+      plugins.forEach(plugin => app.use(plugin));
+
       const inst = getCurrentInstance();
       if (inst === null) return;
-      Object.assign(inst.appContext, app._context)
-      Object.assign(inst.provides, app._context.provides)
+      Object.assign(inst!.appContext, app._context);
+      Object.assign(inst!.appContext.provides, app._context.provides);
+
+      return () => h(component, props)
     },
     styles: [appStyles],
   });
