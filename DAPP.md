@@ -34,5 +34,10 @@ Properties are reactive, so any change to props will update widget's internal st
 />
 ```
 
-Also, widget will dispatch to events:
-1) 
+Also, widget will dispatch to Custom Events:
+1) 'signAndSubmitTransaction' - this event will be containing payload with transaction. Just accept props inside handler 
+and you will find prop 'detail' with full transaction payload;
+2) 'transactionProcessed' - this event will be fired after widget accepts hash and status of transaction and correctly resolves it with. 
+
+** IMPORTANT **
+Then parent receives 'transactionProcessed' - You need to update status with 'pending' and hash should be set to null. Otherwise, it will be led to bugs due to incorrect source of truth.
