@@ -5,7 +5,7 @@ import { computed, reactive, ref, watch, readonly } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS_TESTNET_CHAIN_ID, APTOS } from "@/constants/constants";
-import { Network } from '@/types';
+import { Network, TStatusTransaction } from '@/types';
 import { restUrl } from '@/utils/networkData';
 
 type GlobalCachebleState = {
@@ -33,6 +33,8 @@ const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
 export const useStore = createGlobalState(() => {
 
   const insideNativeWallet = ref(false);
+  const nativeStatusTransaction = ref<TStatusTransaction>("pending");
+  const nativeTransactionHash = ref(null);
 
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
@@ -69,10 +71,11 @@ export const useStore = createGlobalState(() => {
     network: adapterNetwork,
     wallet,
   } = storeToRefs(walletAdapter) as unknown as any;
+
   const nativeWalletAccount = ref();
   const nativeNetworkData = ref<{ name?: string; chainId?: string }>()
-
   const walletAddress = computed(() => insideNativeWallet ? nativeWalletAccount.value : walletAccount.value.address);
+  const networkName = computed(() => insideNativeWallet ? nativeNetworkData.value?.name : adapterNetwork.value.name);
 
   const chainId = computed(
     () => {
@@ -84,8 +87,6 @@ export const useStore = createGlobalState(() => {
     }
   );
 
-  const networkName = computed(() => insideNativeWallet ? nativeNetworkData.value?.name : adapterNetwork.value.name);
-
   const network = computed(
     () =>
       networks.find((network: Network) => {
@@ -96,13 +97,13 @@ export const useStore = createGlobalState(() => {
   const defaultToken = computed(() => storage.value.defaultToken);
   const account = computed(() => storage.value.account);
 
-  const name = computed(() => insideNativeWallet.value ? 'Pontem' : wallet.value?.adapter.name);
+  const walletName = computed(() => insideNativeWallet.value ? 'Pontem' : wallet.value?.adapter.name);
 
   function resetAccount() {
     storage.value.defaultToken = APTOS;
 
     if (walletAddress.value) {
-      if (name.value.toLowerCase() !== 'pontem') {
+      if (walletName.value.toLowerCase() !== 'pontem') {
         // other wallets like Petra || Martian || rise || fewcha etc...
         if (
           networkName.value.toLowerCase() ===
@@ -172,7 +173,7 @@ export const useStore = createGlobalState(() => {
       }
       storage.value.account = {
         address: walletAddress.value as string,
-        type: `${name.value}`,
+        type: `${walletName.value}`,
       };
       storage.value.defaultToken = APTOS;
     } else {
@@ -215,6 +216,8 @@ export const useStore = createGlobalState(() => {
     networkOptions,
     insideNativeWallet,
     nativeWalletAccount,
-    nativeNetworkData
+    nativeNetworkData,
+    nativeStatusTransaction,
+    nativeTransactionHash
   }
 });

@@ -73,9 +73,8 @@ watch(state, () => {
   emits('submitted', state.value);
 });
 
-
-
 function onClose() {
+  emits('rejected', 'Time out');
   emits('close');
 }
 </script>

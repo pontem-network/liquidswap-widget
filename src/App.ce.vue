@@ -12,10 +12,12 @@ import { usePoolsStore, useStore, useTokensStore } from "@/store";
 import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
 import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 import { InvalidNetworkDialog } from '@/components/InvalidNetworkDialog';
+import {TStatusTransaction} from "@/types";
 
 const props = defineProps<{
-  dataAccount: string;
-  dataNetwork: string;
+  dataAccount: string; // account address like 0x....da14
+  dataNetwork: string; // { name?: string; chainId?: string } as JSON
+  dataTransaction: string; // { status: 'pending' | 'success' | 'rejected'; hash: string | null } as JSON
 }>();
 // initialize stores
 (async () => {
@@ -32,6 +34,8 @@ watch([props], () => {
     mainStore.insideNativeWallet.value = true;
     mainStore.nativeWalletAccount.value = props.dataAccount;
     mainStore.nativeNetworkData.value = JSON.parse(props.dataNetwork);
+    mainStore.nativeStatusTransaction.value = JSON.parse(props.dataTransaction).status as TStatusTransaction;
+    mainStore.nativeTransactionHash.value = JSON.parse(props.dataTransaction)?.hash;
   }
 })
 </script>

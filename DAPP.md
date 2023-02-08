@@ -1,0 +1,38 @@
+Liquidswap widget could be used as DAPP inside wallet.
+Work still in progress. 
+
+<liquidswap-widget/> can be used without wallet adapter. 
+
+It needs just several properties:
+* Account address of wallet;
+```typescript
+const dataAccount = '0x15fd61229f6e12b51adbff45b7b74310c7eaf9c24ef8c13b653c8f2a07bc1d14';
+```
+* Network information: name and chainId;
+```typescript
+const dataNetwork = { name: 'mainnet', chainId: '1' };
+```
+* Transaction info: status and hash;
+```typescript
+interface ITransactionStatus {
+  status: 'pending' | 'success' | 'rejected';
+  hash: string | null
+};
+const transactionStatus: ITransactionStatus = { status: 'pending', hash: null };
+```
+
+Properties are passed as strings (data-attributes), so to pass Object you need to use JSON.stringify();
+They will be extruded with JSON.parse();
+Properties are reactive, so any change to props will update widget's internal store;
+
+```jsx
+<liquidswap-widget
+    ref={ref}
+    data-network={JSON.stringify(dataNetwork)}
+    data-account={dataAccount}
+    data-transaction={JSON.stringify(transactionStatus)}
+/>
+```
+
+Also, widget will dispatch to events:
+1) 

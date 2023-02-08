@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { CORRECT_CHAIN, CORRECT_CHAIN_ID } from '@/constants/constants';
+import { CORRECT_CHAIN } from '@/constants/constants';
 import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 import { computed } from 'vue';
 import PDialog from 'primevue/dialog';

@@ -145,7 +145,9 @@ const tokensStore = useTokensStore();
 
 const { curves, account, insideNativeWallet } = mainStore;
 
-const connected = computed(() => insideNativeWallet.value ? true : storeToRefs(adapter).connected.value )
+const connectedAdapter = storeToRefs(adapter).connected;
+
+const connected = ref(false);
 
 const curveType = computed(() =>
   poolsStore.getCurveType(
@@ -168,6 +170,10 @@ watch(
     immediate: true,
   },
 );
+
+watch([insideNativeWallet, storeToRefs(adapter).connected], () => {
+  connected.value = insideNativeWallet.value ? true : connectedAdapter.value as unknown as boolean;
+})
 
 const fromBalance = useCurrentAccountBalance(
   computed(() => swapStore.fromCurrency?.token),

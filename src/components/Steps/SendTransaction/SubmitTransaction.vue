@@ -120,7 +120,7 @@ const isSuccess = computed(() => props.state.status === 'success');
 const { copy: onCopyAddress } = useClipboard();
 const txLink = computed(
   () =>
-    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=mainnet `,
+    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=mainnet`,
 );
 
 const description = computed(() => {
@@ -141,6 +141,12 @@ function copyAddress() {
 }
 
 function onComplete() {
+  const event = new CustomEvent('transactionProcessed', {
+    composed: true,
+    bubbles: true,
+  });
+  document.querySelector('liquidswap-widget')!.dispatchEvent(event);
+
   if (isSuccess.value) {
     // TODO: persist LP?
     emits('success');
