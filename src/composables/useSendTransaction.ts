@@ -36,7 +36,7 @@ export function useSendTransaction() {
               pause();
               return resolve(actualNativeTransactionHash.value)
             }
-            if (actualNativeStatusTransaction.value === "rejected") {
+            if (actualNativeStatusTransaction.value === "error") {
               pause();
               return reject('Sorry, something went wrong. Reopen the page and try again later.');
             }

@@ -15,7 +15,7 @@ const dataNetwork = { name: 'mainnet', chainId: '1' };
 * Transaction info: status and hash;
 ```typescript
 interface ITransactionStatus {
-  status: 'pending' | 'success' | 'rejected';
+  status: 'pending' | 'success' | 'error';
   hash: string | null
 };
 const transactionStatus: ITransactionStatus = { status: 'pending', hash: null };

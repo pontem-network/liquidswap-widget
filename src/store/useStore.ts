@@ -26,15 +26,13 @@ const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
     nodeUrl: nodeUrl,
     networkOptions: networkOptions
   });
-
   return sdk;
 }
 
 export const useStore = createGlobalState(() => {
-
   const insideNativeWallet = ref(false);
-  const nativeStatusTransaction = ref<TStatusTransaction>("pending");
-  const nativeTransactionHash = ref(null);
+  const dappStatusTransaction = ref<TStatusTransaction>("pending");
+  const dappTransactionHash = ref(null);
 
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
@@ -72,15 +70,16 @@ export const useStore = createGlobalState(() => {
     wallet,
   } = storeToRefs(walletAdapter) as unknown as any;
 
-  const nativeWalletAccount = ref();
-  const nativeNetworkData = ref<{ name?: string; chainId?: string }>()
-  const walletAddress = computed(() => insideNativeWallet ? nativeWalletAccount.value : walletAccount.value.address);
-  const networkName = computed(() => insideNativeWallet ? nativeNetworkData.value?.name : adapterNetwork.value.name);
+  const dappWalletAccount = ref();
+  const dappNetworkData = ref<{ name?: string; chainId?: string }>();
+
+  const walletAddress = computed(() => insideNativeWallet ? dappWalletAccount.value : walletAccount.value?.address);
+  const networkName = computed(() => insideNativeWallet ? dappNetworkData.value?.name : adapterNetwork.value?.name);
 
   const chainId = computed(
     () => {
       if (insideNativeWallet) {
-        return nativeNetworkData.value?.chainId;
+        return dappNetworkData.value?.chainId;
       } else {
         return adapterNetwork.value?.chainId || `${CORRECT_CHAIN_ID}`;
       }
@@ -182,7 +181,7 @@ export const useStore = createGlobalState(() => {
     }
   }
 
-  watch([walletAddress, networkName, chainId, name, nativeNetworkData, nativeWalletAccount], () => {
+  watch([walletAddress, networkName, chainId, walletName, dappNetworkData, dappWalletAccount], () => {
     resetAccount();
   });
 
@@ -193,7 +192,6 @@ export const useStore = createGlobalState(() => {
   window.addEventListener('resize', () => {
     storage.value.isMobile = handleMobileScreen();
   });
-
 
   const dialogs = reactive<Record<string, boolean>>({
     coinList: false,
@@ -215,9 +213,9 @@ export const useStore = createGlobalState(() => {
     modules,
     networkOptions,
     insideNativeWallet,
-    nativeWalletAccount,
-    nativeNetworkData,
-    nativeStatusTransaction,
-    nativeTransactionHash
+    dappWalletAccount,
+    dappNetworkData,
+    dappStatusTransaction,
+    dappTransactionHash
   }
 });

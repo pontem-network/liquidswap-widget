@@ -92,6 +92,7 @@ import { useClipboard } from '@vueuse/core';
 import { CopyNotification } from '@/components/CopyNotification';
 import PButton from "primevue/button";
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
+import {useStore} from "@/store";
 
 type State =
   | {
@@ -112,7 +113,14 @@ interface IProps {
 const dialog = ref();
 const props = defineProps<IProps>();
 const emits = defineEmits(['close', 'success', 'reject']);
+const { networkId } = useStore();
 
+const networkName = computed(() => {
+  switch (networkId.value) {
+    case 1: return 'mainnet';
+    default: return 'testnet';
+  }
+})
 const txState = computed(() => props.state.tx);
 const isInternalError = computed(() => !isSuccess.value && !txState.value);
 const isSuccess = computed(() => props.state.status === 'success');
@@ -120,7 +128,7 @@ const isSuccess = computed(() => props.state.status === 'success');
 const { copy: onCopyAddress } = useClipboard();
 const txLink = computed(
   () =>
-    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=mainnet`,
+    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=${networkName}`,
 );
 
 const description = computed(() => {
@@ -145,10 +153,9 @@ function onComplete() {
     composed: true,
     bubbles: true,
   });
-  document.querySelector('liquidswap-widget')!.dispatchEvent(event);
+  document.querySelector('liquidswap-widget')?.dispatchEvent(event);
 
   if (isSuccess.value) {
-    // TODO: persist LP?
     emits('success');
   } else {
     emits('reject');

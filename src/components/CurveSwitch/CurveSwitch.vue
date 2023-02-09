@@ -47,6 +47,8 @@ import {
   useTokensStore,
 } from '@/store';
 
+const toast = useToast();
+
 interface IProps {
   curve?: string;
 }
@@ -56,7 +58,6 @@ const props = defineProps<IProps>();
 const { curves } = useStore();
 const store = useSwapStore();
 const tokenStore = useTokensStore();
-// const toast = useToast();
 
 const isBusy = computed(() =>
   store.isBusy !== undefined ? store.isBusy.value : false,
@@ -66,7 +67,6 @@ const switchSelected = (curve: string) => {
   if (isBusy.value === true) return;
   store.curve = curve;
 };
-
 
 watch(
   [

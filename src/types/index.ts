@@ -57,7 +57,6 @@ export type Network = {
     CoinInfo: string;
     CoinStore: string;
   };
-  // tokens: IPersistedToken[];
 };
 
 export interface ICreateToken {
