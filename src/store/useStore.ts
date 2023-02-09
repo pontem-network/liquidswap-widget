@@ -64,6 +64,7 @@ export const useStore = createGlobalState(() => {
   const networks = reactive(NETWORKS);
 
   const walletAdapter = useWalletProviderStore();
+
   const {
     account: walletAccount,
     network: adapterNetwork,
@@ -73,8 +74,8 @@ export const useStore = createGlobalState(() => {
   const dappWalletAccount = ref();
   const dappNetworkData = ref<{ name?: string; chainId?: string }>();
 
-  const walletAddress = computed(() => insideNativeWallet ? dappWalletAccount.value : walletAccount.value?.address);
-  const networkName = computed(() => insideNativeWallet ? dappNetworkData.value?.name : adapterNetwork.value?.name);
+  const walletAddress = computed(() => insideNativeWallet.value ? dappWalletAccount.value : walletAccount.value?.address);
+  const networkName = computed(() => insideNativeWallet.value ? dappNetworkData.value?.name : adapterNetwork.value?.name);
 
   const chainId = computed(
     () => {
@@ -97,6 +98,13 @@ export const useStore = createGlobalState(() => {
   const account = computed(() => storage.value.account);
 
   const walletName = computed(() => insideNativeWallet.value ? 'Pontem' : wallet.value?.adapter.name);
+
+  const dialogs = reactive<Record<string, boolean>>({
+    coinList: false,
+    connectWallet: false,
+    invalidNetwork: false,
+    swapConfirm: false,
+  });
 
   function resetAccount() {
     storage.value.defaultToken = APTOS;
@@ -181,7 +189,7 @@ export const useStore = createGlobalState(() => {
     }
   }
 
-  watch([walletAddress, networkName, chainId, walletName, dappNetworkData, dappWalletAccount], () => {
+  watch([insideNativeWallet, dappWalletAccount, dappNetworkData, adapterNetwork, walletAccount, chainId, walletName, walletAddress, networkName], () => {
     resetAccount();
   });
 
@@ -191,13 +199,6 @@ export const useStore = createGlobalState(() => {
 
   window.addEventListener('resize', () => {
     storage.value.isMobile = handleMobileScreen();
-  });
-
-  const dialogs = reactive<Record<string, boolean>>({
-    coinList: false,
-    connectWallet: false,
-    invalidNetwork: false,
-    swapConfirm: false,
   });
 
   return {

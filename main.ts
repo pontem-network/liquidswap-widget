@@ -27,7 +27,6 @@ const createElementInstance = ({ component, plugins = [] }: ICreateElementInstan
       const app = createApp();
       const pinia = createPinia();
       const adapter = useWalletProviderStore(pinia);
-      plugins.forEach(plugin => app.use(plugin));
 
       setTimeout(() => {
         adapter.init({
@@ -38,6 +37,8 @@ const createElementInstance = ({ component, plugins = [] }: ICreateElementInstan
       }, 300);
 
       setActivePinia(pinia);
+
+      plugins.forEach(plugin => app.use(plugin));
 
       const inst = getCurrentInstance();
       if (inst === null) return;

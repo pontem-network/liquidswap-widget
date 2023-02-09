@@ -118,9 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 import { watchDebounced } from '@vueuse/shared';
-import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
@@ -137,7 +135,6 @@ import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 
-const adapter = useWalletProviderStore();
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
@@ -145,9 +142,7 @@ const tokensStore = useTokensStore();
 
 const { curves, account, insideNativeWallet } = mainStore;
 
-const { connected: connectedAdapter } = storeToRefs(adapter);
-
-const connected = computed(() => insideNativeWallet.value ? true : connectedAdapter.value as unknown as boolean);
+const connected = computed(() => Boolean(account.value));
 
 const curveType = computed(() =>
   poolsStore.getCurveType(

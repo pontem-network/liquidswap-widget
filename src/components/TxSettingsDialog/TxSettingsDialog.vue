@@ -98,8 +98,10 @@ const emits = defineEmits(['update:isDefault', 'update:modelValue', 'close']);
 
 const adapter = useWalletProviderStore();
 
+const { connected: connectedWallet } = storeToRefs(adapter);
+
 const { insideNativeWallet } = useStore();
-const connected = computed(() => insideNativeWallet.value ? false : storeToRefs(adapter).connected.value )
+const connected = computed(() => insideNativeWallet.value ? false : connectedWallet );
 
 const { copy: onCopyUrl } = useClipboard();
 

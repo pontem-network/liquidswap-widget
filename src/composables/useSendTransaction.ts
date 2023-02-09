@@ -9,10 +9,10 @@ type TxParams = MaybeRef<AptosCreateTx | undefined>;
 
 export function useSendTransaction() {
   const adapter = useWalletProviderStore();
-  const { insideNativeWallet, nativeStatusTransaction, nativeTransactionHash } = useStore();
+  const { insideNativeWallet, dappStatusTransaction, dappTransactionHash } = useStore();
 
-  const actualNativeStatusTransaction = computed(() => nativeStatusTransaction.value);
-  const actualNativeTransactionHash = computed(() => nativeTransactionHash.value);
+  const actualNativeStatusTransaction = computed(() => dappStatusTransaction.value);
+  const actualNativeTransactionHash = computed(() => dappTransactionHash.value);
 
   const { state, isReady, isLoading, error, execute } = useAsyncState<
     string | undefined
