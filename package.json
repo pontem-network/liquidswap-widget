@@ -1,6 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "files": [
     "src",
@@ -39,14 +39,11 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "@originjs/vite-plugin-require-context": "^1.0.9",
     "@types/webpack-env": "^1.18.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "gh-pages": "^4.0.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "vite-plugin-dts": "^1.7.1",
-    "vite-plugin-package-version": "^1.0.2",
-    "vite-plugin-require-transform": "^1.0.4",
     "vue-tsc": "^1.0.11",
     "vite-svg-loader": "4.0.0"
   },
@@ -70,6 +67,6 @@
     "tslib": "^2.3.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
-    "vue": "^3.2.40"
+    "vue": "3.2.40"
   }
 }

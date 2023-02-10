@@ -114,21 +114,15 @@
       :from-token="swapStore.fromCurrency.token"
       @close="txSettingsDialogDisplay = false"
     />
-<!--    <connect-wallet-dialog v-model:visible="mainStore.dialogs.connectWallet" />-->
-<!--    <swap-confirm-dialog v-model:visible="mainStore.dialogs.swapConfirm" />-->
   </div>
 </template>
 
 <script setup lang="ts">
-import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 import { watchDebounced } from '@vueuse/shared';
-import { storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
 
-import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
-import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
 import { InputToggle } from '@/components/InputToggle';
@@ -141,14 +135,14 @@ import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 
-const adapter = useWalletProviderStore();
-const { account, connected } = storeToRefs(adapter);
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
 
-const { curves } = mainStore;
+const { curves, account, insideNativeWallet } = mainStore;
+
+const connected = computed(() => Boolean(account.value));
 
 const curveType = computed(() =>
   poolsStore.getCurveType(
@@ -171,7 +165,6 @@ watch(
     immediate: true,
   },
 );
-
 const fromBalance = useCurrentAccountBalance(
   computed(() => swapStore.fromCurrency?.token),
 );

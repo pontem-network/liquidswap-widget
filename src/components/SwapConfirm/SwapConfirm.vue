@@ -9,7 +9,7 @@
     v-if="view === 'tx'"
     title="Swap Coins"
     :payload="payload"
-    :stable="isCurveStabe"
+    :stable="isCurveStable"
     @back="onBack"
     @close="onClose"
     @success="onSuccess"
@@ -76,7 +76,7 @@ useTimeoutPoll(() => swapStore.refetchRates(true), RECALCULATION_TIME, {
   immediate: true,
 });
 
-const isCurveStabe = computed(() => swapStore.curve === curves.stable);
+const isCurveStable = computed(() => swapStore.curve === curves.stable);
 
 function onSwapConfirm() {
   cachedPayload.value = cloneDeep(unref(payload.value));

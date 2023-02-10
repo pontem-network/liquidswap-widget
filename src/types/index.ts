@@ -57,7 +57,6 @@ export type Network = {
     CoinInfo: string;
     CoinStore: string;
   };
-  // tokens: IPersistedToken[];
 };
 
 export interface ICreateToken {
@@ -74,3 +73,5 @@ export interface IPoolExist {
   toCoin: string;
   curve: string;
 }
+
+export type TStatusTransaction = "success" | "pending" | "error";

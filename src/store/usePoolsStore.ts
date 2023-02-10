@@ -69,7 +69,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     } catch (e) {
       throw new Error('Bad json');
     }
-    for (let index = 0; index < json.data.length; index++) {
+    for (let index = 0; index < json.data?.length; index++) {
       const one = json.data[index] as {
         alias: { pair: string; curve: string };
         apr: number;
