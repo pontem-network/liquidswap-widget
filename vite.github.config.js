@@ -13,7 +13,7 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => tag.startsWith('liquid-swap')
+          isCustomElement: (tag) => tag.startsWith('liquidswap-')
         }
       }
     }),
