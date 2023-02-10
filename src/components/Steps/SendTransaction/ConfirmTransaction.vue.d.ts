@@ -20,8 +20,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
     tx: import("vue").ComputedRef<AptosCreateTx>;
     description: import("vue").ComputedRef<string | undefined>;
     onClose: () => void;
-    readonly ProgressSpinner: typeof ProgressSpinner;
-    readonly PButton: typeof PButton;
+    ProgressSpinner: typeof ProgressSpinner;
+    PButton: typeof PButton;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "rejected" | "submitted")[], "close" | "rejected" | "submitted", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     tx: {
         type: null;

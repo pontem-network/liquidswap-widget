@@ -13,7 +13,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     emits: (event: "close" | "back", ...args: any[]) => void;
     onClose: () => void;
     onBack: () => void;
-    readonly PButton: typeof PButton;
+    PButton: typeof PButton;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "back")[], "close" | "back", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     title: {
         type: StringConstructor;

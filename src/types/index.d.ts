@@ -49,3 +49,4 @@ export interface IPoolExist {
     toCoin: string;
     curve: string;
 }
+export declare type TStatusTransaction = "success" | "pending" | "error";

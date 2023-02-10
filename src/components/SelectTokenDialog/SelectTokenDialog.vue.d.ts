@@ -141,10 +141,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
             command: (...args: any[]) => void;
         }[];
         selectToken: (token: string) => void;
-        readonly ProgressSpinner: typeof import("primevue/progressspinner").default;
-        readonly InputText: typeof import("primevue/inputtext").default;
-        readonly TextHighlight: import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>;
-        readonly DialogHeader: import("vue").DefineComponent<{
+        ProgressSpinner: typeof import("primevue/progressspinner").default;
+        InputText: typeof import("primevue/inputtext").default;
+        TextHighlight: import("vue").DefineComponent<unknown, object, {}, import("vue").ComputedOptions, import("vue").MethodOptions, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<unknown>, {}>;
+        DialogHeader: import("vue").DefineComponent<{
             title: {
                 type: StringConstructor;
                 required: true;
@@ -158,7 +158,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
             emits: (event: "close" | "back", ...args: any[]) => void;
             onClose: () => void;
             onBack: () => void;
-            readonly PButton: typeof import("primevue/button").default;
+            PButton: typeof import("primevue/button").default;
         }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "back")[], "close" | "back", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
             title: {
                 type: StringConstructor;
@@ -174,7 +174,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         }, {
             hasBack: boolean;
         }>;
-        readonly TokenAlert: import("vue").DefineComponent<{
+        TokenAlert: import("vue").DefineComponent<{
             type: {
                 type: StringConstructor;
                 required: true;
@@ -266,7 +266,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
                 required: true;
             };
         }>>, {}>;
-        readonly TokenIcon: import("vue").DefineComponent<{
+        TokenIcon: import("vue").DefineComponent<{
             logo: {
                 type: StringConstructor;
                 required: false;
@@ -296,7 +296,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
                 class: string | undefined;
                 src?: undefined;
             }>;
-            readonly IdentificationIcon: import("vue").DefineComponent<{
+            IdentificationIcon: import("vue").DefineComponent<{
                 address: {
                     type: StringConstructor;
                     required: true;
@@ -372,7 +372,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         onNavigate?: ((...args: any[]) => any) | undefined;
         "onUpdate:poolId"?: ((...args: any[]) => any) | undefined;
     }, {}>;
-    readonly PDialog: typeof PDialog;
+    PDialog: typeof PDialog;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:actionToken" | "update:secondaryToken")[], "update:actionToken" | "update:secondaryToken", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     actionToken: {
         type: StringConstructor;

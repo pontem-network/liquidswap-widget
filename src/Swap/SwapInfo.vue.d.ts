@@ -140,7 +140,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     formatter: Intl.NumberFormat;
     priceImpact: import("vue").ComputedRef<string>;
     priceImpactClass: import("vue").ComputedRef<"-green" | "-yellow" | "-red">;
-    readonly PAccordion: typeof PAccordion;
-    readonly PAccordionTab: typeof PAccordionTab;
+    PAccordion: typeof PAccordion;
+    PAccordionTab: typeof PAccordionTab;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}>;
 export default _sfc_main;

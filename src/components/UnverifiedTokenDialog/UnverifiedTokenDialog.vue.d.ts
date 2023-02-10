@@ -10,8 +10,8 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     show: () => void;
     hide: () => void;
     onClose: () => void;
-    readonly PDialog: typeof PDialog;
-    readonly PButton: typeof PButton;
+    PDialog: typeof PDialog;
+    PButton: typeof PButton;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "close"[], "close", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
     onClose?: ((...args: any[]) => any) | undefined;
 }, {}>;

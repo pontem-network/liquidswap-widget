@@ -9,7 +9,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         uncorrelated: string;
     };
     props: any;
-    curve: import("vue").ComputedRef<"uncorrelated" | "stable">;
+    curve: import("vue").ComputedRef<"stable" | "uncorrelated">;
     ToolTip: {
         name: string;
         props: {

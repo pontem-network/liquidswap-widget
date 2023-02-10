@@ -28,7 +28,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         class: string | undefined;
         src?: undefined;
     }>;
-    readonly IdentificationIcon: import("vue").DefineComponent<{
+    IdentificationIcon: import("vue").DefineComponent<{
         address: {
             type: StringConstructor;
             required: true;

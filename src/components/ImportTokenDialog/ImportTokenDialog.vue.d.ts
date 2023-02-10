@@ -181,7 +181,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     show: () => void;
     hide: () => void;
     onClose: () => void;
-    readonly DialogHeader: import("vue").DefineComponent<{
+    DialogHeader: import("vue").DefineComponent<{
         title: {
             type: StringConstructor;
             required: true;
@@ -195,7 +195,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         emits: (event: "close" | "back", ...args: any[]) => void;
         onClose: () => void;
         onBack: () => void;
-        readonly PButton: typeof PButton;
+        PButton: typeof PButton;
     }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "back")[], "close" | "back", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
         title: {
             type: StringConstructor;
@@ -211,7 +211,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     }, {
         hasBack: boolean;
     }>;
-    readonly TokenIcon: import("vue").DefineComponent<{
+    TokenIcon: import("vue").DefineComponent<{
         logo: {
             type: StringConstructor;
             required: false;
@@ -241,7 +241,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
             class: string | undefined;
             src?: undefined;
         }>;
-        readonly IdentificationIcon: import("vue").DefineComponent<{
+        IdentificationIcon: import("vue").DefineComponent<{
             address: {
                 type: StringConstructor;
                 required: true;
@@ -294,8 +294,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
             required: false;
         };
     }>>, {}>;
-    readonly PDialog: typeof PDialog;
-    readonly PButton: typeof PButton;
+    PDialog: typeof PDialog;
+    PButton: typeof PButton;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "close"[], "close", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     token: {
         type: StringConstructor;

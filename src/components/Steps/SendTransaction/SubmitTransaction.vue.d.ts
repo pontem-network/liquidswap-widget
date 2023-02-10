@@ -13,6 +13,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
     dialog: import("vue").Ref<any>;
     props: any;
     emits: (event: "success" | "close" | "reject", ...args: any[]) => void;
+    networkId: Readonly<import("vue").Ref<number>>;
+    networkName: import("vue").ComputedRef<"mainnet" | "testnet">;
     txState: import("vue").ComputedRef<any>;
     isInternalError: import("vue").ComputedRef<boolean>;
     isSuccess: import("vue").ComputedRef<boolean>;
@@ -22,8 +24,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
     txMessage: import("vue").ComputedRef<any>;
     copyAddress: () => void;
     onComplete: () => void;
-    readonly shortAddress: typeof shortAddress;
-    readonly CopyNotification: import("vue").DefineComponent<{}, {
+    shortAddress: typeof shortAddress;
+    CopyNotification: import("vue").DefineComponent<{}, {
         NOTIFICATION_DURATION: number;
         display: import("vue").Ref<boolean>;
         animation: import("vue").ComputedRef<{
@@ -32,7 +34,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         show: () => void;
         hide: () => void;
     }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}>;
-    readonly PButton: typeof PButton;
+    PButton: typeof PButton;
     ToolTip: {
         name: string;
         props: {

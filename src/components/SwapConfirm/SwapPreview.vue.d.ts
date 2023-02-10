@@ -192,7 +192,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     };
     onClose: () => void;
     onConfirm: () => void;
-    readonly DialogHeader: import("vue").DefineComponent<{
+    DialogHeader: import("vue").DefineComponent<{
         title: {
             type: StringConstructor;
             required: true;
@@ -206,7 +206,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         emits: (event: "close" | "back", ...args: any[]) => void;
         onClose: () => void;
         onBack: () => void;
-        readonly PButton: typeof PButton;
+        PButton: typeof PButton;
     }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "back")[], "close" | "back", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
         title: {
             type: StringConstructor;
@@ -222,7 +222,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     }, {
         hasBack: boolean;
     }>;
-    readonly TokenIcon: import("vue").DefineComponent<{
+    TokenIcon: import("vue").DefineComponent<{
         logo: {
             type: StringConstructor;
             required: false;
@@ -252,7 +252,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             class: string | undefined;
             src?: undefined;
         }>;
-        readonly IdentificationIcon: import("vue").DefineComponent<{
+        IdentificationIcon: import("vue").DefineComponent<{
             address: {
                 type: StringConstructor;
                 required: true;
@@ -533,7 +533,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             formatted: import("vue").Ref<string>;
         };
     }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}>;
-    readonly PButton: typeof PButton;
+    PButton: typeof PButton;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "confirm")[], "close" | "confirm", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
     onClose?: ((...args: any[]) => any) | undefined;
     onConfirm?: ((...args: any[]) => any) | undefined;

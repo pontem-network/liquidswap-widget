@@ -5,8 +5,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
         required: false;
     };
 }, {
-    props: any;
     toast: import("primevue/toastservice").ToastServiceMethods;
+    props: any;
     curves: {
         stable: string;
         uncorrelated: string;
@@ -171,7 +171,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     }, "getToken" | "registerToken" | "searchToken" | "getTokenInfo" | "removeToken" | "isTokenVerified" | "fetchCoinsList">>;
     isBusy: import("vue").ComputedRef<boolean>;
     switchSelected: (curve: string) => void;
-    readonly PToast: typeof PToast;
+    PToast: typeof PToast;
     ToolTip: {
         name: string;
         props: {

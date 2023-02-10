@@ -260,7 +260,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         decimals: import("vue").ComputedRef<number>;
         formatted: import("vue").Ref<string>;
     }>;
-    readonly TokenIcon: import("vue").DefineComponent<{
+    TokenIcon: import("vue").DefineComponent<{
         logo: {
             type: StringConstructor;
             required: false;
@@ -290,7 +290,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
             class: string | undefined;
             src?: undefined;
         }>;
-        readonly IdentificationIcon: import("vue").DefineComponent<{
+        IdentificationIcon: import("vue").DefineComponent<{
             address: {
                 type: StringConstructor;
                 required: true;
