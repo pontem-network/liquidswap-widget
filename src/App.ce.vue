@@ -28,7 +28,7 @@ const props = defineProps<{
 })();
 const mainStore = useStore();
 
-watch([props], () => {
+function checkNativeWallet (){
   if (props.dataAccount && props.dataNetwork) {
     mainStore.insideNativeWallet.value = true;
     mainStore.dappWalletAccount.value = props.dataAccount;
@@ -36,5 +36,10 @@ watch([props], () => {
     mainStore.dappStatusTransaction.value = props?.dataTransaction && JSON.parse(props.dataTransaction).status;
     mainStore.dappTransactionHash.value = props?.dataTransaction && JSON.parse(props.dataTransaction)?.hash;
   }
+}
+
+checkNativeWallet();
+watch([props], () => {
+  checkNativeWallet();
 })
 </script>
