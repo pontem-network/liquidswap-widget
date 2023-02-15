@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-step">
-    <DialogHeader title="Select a coin" @close="onClose" />
+    <DialogHeader title="Select Tokens" @close="onClose" />
     <div class="search">
       <InputText
         v-model.trim="search"
@@ -49,27 +49,63 @@
             </li>
           </ul>
           <p v-else-if="isLoadingTokensList" class="text-center">Loading...</p>
-          <p v-else class="text-center">Coins not found</p>
+          <div v-else-if="importTokenPreview" class="import-coin-wrap">
+            <TokenIcon
+                :logo="importTokenPreview?.logo"
+                :type="importTokenPreview?.type"
+                class="img"
+                size="32"
+            />
+            <div class="coin-wrap__labels">
+              <h3 class="coin-symbol">{{ importTokenPreview?.symbol }}</h3>
+              <p
+                  v-if="importTokenPreview?.symbol !== importTokenPreview?.name"
+                  class="coin-name"
+              >
+                {{ importTokenPreview?.name }}
+              </p>
+            </div>
+            <div class="coin-wrap__actions">
+              <PButton class="coin-import" @click="importToken">Import</PButton>
+            </div>
+          </div>
+          <p v-else class="text-center">Tokens not found</p>
         </template>
       </div>
     </div>
+    <div class="dialog-step__footer">
+      <div class="dialog-step__divider mb-3" />
+      <p-button
+          class="p-button-secondary justify-content-center w-full"
+          @click="onManageCoinLists"
+      >
+        Manage Token Lists
+      </p-button>
+    </div>
   </div>
+  <ImportTokenDialog
+    ref="importDialog"
+    v-model:token="importTokenType"
+    :has-back="true"
+  />
 </template>
 
 <script setup lang="ts">
-import {computed, ComputedRef, ref, watch, watchEffect} from 'vue';
+import { computed, ComputedRef, ref, watch, watchEffect } from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import orderBy from 'lodash/orderBy';
 import { useTokensStore } from '@/store';
 import { IPersistedTokenExtended } from '@/store/useTokenStore';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext';
+import PButton from 'primevue/button';
 
 import { checkAptosType } from '@/utils/utils';
 import { TextHighlight } from '@/components/TextHighlight';
 import { DialogHeader } from '@/components/DialogHeader';
 import { TokenAlert } from '@/components/TokenAlert';
 import { TokenIcon } from '@/components/TokenIcon';
+import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 
 interface IProps {
   actionToken?: string;
@@ -96,6 +132,11 @@ const emits = defineEmits([
 const rawTokenList_ = ref<TokenInList[]>();
 const tokenList_ = ref<TokenInList[]>();
 const isLoadingTokensList = ref<boolean>(false);
+
+const importTokenPreview = ref();
+const importDialog = ref();
+
+const importTokenType = computed(() => importTokenPreview.value?.type);
 
 function onClose() {
   emits('close');
@@ -154,8 +195,8 @@ const rawTokenList = async () => {
 
   return orderBy(
     list,
-    ['selected', 'token.order', 'token.alias'],
-    ['desc', 'asc', 'asc'],
+    ['selected', 'token.caution', 'token.order', 'token.alias'],
+    ['desc', 'asc', 'asc', 'asc'],
   );
 };
 
@@ -165,13 +206,15 @@ const selectedTokens = computed(() => {
 
 function searchToken(resource: string) {
   searchLoading.value = true;
-  const { cancel, request } = tokensStore.searchToken(resource, true);
+  const request = tokensStore.searchToken(resource, false);
 
-  request.then(() => (searchLoading.value = false));
+  console.log('searchToken request', request);
 
-  return () => {
-    cancel('Rejected by user');
-  };
+  request?.then(() => (searchLoading.value = false));
+
+  // return () => {
+  //   cancel('Rejected by user');
+  // };
 }
 
 function filterTokenList(list: TokenInList[]) {
@@ -199,6 +242,14 @@ function selectToken(token: string) {
   emits('update:actionToken', token);
 }
 
+const importToken = () => {
+  importDialog.value.show();
+};
+
+function onManageCoinLists() {
+  emits('navigate', 'manage-presets');
+}
+
 // watchers
 watchEffect(async () => {
   isLoadingTokensList.value = true;
@@ -212,11 +263,15 @@ watchEffect(async () => {
   ));
 });
 
-watch(search, (v, _, onCleanup) => {
+watch(search, async (v, _) => {
   if (checkAptosType(v)) {
-    const cancel = searchToken(v);
-    onCleanup(cancel);
+    const tokenInfo = await tokensStore.getTokenInfo(search.value);
+    importTokenPreview.value = tokenInfo && {
+      ...tokenInfo,
+      logo: tokensStore.getLogoUrl(search.value),
+    };
   } else {
+    importTokenPreview.value = null;
     searchLoading.value = false;
   }
 });

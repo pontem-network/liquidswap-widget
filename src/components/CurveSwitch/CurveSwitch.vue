@@ -29,7 +29,7 @@
         alt="stable curve"
       />
       <p>Stable</p>
-      <ToolTip position="top" :tooltipText="'Using formula optimized for stable coins swaps'">
+      <ToolTip position="top-left" :tooltipText="'Using formula optimized for stable coins swaps'">
         <i class="pi pi-info-circle"/>
       </ToolTip>
     </div>

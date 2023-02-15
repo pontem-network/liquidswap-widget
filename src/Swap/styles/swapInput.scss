@@ -62,12 +62,13 @@
       background: transparent;
       -webkit-appearance: none;
       border: 0;
-      padding: 1rem;
+      padding: 1rem 0 1rem 1rem;
       font-size: 28px;
       box-shadow: none;
       color: var(--surface-0) !important;
       width: 0;
       flex: 1 1 auto;
+      letter-spacing: -0.13px;
 
       ::placeholder {
         color: var(--surface-400);

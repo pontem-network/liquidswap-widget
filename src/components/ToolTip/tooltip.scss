@@ -34,7 +34,7 @@ $gray: var(--surface-card);
     font-size: 0.875rem;
 
     min-width: 4em;
-    max-width: 18em;
+    max-width: 16em;
     width: max-content;
     white-space: normal;
     overflow: hidden;
@@ -110,10 +110,41 @@ $gray: var(--surface-card);
     transform: translate(0.5em, -50%);
   }
 
+  /* position: TOP-LEFT */
+  &[position^="top-left"]::before {
+    bottom: 100%;
+    border-bottom-width: 0;
+    border-top-color: $gray;
+    left: calc(0em + 8px);
+    transform: translate(-50%, -0.5em);
+  }
+  &[position^="top-left"]::after {
+    bottom: calc(100% + 5px);
+    left: -88px;
+    transform: translate(-50%, -0.5em);
+  }
+
+  /* position: BOTTOM-LEFT */
+  &[position^="bottom-left"]::before {
+    top: 100%;
+    border-top-width: 0;
+    border-bottom-color: $gray;
+    transform: translate(-50%, -0.5em);
+  }
+  &[position^="bottom-left"]::after {
+    top: calc(100% + 5px);
+    left: 40px;
+    transform: translate(-50%, -0.5em);
+  }
+
   &:not([position]):hover::before,
   &:not([position]):hover::after,
   &[position^="top"]:hover::before,
   &[position^="top"]:hover::after,
+  &[position^="top-left"]:hover::before,
+  &[position^="top-left"]:hover::after,
+  &[position^="bottom-left"]:hover::before,
+  &[position^="bottom-left"]:hover::after,
   &[position^="bottom"]:hover::before,
   &[position^="bottom"]:hover::after {
     animation: tooltips-vert 300ms ease-out forwards;

@@ -15,7 +15,7 @@
         alt="uncorrelated curve"
       />
       <p>{{ props.type == curves.stable ? 'Stable' : 'Uncorrelated' }}</p>
-      <ToolTip position="left" :tooltip-text="`Using formula optimized for ${curve} coins swaps`">
+      <ToolTip position="top-left" :tooltip-text="`Using formula optimized for ${curve} coins swaps`">
         <i class="pi pi-info-circle"/>
       </ToolTip>
     </div>
