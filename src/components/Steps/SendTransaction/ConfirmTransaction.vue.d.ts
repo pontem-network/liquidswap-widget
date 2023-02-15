@@ -12,7 +12,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     };
 }, {
     props: any;
-    emits: (event: "close" | "rejected" | "submitted", ...args: any[]) => void;
+    emits: (event: "rejected" | "close" | "submitted", ...args: any[]) => void;
     state: import("vue").Ref<string | undefined>;
     error: import("vue").Ref<unknown>;
     execute: (txParams: AptosCreateTx | import("vue").Ref<AptosCreateTx | undefined> | undefined) => Promise<string | undefined>;
@@ -22,7 +22,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     onClose: () => void;
     ProgressSpinner: typeof ProgressSpinner;
     PButton: typeof PButton;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "rejected" | "submitted")[], "close" | "rejected" | "submitted", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("rejected" | "close" | "submitted")[], "rejected" | "close" | "submitted", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     tx: {
         type: null;
         required: true;
