@@ -207,14 +207,7 @@ const selectedTokens = computed(() => {
 function searchToken(resource: string) {
   searchLoading.value = true;
   const request = tokensStore.searchToken(resource, false);
-
-  console.log('searchToken request', request);
-
   request?.then(() => (searchLoading.value = false));
-
-  // return () => {
-  //   cancel('Rejected by user');
-  // };
 }
 
 function filterTokenList(list: TokenInList[]) {
