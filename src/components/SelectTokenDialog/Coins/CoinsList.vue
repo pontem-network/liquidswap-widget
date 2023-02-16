@@ -1,6 +1,7 @@
 <template>
   <div class="coins-list">
     <div class="address-import">
+      <span class="address-import__label">Put a token address</span>
       <InputText
         v-model.trim="addressImportStr"
         spellcheck="false"
@@ -87,6 +88,7 @@ import ImportTokenDialog from '@/components/ImportTokenDialog/ImportTokenDialog.
 import { TokenAlert } from '@/components/TokenAlert';
 import { TokenIcon } from '@/components/TokenIcon';
 import PButton from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 const tokensStore = useTokensStore();
 

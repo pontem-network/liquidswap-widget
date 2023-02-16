@@ -222,6 +222,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
   }
 
   function searchToken(type: string, withCancel?: false): Promise<any>;
+
   function searchToken(
     type: string,
     withCancel: true,
@@ -240,9 +241,10 @@ export const useTokensStore = defineStore('tokensStore', () => {
       extractAddressFromType(type),
       composeType(modules.CoinInfo, [type]),
     ) as unknown as any;
-    const request = withCancel ? promise.request : promise;
 
-    request.then((resource?: Resource<AptosCoinInfoResource>) => {
+    const request = withCancel ? promise?.request : promise;
+
+    request?.then((resource?: Resource<AptosCoinInfoResource>) => {
       if (!resource) {
         return;
       }
@@ -256,6 +258,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
           decimals: +data.decimals,
           chainId: mainStore.networkId.value,
           source: 'import',
+          caution: true,
           order: 1,
           type,
         },
@@ -267,8 +270,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
     if (withCancel) {
       return {
-        request: promise.request,
-        cancel: promise.cancel,
+        request: promise?.request,
+        cancel: promise?.cancel,
       };
     }
 

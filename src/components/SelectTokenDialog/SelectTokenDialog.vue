@@ -18,6 +18,13 @@
       @navigate="onNavigate"
       @close="onClose"
     />
+    <ManagePresets
+      v-if="view === 'manage-presets'"
+      class="stepped-dialog__item"
+      @back="onBack"
+      @navigate="onNavigate"
+      @close="onClose"
+    />
   </PDialog>
 </template>
 
@@ -25,6 +32,7 @@
 import TokenList from './TokenList.vue';
 import { ref, computed } from 'vue';
 import PDialog from 'primevue/dialog';
+import ManagePresets from './ManagePresets.vue';
 
 
 interface IProps {

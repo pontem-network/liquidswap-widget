@@ -30,7 +30,7 @@ export function useSendTransaction() {
 
         // @TODO need to use abort controller here instead of promise. In case closing confirm window - setInterval still running.
         return new Promise((resolve, reject) => {
-          const { pause } = useIntervalFn(checkStatus, 400)
+          const { pause } = useIntervalFn(checkStatus, 400);
           function checkStatus() {
             if (actualNativeStatusTransaction.value === "success" && actualNativeTransactionHash.value) {
               pause();
@@ -39,6 +39,10 @@ export function useSendTransaction() {
             if (actualNativeStatusTransaction.value === "error") {
               pause();
               return reject('Sorry, something went wrong. Reopen the page and try again later.');
+            }
+            if (actualNativeStatusTransaction.value === "rejected") {
+              pause();
+              return reject('Rejected by User');
             }
           }
         }).then((response: any) => response).catch((errorMessage: any) => {

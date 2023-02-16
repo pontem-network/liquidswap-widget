@@ -16,7 +16,7 @@ import { InvalidNetworkDialog } from '@/components/InvalidNetworkDialog';
 const props = defineProps<{
   dataAccount?: string; // account address like 0x....da14
   dataNetwork?: string; // { name?: string; chainId?: string } as JSON
-  dataTransaction?: string; // { status: 'pending' | 'success' | 'error'; hash: string | null } as JSON
+  dataTransaction?: string; // { status: 'pending' | 'success' | 'error' | 'rejected'; hash: string | null } as JSON
 }>();
 // initialize stores
 (async () => {

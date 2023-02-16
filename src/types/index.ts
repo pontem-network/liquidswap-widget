@@ -74,4 +74,4 @@ export interface IPoolExist {
   curve: string;
 }
 
-export type TStatusTransaction = "success" | "pending" | "error";
+export type TStatusTransaction = "success" | "pending" | "error" | "rejected";

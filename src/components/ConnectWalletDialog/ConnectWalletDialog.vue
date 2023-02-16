@@ -2,7 +2,7 @@
   <PDialog
     v-model:visible="displayModal"
     :draggable="false"
-    :style="{ width: '483px', marginTop: '61px' }"
+    :style="{ maxWidth: '483px', width: '100%', marginTop: '61px' }"
     :modal="true"
     :position="'top'"
     :closable="true"
