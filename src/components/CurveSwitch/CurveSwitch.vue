@@ -9,7 +9,7 @@
       @click="switchSelected(curves.uncorrelated)"
     >
       <img src="../../assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
-      <p>Uncorrelated</p>
+      <p>Unstable</p>
       <ToolTip position="top" :tooltipText="'Using x*y=K formula'">
         <i class="pi pi-info-circle" />
       </ToolTip>

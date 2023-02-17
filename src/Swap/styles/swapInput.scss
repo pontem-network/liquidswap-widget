@@ -63,12 +63,13 @@
       -webkit-appearance: none;
       border: 0;
       padding: 1rem 0 1rem 1rem;
-      font-size: 28px;
+      font-size: 21px;
       box-shadow: none;
       color: var(--surface-0) !important;
       width: 0;
       flex: 1 1 auto;
       letter-spacing: -0.13px;
+      line-height: 33px;
 
       ::placeholder {
         color: var(--surface-400);
@@ -81,7 +82,7 @@
   }
 
   &__select {
-    font-size: 16px;
+    font-size: 15px;
     height: 2.4rem;
     padding: 0 12px;
     box-shadow: rgb(0 0 0 / 8%) 0 6px 10px;
