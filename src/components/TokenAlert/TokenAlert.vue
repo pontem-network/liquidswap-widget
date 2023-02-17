@@ -1,7 +1,7 @@
 <template>
   <ToolTip
       v-if="isNotDefaultCoin"
-      position="top"
+      position="bottom"
       :tooltipText="'Warning: This coin may be unaudited or contain critical vulnerabilities'"
   >
     <img

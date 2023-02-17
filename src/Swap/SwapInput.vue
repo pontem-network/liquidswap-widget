@@ -22,6 +22,7 @@
           :max-fraction-digits="tokenDecimals"
           @keyup="onInput"
           @blur="onBlur"
+          :inside="'123'"
         />
         <PButton
           v-if="!state.token"
