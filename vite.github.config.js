@@ -8,6 +8,9 @@ import svgLoader from 'vite-svg-loader';
 
 import dts from 'vite-plugin-dts';
 
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
+
+
 export default defineConfig({
   plugins: [
     vue({
@@ -20,7 +23,9 @@ export default defineConfig({
     dts(),
     svgLoader({
       defaultImport: 'url'
-    })],
+    }),
+    chunkSplitPlugin(),
+  ],
   resolve: {
     alias: {
       '@' : resolve(__dirname, './src')

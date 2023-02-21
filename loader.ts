@@ -1,8 +1,6 @@
 import { LiquidSwapWidget } from './main';
 
-import './src/styles/index.scss';
-
-import styles from './src/styles/index.scss';
+import styles from './src/styles/index.scss?inline';
 
 export const loadWidget = (tagName = 'liquidswap-widget') => {
   const el = customElements.get(tagName);

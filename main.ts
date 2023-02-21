@@ -7,49 +7,36 @@ import { walletsList } from "@/constants/wallets";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 
-import appStyles from './src/styles/index.scss?inline';
+import appStyles from './src/styles/index.scss';
 
-interface ICreateElementInstance {
-  component: Element;
-  props?: any;
-  plugins?: Array<any>;
-}
+const plugins = [PrimeVue, ToastService];
 
-const config = {
-  component: App,
-  plugins: [PrimeVue, ToastService],
-}
+export const LiquidSwapWidget = defineCustomElement({
+  props: App.props,
+  setup(props) {
+    const app = createApp();
+    const pinia = createPinia();
+    const adapter = useWalletProviderStore(pinia);
 
-const createElementInstance = ({ component, plugins = [] }: ICreateElementInstance) => {
-  return defineCustomElement({
-    props: component.props,
-    setup(props) {
-      const app = createApp();
-      const pinia = createPinia();
-      const adapter = useWalletProviderStore(pinia);
+    setTimeout(() => {
+      adapter.init({
+        wallets: walletsList.map((one) => new one.adapter(one.options)),
+        localStorageKey: 'pontem_widget',
+        autoConnect: true,
+      });
+    }, 300);
 
-      setTimeout(() => {
-        adapter.init({
-          wallets: walletsList.map((one) => new one.adapter(one.options)),
-          localStorageKey: 'pontem_widget',
-          autoConnect: true,
-        });
-      }, 300);
+    setActivePinia(pinia);
 
-      setActivePinia(pinia);
+    plugins.forEach(plugin => app.use(plugin));
 
-      plugins.forEach(plugin => app.use(plugin));
+    const inst = getCurrentInstance();
+    if (inst === null) return;
+    Object.assign(inst!.appContext, app._context);
+    Object.assign(inst.provides, app._context.provides);
+    Object.assign(inst!.appContext.provides, app._context.provides);
 
-      const inst = getCurrentInstance();
-      if (inst === null) return;
-      Object.assign(inst!.appContext, app._context);
-      Object.assign(inst.provides, app._context.provides);
-      Object.assign(inst!.appContext.provides, app._context.provides);
-
-      return () => h(component, props)
-    },
-    styles: [appStyles],
-  });
-}
-
-export const LiquidSwapWidget = createElementInstance(config);
+    return () => h(App, props)
+  },
+  styles: [appStyles],
+});
