@@ -766,12 +766,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         manageSwitch: import("vue").Ref<"lists" | "coins">;
         addressImportStr: import("vue").Ref<string>;
         error: import("vue").Ref<boolean>;
-        presets: import("vue").ComputedRef<never[]>;
-        customPools: import("vue").ComputedRef<any[]>;
-        onPoolDelete: () => void;
-        checkErrors: () => boolean;
         onClose: () => void;
-        onBack: () => void;
         DialogHeader: import("vue").DefineComponent<{
             title: {
                 type: StringConstructor;
@@ -802,89 +797,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
         }, {
             hasBack: boolean;
         }>;
-        TokenIcon: import("vue").DefineComponent<{
-            logo: {
-                type: StringConstructor;
-                required: false;
-            };
-            type: {
-                type: StringConstructor;
-                required: false;
-            };
-            size: {
-                type: StringConstructor;
-                required: false;
-            };
-            class: {
-                type: StringConstructor;
-                required: false;
-            };
-        }, {
-            props: any;
-            tokenImageProps: import("vue").ComputedRef<{
-                src: string;
-                size?: undefined;
-                address?: undefined;
-                class?: undefined;
-            } | {
-                size: string | undefined;
-                address: string | undefined;
-                class: string | undefined;
-                src?: undefined;
-            }>;
-            IdentificationIcon: import("vue").DefineComponent<{
-                address: {
-                    type: StringConstructor;
-                    required: true;
-                };
-                useHash: {
-                    type: BooleanConstructor;
-                    required: false;
-                };
-                size: {
-                    type: (StringConstructor | NumberConstructor)[];
-                    required: false;
-                };
-            }, {
-                props: any;
-                iconRef: import("vue").Ref<HTMLElement | undefined>;
-                address: import("vue").Ref<string>;
-                hashCode: (s?: string | undefined) => number;
-                icon: import("vue").ComputedRef<any>;
-            }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-                address: {
-                    type: StringConstructor;
-                    required: true;
-                };
-                useHash: {
-                    type: BooleanConstructor;
-                    required: false;
-                };
-                size: {
-                    type: (StringConstructor | NumberConstructor)[];
-                    required: false;
-                };
-            }>>, {
-                useHash: boolean;
-            }>;
-        }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-            logo: {
-                type: StringConstructor;
-                required: false;
-            };
-            type: {
-                type: StringConstructor;
-                required: false;
-            };
-            size: {
-                type: StringConstructor;
-                required: false;
-            };
-            class: {
-                type: StringConstructor;
-                required: false;
-            };
-        }>>, {}>;
         CoinsList: import("vue").DefineComponent<{}, {
             tokensStore: import("pinia").Store<"tokensStore", import("pinia")._UnwrapAll<Pick<{
                 getLogoUrl: import("vue").ComputedRef<(symbol: string) => any>;
@@ -1450,39 +1362,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
             PButton: typeof import("primevue/button").default;
             InputText: typeof import("primevue/inputtext").default;
         }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}>;
-        TokensListItem: import("vue").DefineComponent<{
-            preset: {
-                type: ObjectConstructor;
-                required: true;
-            };
-        }, {
-            props: any;
-            preset: import("vue").Ref<{
-                logo: string;
-                name: string;
-                tokens: string[];
-                enabled: boolean;
-                options: {
-                    switchable: boolean;
-                };
-            }>;
-            enabled: import("vue").WritableComputedRef<boolean>;
-            menu: import("vue").Ref<any>;
-            items: import("vue").Ref<{
-                label: string;
-                command: () => void;
-            }[]>;
-            PMenu: typeof import("primevue/menu").default;
-            PInputSwitch: typeof import("primevue/inputswitch").default;
-        }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-            preset: {
-                type: ObjectConstructor;
-                required: true;
-            };
-        }>>, {}>;
-        PButton: typeof import("primevue/button").default;
-        PInlineMessage: typeof import("primevue/inlinemessage").default;
-        PInputSwitch: typeof import("primevue/inputswitch").default;
     }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("close" | "back" | "navigate")[], "close" | "back" | "navigate", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
         onClose?: ((...args: any[]) => any) | undefined;
         onBack?: ((...args: any[]) => any) | undefined;
