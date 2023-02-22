@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 
 import svgLoader from 'vite-svg-loader';
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
+
 
 import dts from 'vite-plugin-dts';
 
@@ -20,7 +22,8 @@ export default defineConfig({
     dts(),
     svgLoader({
       defaultImport: 'url'
-    })
+    }),
+    chunkSplitPlugin()
   ],
   resolve:{
     alias:{
@@ -50,6 +53,7 @@ export default defineConfig({
     // Reduce bloat from legacy polyfills.
     target: 'esnext',
     outDir: 'dist',
+    sourcemap: true,
   },
 
   define: { 'process.env.NODE_ENV': '"production"' },

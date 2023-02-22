@@ -17,19 +17,6 @@
     eip1193-provider "^1.0.1"
     js-sha3 "^0.8.0"
 
-"@esbuild-plugins/node-globals-polyfill@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@esbuild-plugins/node-globals-polyfill/-/node-globals-polyfill-0.1.1.tgz"
-  integrity sha512-MR0oAA+mlnJWrt1RQVQ+4VYuRJW/P2YmRTv1AsplObyvuBMnPHiizUF95HHYiSsMGLhyGtWufaq2XQg6+iurBg==
-
-"@esbuild-plugins/node-modules-polyfill@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/@esbuild-plugins/node-modules-polyfill/-/node-modules-polyfill-0.1.4.tgz"
-  integrity sha512-uZbcXi0zbmKC/050p3gJnne5Qdzw8vkXIv+c2BW0Lsc1ji1SkrxbKPUy5Efr0blbTu1SL8w4eyfpnSdPg3G0Qg==
-  dependencies:
-    escape-string-regexp "^4.0.0"
-    rollup-plugin-node-polyfills "^0.2.1"
-
 "@esbuild/android-arm64@0.16.17":
   version "0.16.17"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.16.17.tgz#cf91e86df127aa3d141744edafcba0abdc577d23"
@@ -1098,6 +1085,11 @@ entities@^4.2.0:
   resolved "https://registry.npmjs.org/entities/-/entities-4.4.0.tgz"
   integrity sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==
 
+es-module-lexer@^1.0.3:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-1.1.1.tgz#d4fed363dcd94bf12586266f7b80bbee6d80ce6e"
+  integrity sha512-n3ruqU8Te7I5prBd6d0darM8ajFuVNhLWvgo04hN7goWSaSrxe7ENOZitac7akN0A2o+8fMomBDsNPvW/eE3CQ==
+
 esbuild-android-64@0.14.54:
   version "0.14.54"
   resolved "https://registry.yarnpkg.com/esbuild-android-64/-/esbuild-android-64-0.14.54.tgz#505f41832884313bbaffb27704b8bcaa2d8616be"
@@ -1257,16 +1249,6 @@ escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
-
-escape-string-regexp@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
-  integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
-
-estree-walker@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.npmjs.org/estree-walker/-/estree-walker-0.6.1.tgz"
-  integrity sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==
 
 estree-walker@^2.0.2:
   version "2.0.2"
@@ -1643,10 +1625,17 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-magic-string@^0.25.3, magic-string@^0.25.7:
+magic-string@^0.25.7:
   version "0.25.9"
   resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.25.9.tgz"
   integrity sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==
+  dependencies:
+    sourcemap-codec "^1.4.8"
+
+magic-string@^0.26.3:
+  version "0.26.7"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.26.7.tgz#caf7daf61b34e9982f8228c4527474dac8981d6f"
+  integrity sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==
   dependencies:
     sourcemap-codec "^1.4.8"
 
@@ -1953,29 +1942,6 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rollup-plugin-inject@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/rollup-plugin-inject/-/rollup-plugin-inject-3.0.2.tgz"
-  integrity sha512-ptg9PQwzs3orn4jkgXJ74bfs5vYz1NCZlSQMBUA0wKcGp5i5pA1AO3fOUEte8enhGUC+iapTCzEWw2jEFFUO/w==
-  dependencies:
-    estree-walker "^0.6.1"
-    magic-string "^0.25.3"
-    rollup-pluginutils "^2.8.1"
-
-rollup-plugin-node-polyfills@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/rollup-plugin-node-polyfills/-/rollup-plugin-node-polyfills-0.2.1.tgz"
-  integrity sha512-4kCrKPTJ6sK4/gLL/U5QzVT8cxJcofO0OU74tnB19F40cmuAKSzH5/siithxlofFEjwvw1YAhPmbvGNA6jEroA==
-  dependencies:
-    rollup-plugin-inject "^3.0.0"
-
-rollup-pluginutils@^2.8.1:
-  version "2.8.2"
-  resolved "https://registry.npmjs.org/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz"
-  integrity sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==
-  dependencies:
-    estree-walker "^0.6.1"
-
 rollup@^3.7.0:
   version "3.10.0"
   resolved "https://registry.npmjs.org/rollup/-/rollup-3.10.0.tgz"
@@ -2160,6 +2126,14 @@ validator@^13.7.0:
   version "13.7.0"
   resolved "https://registry.npmjs.org/validator/-/validator-13.7.0.tgz"
   integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
+
+vite-plugin-chunk-split@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/vite-plugin-chunk-split/-/vite-plugin-chunk-split-0.4.7.tgz#3ada0e85b4e4cc4fba7540c4fc691aec4f893c07"
+  integrity sha512-BGPMTxlC6Z+VNY1t/51F1ablkt4UQqdEPvAmCKRBsEPIpKAlW3sioQwK4klS14ievsGNaeALAKdko7n3oPJ8BQ==
+  dependencies:
+    es-module-lexer "^1.0.3"
+    magic-string "^0.26.3"
 
 vite-plugin-dts@^1.7.1:
   version "1.7.1"

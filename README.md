@@ -1,11 +1,12 @@
 <a name="readme-top"></a>
 
-# Liquidswap Widget
 <!-- PROJECT SHIELDS -->
 ![npm](https://img.shields.io/npm/v/@pontem/liquidswap-widget?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/pontem-network/liquidswap-widget?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/pontem-network/liquidswap-widget?style=for-the-badge)
 ![GitHub contributors](https://img.shields.io/github/contributors/pontem-network/liquidswap-widget?style=for-the-badge)
+
+# Liquidswap Widget
 
 A web component custom element which can be embedded to any frontend application or even plain html / js / css.
 Using full strength of [@pontem/liquidswap-sdk](https://www.npmjs.com/package/@pontem/liquidswap-sdk) widget can provide
