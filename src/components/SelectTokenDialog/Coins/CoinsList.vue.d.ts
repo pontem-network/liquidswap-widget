@@ -187,6 +187,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             convertError: import("vue").Ref<string | undefined>;
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
+            priceImpactFormatted: ComputedRef<string>;
         }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
             check: () => Promise<void>;
             isBusy: ComputedRef<import("vue").Ref<boolean>>;
@@ -218,7 +219,8 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             convertError: import("vue").Ref<string | undefined>;
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
-        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact">, Pick<{
+            priceImpactFormatted: ComputedRef<string>;
+        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
             check: () => Promise<void>;
             isBusy: ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: ComputedRef<boolean>;
@@ -249,6 +251,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             convertError: import("vue").Ref<string | undefined>;
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
+            priceImpactFormatted: ComputedRef<string>;
         }, "check" | "toggleCurrencies" | "refetchRates">>;
         emits: (event: "close", ...args: any[]) => void;
         getToken: () => Promise<void>;

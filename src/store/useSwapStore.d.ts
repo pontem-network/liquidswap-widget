@@ -29,6 +29,7 @@ export declare const useSwapStore: import("pinia").StoreDefinition<"swapStore", 
     convertError: import("vue").Ref<string | undefined>;
     stableSwapType: import("vue").Ref<"high" | "normal">;
     priceImpact: import("vue").ComputedRef<number>;
+    priceImpactFormatted: import("vue").ComputedRef<string>;
 }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
     check: () => Promise<void>;
     isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
@@ -60,7 +61,8 @@ export declare const useSwapStore: import("pinia").StoreDefinition<"swapStore", 
     convertError: import("vue").Ref<string | undefined>;
     stableSwapType: import("vue").Ref<"high" | "normal">;
     priceImpact: import("vue").ComputedRef<number>;
-}, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact">, Pick<{
+    priceImpactFormatted: import("vue").ComputedRef<string>;
+}, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
     check: () => Promise<void>;
     isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
     isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -91,4 +93,5 @@ export declare const useSwapStore: import("pinia").StoreDefinition<"swapStore", 
     convertError: import("vue").Ref<string | undefined>;
     stableSwapType: import("vue").Ref<"high" | "normal">;
     priceImpact: import("vue").ComputedRef<number>;
+    priceImpactFormatted: import("vue").ComputedRef<string>;
 }, "check" | "toggleCurrencies" | "refetchRates">>;

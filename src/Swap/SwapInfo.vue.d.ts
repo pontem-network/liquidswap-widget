@@ -32,6 +32,7 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         convertError: import("vue").Ref<string | undefined>;
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
+        priceImpactFormatted: import("vue").ComputedRef<string>;
     }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
@@ -63,7 +64,8 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         convertError: import("vue").Ref<string | undefined>;
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
-    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact">, Pick<{
+        priceImpactFormatted: import("vue").ComputedRef<string>;
+    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
         isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -94,16 +96,23 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         convertError: import("vue").Ref<string | undefined>;
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
+        priceImpactFormatted: import("vue").ComputedRef<string>;
     }, "check" | "toggleCurrencies" | "refetchRates">>;
+    curves: {
+        stable: string;
+        uncorrelated: string;
+    };
     uc: {
         checkAndConfirm: (coin: string) => boolean;
     };
     slippageAmount: import("vue").ComputedRef<number>;
+    hasSlippage: import("vue").ComputedRef<boolean>;
     convertRate: import("vue").ComputedRef<number>;
     toAmount: import("vue").ComputedRef<number | undefined>;
     toToken: import("vue").ComputedRef<string | undefined>;
     fromToken: import("vue").ComputedRef<string | undefined>;
     slippageToken: import("vue").ComputedRef<string | undefined>;
+    priceImpact: import("vue").ComputedRef<string>;
     rateTokens: {
         alias: import("vue").ComputedRef<string>;
         symbol: import("vue").ComputedRef<string>;
@@ -137,8 +146,6 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
     };
     isToggled: import("vue").Ref<boolean>;
     activeIndex: import("vue").WritableComputedRef<number | undefined>;
-    formatter: Intl.NumberFormat;
-    priceImpact: import("vue").ComputedRef<string>;
     priceImpactClass: import("vue").ComputedRef<"-green" | "-yellow" | "-red">;
     PAccordion: typeof PAccordion;
     PAccordionTab: typeof PAccordionTab;
