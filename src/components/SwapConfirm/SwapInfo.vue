@@ -20,7 +20,7 @@
         <span v-else>{{ outputTokens.formatted.value }}</span>
       </div>
     </div>
-    <div class="swap-table__row is-small">
+    <div v-if="hasSlippage" class="swap-table__row is-small">
       <div class="swap-table__label">
         {{
           swapStore.lastInteractiveField === 'from'
@@ -62,17 +62,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useSwapStore } from '@/store';
+import { useSwapStore, useStore } from '@/store';
 import { computed } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 
 const swapStore = useSwapStore();
+const { curves } = useStore();
 
 const fromToken = computed(() => swapStore.fromCurrency.token);
 const toToken = computed(() => swapStore.toCurrency.token);
 
 const slippageAmount = computed(() => swapStore.slippageAmount);
-const convertRate = computed(() => swapStore.convertRate); // Mul 100 - hotfix
+const hasSlippage = computed(() => swapStore.curve === curves.uncorrelated);
+const convertRate = computed(() => swapStore.convertRate);
 const slippageToken = computed(() =>
   swapStore.lastInteractiveField === 'from' ? toToken.value : fromToken.value,
 );

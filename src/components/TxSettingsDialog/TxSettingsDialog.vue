@@ -14,45 +14,47 @@
         <div class="settings-overlay__title"></div>
         <div class="settings-overlay__divider" />
         <div class="settings-overlay__content">
-          <div class="common-label">
-            <label for="slippage">Slippage Tolerance:</label>
-            <div @click="setPresetValue(0.5)">0.5%</div>
-            <div @click="setPresetValue(1)">1.0%</div>
-            <div @click="setPresetValue(1.5)">1.5%</div>
-          </div>
-          <div class="slippage-options">
-            <p-button
-                label="Auto"
-                class="slippage-options__button"
-                :class="{ 'p-button-outlined': !slippageIsDefault }"
-                @click="onAutoSlippageClick"
-            />
-            <input-number
-                id="slippage"
-                class="slippage-options__input"
-                :model-value="size"
-                format
-                locale="en-US"
-                mode="decimal"
-                :step="0.25"
-                :max-fraction-digits="2"
-                :min="0.01"
-                :placeholder="'0.50'"
-                :min-fraction-digits="2"
-                @input="onInput"
-                @blur="onBlur"
-            />
-          </div>
-          <div
-              class="slippage-comment"
-              :class="{ ...(error.type ? { [`is-${error.type}`]: true } : {}) }"
-          >
-            <span v-text="error.message" />
+          <template v-if="hasSlippage">
+            <div class="common-label">
+              <label for="slippage">Slippage Tolerance:</label>
+              <div @click="setPresetValue(0.5)">0.5%</div>
+              <div @click="setPresetValue(1)">1.0%</div>
+              <div @click="setPresetValue(1.5)">1.5%</div>
+            </div>
+            <div class="slippage-options">
+              <p-button
+                  label="Auto"
+                  class="slippage-options__button"
+                  :class="{ 'p-button-outlined': !slippageIsDefault }"
+                  @click="onAutoSlippageClick"
+              />
+              <input-number
+                  id="slippage"
+                  class="slippage-options__input"
+                  :model-value="size"
+                  format
+                  locale="en-US"
+                  mode="decimal"
+                  :step="0.25"
+                  :max-fraction-digits="2"
+                  :min="0.01"
+                  :placeholder="'0.50'"
+                  :min-fraction-digits="2"
+                  @input="onInput"
+                  @blur="onBlur"
+              />
+            </div>
             <div
-                v-show="props.fromToken || props.toToken"
-                class="settings-overlay__divider my-2"
-            />
-          </div>
+                class="slippage-comment"
+                :class="{ ...(error.type ? { [`is-${error.type}`]: true } : {}) }"
+            >
+              <span v-text="error.message" />
+              <div
+                  v-show="props.fromToken || props.toToken"
+                  class="settings-overlay__divider my-2"
+              />
+            </div>
+          </template>
           <p-button
               v-show="props.fromToken || props.toToken"
               label="Copy Pool URL"
@@ -83,7 +85,7 @@ import InputNumber from "primevue/inputnumber";
 import PDialog from 'primevue/dialog';
 import { DialogHeader } from '@/components/DialogHeader';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import { useStore } from '@/store';
+import { useStore, useSwapStore } from '@/store';
 import { storeToRefs } from "pinia";
 
 interface IProps {
@@ -100,7 +102,8 @@ const adapter = useWalletProviderStore();
 
 const { connected: connectedWallet } = storeToRefs(adapter);
 
-const { insideNativeWallet } = useStore();
+const { insideNativeWallet, curves } = useStore();
+const swapStore = useSwapStore();
 const connected = computed(() => insideNativeWallet.value ? false : connectedWallet );
 
 const { copy: onCopyUrl } = useClipboard();
@@ -119,6 +122,7 @@ const size = ref<number | undefined>(
 
 const slippageIsDefault = createSyncRef('isDefault');
 const slippage = createSyncRef('modelValue');
+const hasSlippage = computed(() => (swapStore.curve === curves.uncorrelated));
 
 watch(
     () => slippageIsDefault.value,

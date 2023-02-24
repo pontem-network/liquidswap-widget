@@ -38,7 +38,7 @@
               <div class="tx-result__value">
                 <div class="tx-hash" :title="txState.hash">
                   <span>{{ shortAddress(txState.hash, 10, 10) }}</span>
-                  <ToolTip position="top" :tooltipText="'Click to copy'">
+                  <ToolTip position="left" :tooltipText="'Click to copy'">
                     <PButton
                         icon="pi pi-copy"
                         class="p-button-sm p-button-rounded p-button-text"
@@ -128,7 +128,7 @@ const isSuccess = computed(() => props.state.status === 'success');
 const { copy: onCopyAddress } = useClipboard();
 const txLink = computed(
   () =>
-    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=${networkName}`,
+    `https://explorer.aptoslabs.com/txn/${txState.value.hash}?network=${networkName.value}`,
 );
 
 const description = computed(() => {

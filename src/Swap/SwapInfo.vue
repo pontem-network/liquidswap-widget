@@ -29,7 +29,7 @@
           /></span>
           <span v-else>{{ outputTokens.formatted.value }}</span>
         </div>
-        <div class="list__item">
+        <div v-if="hasSlippage" class="list__item">
           <span
             >{{
               swap.lastInteractiveField === 'from'
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSwapStore } from '@/store';
+import { useSwapStore, useStore } from '@/store';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { useUnverifiedCoins } from '@/composables/useUnverifiedCoins';
@@ -79,16 +79,21 @@ import PAccordionTab from 'primevue/accordiontab';
 
 const swap = useSwapStore();
 
+const { curves } = useStore();
+
 const uc = useUnverifiedCoins();
 
 const slippageAmount = computed(() => swap.slippageAmount);
-const convertRate = computed(() => swap.convertRate); // Mul 100 - hotfix
+const hasSlippage = computed(() => swap.curve === curves.uncorrelated);
+const convertRate = computed(() => swap.convertRate);
 const toAmount = computed(() => swap.toCurrency.amount);
 const toToken = computed(() => swap.toCurrency.token);
 const fromToken = computed(() => swap.fromCurrency.token);
 const slippageToken = computed(() =>
   swap.lastInteractiveField === 'from' ? toToken.value : fromToken.value,
 );
+
+const priceImpact = computed(() => swap.priceImpactFormatted);
 
 const rateTokens = useCurrencyFormat(1, fromToken);
 const outputTokens = useCurrencyFormat(toAmount, toToken);
@@ -112,12 +117,6 @@ const activeIndex = computed({
   },
 });
 
-const formatter = Intl.NumberFormat('en', {
-  notation: 'compact',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-const priceImpact = computed(() => formatter.format(swap.priceImpact));
 const priceImpactClass = computed(() => {
   return +priceImpact.value < 0.2
     ? '-green'

@@ -232,16 +232,20 @@ export const useSwapStore = defineStore('swapStore', () => {
   );
 
   const slippageAmount = computed(() => {
-    const multiply = 10000;
-    const slippagePercent = slippage.value * multiply;
+    const MULTIPLY = 10000;
+    const slippagePercent = slippage.value * MULTIPLY;
 
     if (lastInteractiveField.value === 'from' && to.amount !== undefined) {
-      return to.amount - (to.amount * slippagePercent) / multiply;
+      return curve.value === curves.uncorrelated
+        ? to.amount - (to.amount * slippagePercent) / MULTIPLY
+        : to.amount - 1;
     } else if (
       lastInteractiveField.value === 'to' &&
       from.amount !== undefined
     ) {
-      return from.amount + (from.amount * slippagePercent) / multiply;
+      return curve.value === curves.uncorrelated
+        ? from.amount + (from.amount * slippagePercent) / MULTIPLY
+        : from.amount;
     }
     return 0;
   });
@@ -259,7 +263,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   );
 
   const priceImpact = computed(() => {
-    if (!from?.amount) return 0;
+    if (!from?.amount || !from.reserve || !to.reserve) return 0;
     const constantProduct = from.reserve * to.reserve;
     const reserveToAfter = constantProduct / (from.reserve + from.amount);
     const amountOut = to.reserve - reserveToAfter;
@@ -268,6 +272,16 @@ export const useSwapStore = defineStore('swapStore', () => {
     const pImpact = (1 - midPrice / marketPrice) * 100;
     return pImpact;
   });
+
+  const formatter = Intl.NumberFormat('en', {
+    notation: 'compact',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const priceImpactFormatted = computed(() =>
+    formatter.format(priceImpact.value),
+  );
 
   return {
     check,
@@ -292,5 +306,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     convertError,
     stableSwapType,
     priceImpact,
+    priceImpactFormatted,
   };
 });

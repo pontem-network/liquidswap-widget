@@ -302,10 +302,10 @@
   resolved "https://registry.npmjs.org/@pontem/coins-registry/-/coins-registry-1.0.11.tgz"
   integrity sha512-0qM2QbW310UdbwM477dRcXI+w3MpTRgvgUeZAN4sHgg4+SmYiHexckHfPfA9PBcmm3TX8QSawKepL4pzO/9S3A==
 
-"@pontem/liquidswap-sdk@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@pontem/liquidswap-sdk/-/liquidswap-sdk-0.5.4.tgz#0ca6c3996082bbc7fd088cb86e1deefb7356f411"
-  integrity sha512-y3vIdRoFRekM/f+WDIIRHavwWkOmFpWhuFLMwzR02c/wo3RgECdob94Ch6SZSqbXEPG5NkQQgOnB7HxbK6/ewQ==
+"@pontem/liquidswap-sdk@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@pontem/liquidswap-sdk/-/liquidswap-sdk-0.5.7.tgz#a9b2827d83f548963d4775d45527d232209d4175"
+  integrity sha512-bzzHCZB26npFTHg9PP4hEz865EQ8MA6hi9lc2rIlXI7zSQGUAuwLKAULJkEB7PiNpKmY+HdsOeo0wrEGQzAFyQ==
   dependencies:
     aptos "^1.3.17"
     axios "^0.27.2"
