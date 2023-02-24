@@ -8,8 +8,6 @@ import svgLoader from 'vite-svg-loader';
 
 import dts from 'vite-plugin-dts';
 
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
-
 
 export default defineConfig({
   plugins: [
@@ -24,7 +22,6 @@ export default defineConfig({
     svgLoader({
       defaultImport: 'url'
     }),
-    chunkSplitPlugin(),
   ],
   resolve: {
     alias: {
