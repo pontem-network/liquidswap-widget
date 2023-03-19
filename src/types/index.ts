@@ -8,6 +8,8 @@ import {
   WalletName,
 } from '@pontem/aptos-wallet-adapter';
 
+import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
+
 export type AptosCoinInfoResource = {
   decimals: string;
   name: string;
@@ -40,7 +42,7 @@ export interface IWallet {
   options?: any;
 }
 
-export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
+export type TCurveType = 'uncorrelated' | 'stable';
 
 export type TStableSwapType = 'normal' | 'high';
 
@@ -68,10 +70,15 @@ export interface IStoredToken extends ICreateToken {
   reserve: number;
 }
 
+export type TVersionType = typeof VERSION_0 | typeof VERSION_0_5;
+
 export interface IPoolExist {
   fromCoin: string;
   toCoin: string;
   curve: string;
+  version: TVersionType;
 }
 
 export type TStatusTransaction = "success" | "pending" | "error" | "rejected";
+
+

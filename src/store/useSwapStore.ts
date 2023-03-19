@@ -10,7 +10,10 @@ import { useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
 import { DENOMINATOR } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
-import { IStoredToken } from '@/types';
+import { useContractVersion } from '@/composables/useContractVersion';
+import {IStoredToken, TVersionType} from '@/types';
+import { getCurve } from '@/utils/contracts';
+
 
 const DEFAULT_SLIPPAGE = 0.005;
 
@@ -27,10 +30,13 @@ export const useSwapStore = defineStore('swapStore', () => {
     reserve: 0,
   });
 
+  const { version } = useContractVersion();
+
   const mainStore = useStore();
   const { curves, networkOptions, sdk } = mainStore;
 
-  const curve = ref<string>(curves.uncorrelated);
+  const curve = ref<string>(getCurve('uncorrelated', version.value));
+
   const stableSwapType = ref<'high' | 'normal'>('normal');
   const poolExistence = usePoolExistence();
 
@@ -213,7 +219,8 @@ export const useSwapStore = defineStore('swapStore', () => {
     await poolExistence.check({
       fromCoin: from.token,
       toCoin: to.token,
-      curve: curve.value === curves.stable ? 'stable' : 'uncorrelated'
+      curve: curve.value === curves.stable ? 'stable' : 'uncorrelated',
+      version: version.value as unknown as TVersionType,
     });
   }
 
@@ -307,5 +314,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     stableSwapType,
     priceImpact,
     priceImpactFormatted,
+    version,
   };
 });

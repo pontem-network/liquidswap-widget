@@ -1,6 +1,6 @@
 import { Ref, ref, watch } from 'vue';
 
-import { ICreateToken, IPoolExist } from '@/types';
+import { ICreateToken, IPoolExist, TVersionType } from '@/types';
 import { useStore } from "@/store";
 
 type CurveType = 'stable' | 'uncorrelated';
@@ -8,6 +8,7 @@ type CurveType = 'stable' | 'uncorrelated';
 export function usePoolExistence() {
   const mainStore = useStore();
   const sdk = mainStore.sdk;
+
 
   const poolExists = ref<boolean>(false);
   const isFetching = ref<boolean>(false);
@@ -19,6 +20,7 @@ export function usePoolExistence() {
         fromToken: params.fromCoin,
         toToken: params.toCoin,
         curveType: params.curve as CurveType,
+        version: params.version,
       });
       isFetching.value = false;
       return !!response.liquidityPoolResource;
@@ -43,6 +45,7 @@ export function usePoolExistence() {
     from: ICreateToken,
     to: ICreateToken,
     curve: Ref<string>,
+    version: Ref<TVersionType>,
   ) {
     watch(
       [from.token, to.token, curve.value],
@@ -54,6 +57,7 @@ export function usePoolExistence() {
             fromCoin: from.token,
             toCoin: to.token,
             curve: curve.value,
+            version: version.value
           });
         }
       },
