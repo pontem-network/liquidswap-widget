@@ -42,7 +42,7 @@ export interface IWallet {
   options?: any;
 }
 
-export type TCurveType = 'uncorrelated' | 'stable';
+export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
 
 export type TStableSwapType = 'normal' | 'high';
 

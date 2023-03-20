@@ -6,9 +6,9 @@ import { watchDebounced } from '@vueuse/core';
 import { getPoolStr } from '@/utils/pools';
 import { useStore } from '@/store/useStore';
 import { is_sorted, d, decimalsMultiplier  } from '@/utils/utils';
-import { useTokensStore } from '@/store';
+import {usePoolsStore, useTokensStore} from '@/store';
 import { getFromCache } from '@/utils/cache';
-import { DENOMINATOR } from '@/constants/constants';
+import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import {IStoredToken, TVersionType} from '@/types';
@@ -31,6 +31,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   });
 
   const { version } = useContractVersion();
+  const poolsStore = usePoolsStore();
 
   const mainStore = useStore();
   const { curves, networkOptions, sdk } = mainStore;
@@ -55,6 +56,9 @@ export const useSwapStore = defineStore('swapStore', () => {
   const aptos = mainStore.client;
 
   const networkId = computed(() => mainStore.networkId);
+  const predefinedCurve = computed(() => {
+    return poolsStore.getCurveType(from.token, to.token, version.value as unknown as TVersionType);
+  });
 
   watch(slippageIsDefault, (value) => {
     if (value) {
@@ -165,7 +169,8 @@ export const useSwapStore = defineStore('swapStore', () => {
           toToken: to.token,
           interactiveToken: mode,
           curveType: curve.value === curves.stable ? 'stable' : 'uncorrelated',
-          amount: mode === 'from' ? from.amount! : to.amount!
+          amount: mode === 'from' ? from.amount! : to.amount!,
+          version: version.value as unknown as TVersionType
         });
       } catch(_e) {
       }
@@ -225,8 +230,24 @@ export const useSwapStore = defineStore('swapStore', () => {
   }
 
   watchDebounced(
-    () => [from, to, curve],
+    () => [
+      version,
+      from.amount,
+      from.reserve,
+      from.token,
+      to.amount,
+      to.reserve,
+      to.token,
+      curve
+    ],
     async () => {
+      // if we switch tokens to a new value
+      if (
+        predefinedCurve.value !== false &&
+        predefinedCurve.value === getCurve('uncorrelated', version.value)
+      ) {
+        version.value = VERSION_0;
+      }
       await check();
       refetchRates(false);
     },
@@ -243,14 +264,16 @@ export const useSwapStore = defineStore('swapStore', () => {
     const slippagePercent = slippage.value * MULTIPLY;
 
     if (lastInteractiveField.value === 'from' && to.amount !== undefined) {
-      return curve.value === curves.uncorrelated
+      return version.value === VERSION_0_5 ||
+      curve.value === getCurve('uncorrelated', version.value)
         ? to.amount - (to.amount * slippagePercent) / MULTIPLY
         : to.amount - 1;
     } else if (
       lastInteractiveField.value === 'to' &&
       from.amount !== undefined
     ) {
-      return curve.value === curves.uncorrelated
+      return version.value === VERSION_0_5 ||
+      curve.value === getCurve('uncorrelated', version.value)
         ? from.amount + (from.amount * slippagePercent) / MULTIPLY
         : from.amount;
     }
@@ -315,5 +338,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     priceImpact,
     priceImpactFormatted,
     version,
+    predefinedCurve,
   };
 });
