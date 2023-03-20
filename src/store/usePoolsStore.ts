@@ -30,7 +30,7 @@ type Resource<T = any> = {
 
 export const usePoolsStore = defineStore('poolsStore', () => {
   const mainStore = useStore();
-  const { client: aptos, networkOptions } = mainStore;
+  const { client: aptos } = mainStore;
   const isLoading = ref(true);
   const poolsMap = reactive<Record<string, IPersistedPool>>({});
   const poolsTitleMap = reactive<Record<string, string>>({});
@@ -198,10 +198,11 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     pool.reserveY = +response.data.coin_y_reserve.value;
   }
 
-  async function fetchLp(lpCoin: string, pool: IPersistedPool) {
+  async function fetchLp(lpCoin: string, pool: IPersistedPool, contract?: TVersionType) {
     try {
+      const resourcesAccount = getResourcesAccount(contract);
       const response = await aptos.getAccountResource(
-        networkOptions.resourceAccount,
+        resourcesAccount,
         lpCoin,
       )  as unknown as Promise<Resource | undefined> | any;
 
@@ -225,7 +226,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType));
     await Promise.all([
       fetchReserves(liquidityPool, pool, contract),
-      fetchLp(lpCoinInfo, pool),
+      fetchLp(lpCoinInfo, pool, contract),
     ]);
     return pool;
   };

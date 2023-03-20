@@ -4,7 +4,15 @@ import { useWalletProviderStore, WalletAdapterNetwork } from "@pontem/aptos-wall
 import { computed, reactive, ref, watch, readonly } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { RESOURCES_ACCOUNT, MODULES_ACCOUNT, NETWORKS, CORRECT_CHAIN_ID, APTOS_TESTNET_CHAIN_ID, APTOS } from "@/constants/constants";
+import {
+  RESOURCES_ACCOUNT,
+  MODULES_ACCOUNT,
+  NETWORKS, CORRECT_CHAIN_ID,
+  APTOS_TESTNET_CHAIN_ID,
+  APTOS,
+  RESOURCES_V05_ACCOUNT,
+  MODULES_V05_ACCOUNT,
+} from "@/constants/constants";
 import { Network, TStatusTransaction } from '@/types';
 import { restUrl } from '@/utils/networkData';
 
@@ -38,7 +46,9 @@ export const useStore = createGlobalState(() => {
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
     networkOptions: {
       resourceAccount: RESOURCES_ACCOUNT,
-      moduleAccount: MODULES_ACCOUNT
+      moduleAccount: MODULES_ACCOUNT,
+      resourceAccountV05: RESOURCES_V05_ACCOUNT,
+      moduleAccountV05: MODULES_V05_ACCOUNT,
     }
   }));
 
@@ -121,7 +131,9 @@ export const useStore = createGlobalState(() => {
             nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
-              moduleAccount: MODULES_ACCOUNT
+              moduleAccount: MODULES_ACCOUNT,
+              resourceAccountV05: RESOURCES_V05_ACCOUNT,
+              moduleAccountV05: MODULES_V05_ACCOUNT,
             }
           });
         } else if (
@@ -134,7 +146,9 @@ export const useStore = createGlobalState(() => {
             nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
-              moduleAccount: MODULES_ACCOUNT
+              moduleAccount: MODULES_ACCOUNT,
+              resourceAccountV05: RESOURCES_V05_ACCOUNT,
+              moduleAccountV05: MODULES_V05_ACCOUNT,
             }
           })
         } else {
@@ -152,7 +166,9 @@ export const useStore = createGlobalState(() => {
             nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
-              moduleAccount: MODULES_ACCOUNT
+              moduleAccount: MODULES_ACCOUNT,
+              resourceAccountV05: RESOURCES_V05_ACCOUNT,
+              moduleAccountV05: MODULES_V05_ACCOUNT,
             }
           })
         } else if (
@@ -166,7 +182,9 @@ export const useStore = createGlobalState(() => {
               nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
               networkOptions: {
                 resourceAccount: RESOURCES_ACCOUNT,
-                moduleAccount: MODULES_ACCOUNT
+                moduleAccount: MODULES_ACCOUNT,
+                resourceAccountV05: RESOURCES_V05_ACCOUNT,
+                moduleAccountV05: MODULES_V05_ACCOUNT,
               }
             })
           }

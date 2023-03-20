@@ -12,7 +12,7 @@ import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import {IStoredToken, TVersionType} from '@/types';
-import {getCurve, getShortCurveFromFull} from '@/utils/contracts';
+import {getCurve, getResourcesAccount, getShortCurveFromFull} from '@/utils/contracts';
 
 
 const DEFAULT_SLIPPAGE = 0.005;
@@ -34,7 +34,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const poolsStore = usePoolsStore();
 
   const mainStore = useStore();
-  const { networkOptions, sdk } = mainStore;
+  const { sdk } = mainStore;
 
   const curve = ref<string>(getCurve('uncorrelated', version.value));
 
@@ -134,12 +134,14 @@ export const useSwapStore = defineStore('swapStore', () => {
         ? [from.token, to.token]
         : [to.token, from.token];
 
-      const resourceType = getPoolStr(fromToken, toToken, curve.value);
+      const resourceType = getPoolStr(fromToken, toToken, curve.value, version.value as TVersionType);
+
+      const resourcesAccount = getResourcesAccount(version.value);
 
       try {
         const response = await getFromCache(
-          ['calc', networkOptions.resourceAccount, resourceType].join('-'),
-          () => aptos.getAccountResource(networkOptions.resourceAccount, resourceType),
+          ['calc', resourcesAccount, resourceType].join('-'),
+          () => aptos.getAccountResource(resourcesAccount, resourceType),
           { time: 2000 },
         );
         const coinXReserve = +response.data.coin_x_reserve.value;
