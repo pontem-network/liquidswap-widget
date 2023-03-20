@@ -5,9 +5,14 @@ import {
   CURVE_STABLE_V05,
   CURVE_STABLE,
   CURVE_UNCORRELATED,
-  CURVE_UNCORRELATED_V05
+  CURVE_UNCORRELATED_V05,
+  VERSION_0,
+  MODULES_V05_ACCOUNT,
+  MODULES_ACCOUNT,
+  RESOURCES_ACCOUNT,
+  RESOURCES_V05_ACCOUNT,
 } from "@/constants/constants";
-import { TCurveType } from "@/types";
+import {TCurveType, TVersionType} from "@/types";
 
 export function composeType(address: string, generics: string[]): string;
 
@@ -80,4 +85,52 @@ export function getShortCurveFromFull(type: string): TCurveType {
   if (type === CURVE_STABLE || type === CURVE_STABLE_V05) return 'stable';
   if (type === CURVE_UNCORRELATED || type === CURVE_UNCORRELATED_V05) return 'uncorrelated';
   throw new Error('Wrong curve type passed');
+}
+
+/**
+ * Get Modules Account Address for a Contract Version
+ *
+ * @throws Unknown contract version requested
+ *
+ * @param contract version number
+ * @returns string with modules account address
+ */
+export function getModulesAccount(contract?: number): string {
+  if (contract === undefined || contract === VERSION_0) {
+    return MODULES_ACCOUNT;
+  }
+  if (contract === VERSION_0_5) return MODULES_V05_ACCOUNT;
+  throw new Error('Unknown contract version requested');
+}
+
+/**
+ * Get Resources Account Address for a Contract Version
+ *
+ * @throws Unknown contract version requested
+ *
+ * @param contract version number
+ * @returns string with resources account address
+ */
+export function getResourcesAccount(contract?: number): string {
+  if (contract === undefined || contract === VERSION_0) {
+    return RESOURCES_ACCOUNT;
+  }
+  if (contract === VERSION_0_5) return RESOURCES_V05_ACCOUNT;
+  throw new Error('Unknown contract version requested');
+}
+
+/**
+ * Get contract version number based on passed curve type
+ *
+ * @throws Unknown curve passed
+ *
+ * @param curve full type of curve
+ * @returns version
+ */
+export function getContractVersionFromCurve(curve: string): TVersionType {
+  if ([CURVE_STABLE_V05, CURVE_UNCORRELATED_V05].includes(curve)) {
+    return VERSION_0_5;
+  }
+  if ([CURVE_STABLE, CURVE_UNCORRELATED].includes(curve)) return VERSION_0;
+  throw new Error(`Unknown curve passed: ${curve}`);
 }

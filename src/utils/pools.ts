@@ -1,24 +1,26 @@
-import {CURVE_STABLE, NETWORKS_MODULES} from '@/constants/constants';
+import { NETWORKS_MODULES } from '@/constants/constants';
 import { useTokensStore } from '@/store';
-import { MODULES_ACCOUNT, RESOURCES_ACCOUNT } from '@/constants/constants';
+import { RESOURCES_ACCOUNT } from '@/constants/constants';
 import { composeType } from './contracts';
 import { is_sorted } from './utils';
+import { getCurve, getModulesAccount } from '@/utils/contracts';
+import {TVersionType} from "@/types";
 
-const modulesLiquidityPool = composeType(
-  MODULES_ACCOUNT,
-  'liquidity_pool',
-  'LiquidityPool',
-);
 
 export function getPoolStr(
   coinX: string,
   coinY: string,
   curve: string,
+  contract?: TVersionType,
 ): string {
   const [sortedX, sortedY] = is_sorted(coinX, coinY)
     ? [coinX, coinY]
     : [coinY, coinX];
-  return composeType(modulesLiquidityPool, [sortedX, sortedY, curve]);
+  const moduleAccount = getModulesAccount(contract);
+  return composeType(
+    composeType(moduleAccount, 'liquidity_pool', 'LiquidityPool'),
+    [sortedX, sortedY, curve],
+  );
 }
 
 export function getPoolLpStr(
@@ -42,7 +44,12 @@ export function getPoolLpInfoStr(lp: string): string {
   return composeType(NETWORKS_MODULES.CoinInfo, [lp]);
 }
 
-export function getTitleForPool(coinX: string, coinY: string, curve: string) {
+export function getTitleForPool(
+  coinX: string,
+  coinY: string,
+  curve: string,
+  contract?: number,
+) {
   if (!coinX || !coinY) return '';
   const tokensStore = useTokensStore();
   const [sortedX, sortedY] = is_sorted(coinX, coinY)
@@ -53,6 +60,18 @@ export function getTitleForPool(coinX: string, coinY: string, curve: string) {
   if (!tokenX || !tokenY) return '';
   const { alias: aliasX } = tokenX;
   const { alias: aliasY } = tokenY;
-  const curveStar = curve === CURVE_STABLE ? '*' : '';
+  const curveStar = curve === getCurve('stable', contract) ? '*' : '';
   return `${aliasX}/${aliasY}${curveStar}`;
+}
+
+export function destructCoinStorePoolStr(type: string): string[] {
+  if (type.length === 0) return [];
+  return (
+    type
+      //
+      .split('<')[2]
+      .split('>')[0]
+      .replaceAll(' ', '')
+      .split(',')
+  );
 }

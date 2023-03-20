@@ -1,4 +1,4 @@
-import { ref, reactive, onBeforeMount, watch, computed } from 'vue';
+import { ref, reactive, onBeforeMount, watch, computed, unref } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
@@ -7,13 +7,14 @@ import CoinsRegistry from '@pontem/coins-registry';
 import { is_sorted } from '@/utils/utils';
 import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
 import { IStorageBasic, TVersionType } from '@/types';
-import { getCurve } from '@/utils/contracts';
+import { getCurve, getResourcesAccount, getContractVersionFromCurve } from '@/utils/contracts';
 
 import {
   getPoolLpInfoStr,
   getPoolLpStr,
   getPoolStr,
   getTitleForPool,
+  destructCoinStorePoolStr,
 } from '@/utils/pools';
 
 import { useStore } from './useStore';
@@ -125,6 +126,38 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     }
   }
 
+  async function fetchAccountLps() {
+    if (!mainStore.account.value?.address) return;
+
+    const { networkId } = mainStore;
+    const resources = await aptos.getAccountResources(
+      mainStore.account.value.address,
+    );
+    resources.forEach((element: any) => {
+      if (
+        element.type.indexOf('::stake::') !== -1 ||
+        element.type.indexOf('lp_coin') === -1
+      )
+        return;
+      const [coinX, coinY, curveType] = destructCoinStorePoolStr(element.type);
+      const lpVersion = getContractVersionFromCurve(curveType);
+      const poolStr = getPoolStr(coinX, coinY, curveType, lpVersion);
+      if (!poolsMap[poolStr]) {
+        registerPool(
+          {
+            coinX,
+            coinY,
+            curve: curveType,
+            networkId: unref(networkId),
+            contract: lpVersion,
+          },
+          {},
+        );
+      }
+      poolsMap[poolStr].lp = +element.data.coin.value;
+    });
+  }
+
   /**
    * Persist pools list with added reserves only
    *
@@ -151,9 +184,11 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
   watch(poolsMap, (_poolsMap) => persistToStorage(_poolsMap));
 
-  async function fetchReserves(liquidityPool: string, pool: IPersistedPool) {
+  async function fetchReserves(liquidityPool: string, pool: IPersistedPool, contract?: TVersionType) {
+    const resourceAccount = getResourcesAccount(contract);
+
     const response = await aptos.getAccountResource(
-      networkOptions.resourceAccount,
+      resourceAccount,
       liquidityPool,
     ) as unknown as Promise<Resource | undefined> | any;
 
@@ -186,10 +221,10 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         ? curveStable
         : getCurve('uncorrelated', contract);
 
-    const liquidityPool = getPoolStr(coinX, coinY, curveType);
+    const liquidityPool = getPoolStr(coinX, coinY, curveType, contract);
     const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType));
     await Promise.all([
-      fetchReserves(liquidityPool, pool),
+      fetchReserves(liquidityPool, pool, contract),
       fetchLp(lpCoinInfo, pool),
     ]);
     return pool;
@@ -199,7 +234,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     pool: IPoolBase,
     { rewrite = false, isDefault = false, lazy = true },
   ) {
-    const { coinX, coinY, curve, networkId, contract } = pool as IPoolInfo;
+    const { coinX, coinY, curve, networkId, contract = VERSION_0 } = pool as IPoolInfo;
 
     const isSorted = is_sorted(coinX, coinY);
     const [sortedX, sortedY] = isSorted ? [coinX, coinY] : [coinY, coinX];
@@ -210,7 +245,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         : getCurve('uncorrelated', contract)
       : curve;
 
-    const liquidityPool = getPoolStr(sortedX, sortedY, curveType);
+    const liquidityPool = getPoolStr(sortedX, sortedY, curveType, contract);
     if (!rewrite && poolsMap[liquidityPool]) {
       return poolsMap[liquidityPool];
     }
@@ -221,7 +256,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       );
     }
 
-    const title = getTitleForPool(sortedX, sortedY, curve);
+    const title = getTitleForPool(sortedX, sortedY, curve, contract);
     const persistedPool: IPersistedPool = reactive({
       title,
       coinX: sortedX,
@@ -234,10 +269,13 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       lp: 0,
       networkId,
       isDefault,
+      contract,
     });
 
+
     poolsMap[liquidityPool] = persistedPool;
-    poolsTitleMap[`${title}-${curve}`] = liquidityPool;
+    const poolTitleKey = `${title}-${curve}-${contract}`;
+    poolsTitleMap[poolTitleKey] = liquidityPool;
 
     if (lazy) {
       loadPool(persistedPool);
@@ -274,6 +312,8 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         );
       }
     });
+
+    fetchAccountLps();
   }
 
   /**

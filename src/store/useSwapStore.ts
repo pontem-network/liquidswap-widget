@@ -78,6 +78,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   onMounted(() => resetState());
 
   function resetState() {
+    version.value = 0;
     from.token = mainStore.defaultToken.value;
     to.token = undefined;
     from.amount = undefined;
@@ -231,7 +232,7 @@ export const useSwapStore = defineStore('swapStore', () => {
 
   watchDebounced(
     () => [
-      version,
+      version.value,
       from.amount,
       from.reserve,
       from.token,

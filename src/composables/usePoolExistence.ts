@@ -48,7 +48,7 @@ export function usePoolExistence() {
     version: Ref<TVersionType>,
   ) {
     watch(
-      [from.token, to.token, curve.value],
+      [from.token, to.token, curve.value, version.value],
       async () => {
         if (!from.token || !to.token) {
           reset();

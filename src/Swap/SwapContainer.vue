@@ -62,7 +62,7 @@
           <SwapInfo />
         </div>
         <div v-if="curveType" class="swap__row">
-          <CurveInfo :type="curveType" />
+          <CurveInfo :type="curveType" :version="version"/>
         </div>
         <div v-show="canSwitchContract" class="swap__row -version">
           <ContractSwitch type="swap" />

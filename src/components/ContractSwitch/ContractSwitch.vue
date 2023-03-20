@@ -35,6 +35,7 @@ import {
 import { computed } from 'vue';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import SelectButton from "primevue/selectbutton";
+import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
 
 const poolsStore = usePoolsStore();
 
@@ -50,8 +51,8 @@ const poolVersionOptions = computed(() => {
     disabled = true;
   }
   return [
-    { id: 1, label: 'V0', value: 0 },
-    { id: 2, label: 'V0.5', value: 0.5, disabled },
+    { id: 1, label: 'V0', value: VERSION_0 },
+    { id: 2, label: 'V0.5', value: VERSION_0_5, disabled },
   ];
 });
 </script>

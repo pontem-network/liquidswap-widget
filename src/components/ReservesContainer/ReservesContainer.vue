@@ -52,7 +52,7 @@ import { TokenIcon } from '@/components/TokenIcon';
 import { TVersionType } from "@/types";
 
 interface IProps {
-  type: 'swap' | 'add' | 'burn';
+  type: 'swap';
 }
 
 const props = defineProps<IProps>();
@@ -60,6 +60,8 @@ const props = defineProps<IProps>();
 const store = useSwapStore();
 const poolsStore = usePoolsStore();
 const tokensStore = useTokensStore();
+
+const version = computed(() => store.version);
 
 onBeforeMount(async () => {
   await getReserves();
@@ -78,7 +80,7 @@ async function getReserves() {
       store.fromCurrency.token as string,
       store.toCurrency.token as string,
       store.curve,
-      store.version as unknown as TVersionType,
+      version.value as unknown as TVersionType,
     );
     poolRes.value.coinX = pool.coinX;
     poolRes.value.coinY = pool.coinY;
@@ -94,9 +96,12 @@ watch(
     () => store.fromCurrency.token,
     () => store.toCurrency.token,
     () => store.curve,
-    () => store.version,
+    () => version.value,
   ],
   async () => await getReserves(),
+    {
+      deep: true,
+    },
 );
 
 const toTokenEntity = computed(() => {
