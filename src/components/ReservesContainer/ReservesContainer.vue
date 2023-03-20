@@ -49,6 +49,7 @@ import {
 } from '@/store';
 import { is_sorted } from '@/utils/utils';
 import { TokenIcon } from '@/components/TokenIcon';
+import { TVersionType } from "@/types";
 
 interface IProps {
   type: 'swap' | 'add' | 'burn';
@@ -77,6 +78,7 @@ async function getReserves() {
       store.fromCurrency.token as string,
       store.toCurrency.token as string,
       store.curve,
+      store.version as unknown as TVersionType,
     );
     poolRes.value.coinX = pool.coinX;
     poolRes.value.coinY = pool.coinY;
@@ -92,6 +94,7 @@ watch(
     () => store.fromCurrency.token,
     () => store.toCurrency.token,
     () => store.curve,
+    () => store.version,
   ],
   async () => await getReserves(),
 );

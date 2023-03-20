@@ -69,22 +69,30 @@
 </template>
 
 <script setup lang="ts">
-import { useSwapStore, useStore } from '@/store';
+import { useSwapStore } from '@/store';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { useUnverifiedCoins } from '@/composables/useUnverifiedCoins';
+import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
+import { getCurve } from '@/utils/contracts';
 
 import PAccordion from 'primevue/accordion';
 import PAccordionTab from 'primevue/accordiontab';
 
 const swap = useSwapStore();
 
-const { curves } = useStore();
+const version = computed(() => swap.version);
 
 const uc = useUnverifiedCoins();
 
 const slippageAmount = computed(() => swap.slippageAmount);
-const hasSlippage = computed(() => swap.curve === curves.uncorrelated);
+const hasSlippage = computed(
+    () =>
+        (version.value === VERSION_0 &&
+            swap.curve === getCurve('uncorrelated', version.value)) ||
+        version.value === VERSION_0_5,
+);
+
 const convertRate = computed(() => swap.convertRate);
 const toAmount = computed(() => swap.toCurrency.amount);
 const toToken = computed(() => swap.toCurrency.token);

@@ -12,7 +12,7 @@ import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import {IStoredToken, TVersionType} from '@/types';
-import { getCurve } from '@/utils/contracts';
+import {getCurve, getShortCurveFromFull} from '@/utils/contracts';
 
 
 const DEFAULT_SLIPPAGE = 0.005;
@@ -34,7 +34,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const poolsStore = usePoolsStore();
 
   const mainStore = useStore();
-  const { curves, networkOptions, sdk } = mainStore;
+  const { networkOptions, sdk } = mainStore;
 
   const curve = ref<string>(getCurve('uncorrelated', version.value));
 
@@ -168,7 +168,7 @@ export const useSwapStore = defineStore('swapStore', () => {
           fromToken: from.token,
           toToken: to.token,
           interactiveToken: mode,
-          curveType: curve.value === curves.stable ? 'stable' : 'uncorrelated',
+          curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
           amount: mode === 'from' ? from.amount! : to.amount!,
           version: version.value as unknown as TVersionType
         });
@@ -224,7 +224,7 @@ export const useSwapStore = defineStore('swapStore', () => {
     await poolExistence.check({
       fromCoin: from.token,
       toCoin: to.token,
-      curve: curve.value === curves.stable ? 'stable' : 'uncorrelated',
+      curve: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
       version: version.value as unknown as TVersionType,
     });
   }
