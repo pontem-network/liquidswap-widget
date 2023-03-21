@@ -77,9 +77,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       const { pair } = one.alias;
       let { curve } = one.alias;
       curve = curve.toLowerCase();
-      if (curve == 'uncorrelated') {
-        curve = 'unstable'; // don't change it here
-      }
       const coins = pair.split('-');
       for (let i = 0; i < 2; i++) {
         if (['USDT', 'USDC', 'BTC', 'WETH', 'SOL'].includes(coins[i])) {
