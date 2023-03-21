@@ -38,8 +38,8 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
 import { RECALCULATION_TIME } from '@/constants/constants';
-import {TVersionType} from "@/types";
-import {getCurve, getShortCurveFromFull} from "@/utils/contracts";
+import { TVersionType } from "@/types";
+import { getCurve, getShortCurveFromFull } from "@/utils/contracts";
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 

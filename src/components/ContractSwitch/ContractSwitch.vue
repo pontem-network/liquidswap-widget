@@ -36,7 +36,7 @@ import { computed } from 'vue';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import SelectButton from "primevue/selectbutton";
 import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
-import {TVersionType} from "@/types";
+import { TVersionType } from "@/types";
 
 const poolsStore = usePoolsStore();
 

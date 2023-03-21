@@ -5,14 +5,14 @@ import { watchDebounced } from '@vueuse/core';
 
 import { getPoolStr } from '@/utils/pools';
 import { useStore } from '@/store/useStore';
-import { is_sorted, d, decimalsMultiplier  } from '@/utils/utils';
-import {usePoolsStore, useTokensStore} from '@/store';
+import { is_sorted, d, decimalsMultiplier } from '@/utils/utils';
+import { usePoolsStore, useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
 import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
-import {IStoredToken, TVersionType} from '@/types';
-import {getCurve, getResourcesAccount, getShortCurveFromFull} from '@/utils/contracts';
+import { IStoredToken, TVersionType } from '@/types';
+import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/contracts';
 
 
 const DEFAULT_SLIPPAGE = 0.005;

@@ -140,14 +140,14 @@ import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
 import { getCurve } from '@/utils/contracts';
-import {TVersionType} from "@/types";
+import { TVersionType } from "@/types";
 
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
 
-const { account, insideNativeWallet } = mainStore;
+const { account } = mainStore;
 const version = computed(() => swapStore.version);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
