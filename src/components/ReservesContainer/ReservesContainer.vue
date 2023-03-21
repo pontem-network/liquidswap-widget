@@ -75,6 +75,9 @@ const poolRes = ref({
 });
 
 async function getReserves() {
+  console.log('store.curve', store.curve);
+  console.log('version.value', version.value);
+
   try {
     const pool = await poolsStore.getPool(
       store.fromCurrency.token as string,

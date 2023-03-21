@@ -1,10 +1,9 @@
 import { NETWORKS_MODULES } from '@/constants/constants';
 import { useTokensStore } from '@/store';
-import { RESOURCES_ACCOUNT } from '@/constants/constants';
-import { composeType } from './contracts';
+import { composeType, getResourcesAccount } from './contracts';
 import { is_sorted } from './utils';
 import { getCurve, getModulesAccount } from '@/utils/contracts';
-import {TVersionType} from "@/types";
+import { TVersionType } from "@/types";
 
 
 export function getPoolStr(
@@ -27,13 +26,14 @@ export function getPoolLpStr(
   coinX: string,
   coinY: string,
   curve: string,
+  contract?: TVersionType,
 ): string {
   const [sortedX, sortedY] = is_sorted(coinX, coinY)
     ? [coinX, coinY]
     : [coinY, coinX];
+  const resourceAccount = getResourcesAccount(contract);
   return composeType(
-    //
-    RESOURCES_ACCOUNT,
+    resourceAccount,
     'lp_coin',
     'LP',
     [sortedX, sortedY, curve],

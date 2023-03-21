@@ -65,15 +65,23 @@
 import { useSwapStore, useStore } from '@/store';
 import { computed } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
+import { getCurve } from "@/utils/contracts";
+import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
 
 const swapStore = useSwapStore();
-const { curves } = useStore();
+const version = computed(() => swapStore.version);
 
 const fromToken = computed(() => swapStore.fromCurrency.token);
 const toToken = computed(() => swapStore.toCurrency.token);
 
 const slippageAmount = computed(() => swapStore.slippageAmount);
-const hasSlippage = computed(() => swapStore.curve === curves.uncorrelated);
+const hasSlippage = computed(
+() =>
+    (version.value === VERSION_0 &&
+        swapStore.curve === getCurve('uncorrelated', version.value)) ||
+    version.value === VERSION_0_5,
+);
+
 const convertRate = computed(() => swapStore.convertRate);
 const slippageToken = computed(() =>
   swapStore.lastInteractiveField === 'from' ? toToken.value : fromToken.value,

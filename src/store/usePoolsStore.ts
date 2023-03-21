@@ -77,6 +77,9 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       const { pair } = one.alias;
       let { curve } = one.alias;
       curve = curve.toLowerCase();
+      if (curve == 'uncorrelated') {
+        curve = 'unstable'; // don't change it here
+      }
       const coins = pair.split('-');
       for (let i = 0; i < 2; i++) {
         if (['USDT', 'USDC', 'BTC', 'WETH', 'SOL'].includes(coins[i])) {
@@ -223,7 +226,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         : getCurve('uncorrelated', contract);
 
     const liquidityPool = getPoolStr(coinX, coinY, curveType, contract);
-    const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType));
+    const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType, contract));
     await Promise.all([
       fetchReserves(liquidityPool, pool, contract),
       fetchLp(lpCoinInfo, pool, contract),
@@ -333,7 +336,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         curve: string,
         contract?: TVersionType,
       ): Promise<IPersistedPool> => {
-        const liquidityPool = getPoolStr(coinX, coinY, curve);
+        const liquidityPool = getPoolStr(coinX, coinY, curve, contract);
         let registeredPool = poolsMap[liquidityPool];
         if (!registeredPool) {
           const mainStore = useStore();
@@ -375,6 +378,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     coinY?: string,
     version?: TVersionType,
   ): string | false {
+    console.log('!!getCurveType version', version); //verno
     if (!coinX || !coinY) return false;
     const [sortedX, sortedY] = is_sorted(coinX, coinY)
       ? [coinX, coinY]

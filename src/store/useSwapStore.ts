@@ -234,7 +234,7 @@ export const useSwapStore = defineStore('swapStore', () => {
 
   watchDebounced(
     () => [
-      version.value,
+      version,
       from.amount,
       from.reserve,
       from.token,
@@ -251,6 +251,7 @@ export const useSwapStore = defineStore('swapStore', () => {
       ) {
         version.value = VERSION_0;
       }
+      console.log('!!watchDebounced, version, curve', version.value, curve.value)
       await check();
       refetchRates(false);
     },

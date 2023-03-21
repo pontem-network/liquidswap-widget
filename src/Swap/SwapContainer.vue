@@ -140,6 +140,7 @@ import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
 import { getCurve } from '@/utils/contracts';
+import {TVersionType} from "@/types";
 
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
@@ -158,6 +159,7 @@ const curveType = computed(() =>
   poolsStore.getCurveType(
     swapStore.fromCurrency?.token,
     swapStore.toCurrency?.token,
+    version.value as TVersionType,
   ),
 );
 

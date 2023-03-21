@@ -36,16 +36,27 @@ import { computed } from 'vue';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import SelectButton from "primevue/selectbutton";
 import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
+import {TVersionType} from "@/types";
 
 const poolsStore = usePoolsStore();
 
 const store = useSwapStore();
 
+const version = computed(() => store.version);
+
+const predefinedCurve = computed(() => {
+  return poolsStore.getCurveType(
+      store.fromCurrency.token,
+      store.toCurrency.token,
+      version.value as TVersionType,
+  );
+});
+
 const poolVersionOptions = computed(() => {
-  const unstableCurve = getCurve('uncorrelated', store.version);
+  const unstableCurve = getCurve('uncorrelated', version.value);
   let disabled = false;
   if (
-    store.curve === unstableCurve && store.predefinedCurve === unstableCurve
+    store.curve === unstableCurve && predefinedCurve.value === unstableCurve
   ) {
     // and pool is default
     disabled = true;

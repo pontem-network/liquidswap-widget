@@ -35,14 +35,13 @@
 
 <script setup lang="ts">
 import DialogHeader from '@/components/DialogHeader/DialogHeader.vue';
-import { useStore, useTokensStore } from '@/store';
+import { useTokensStore } from '@/store';
 import { ref } from 'vue';
 import CoinsList from './Coins/CoinsList.vue';
 
 const emits = defineEmits(['back', 'close', 'navigate']);
 
 const tokensStore = useTokensStore();
-const { curves } = useStore();
 
 type TManageSwitch = 'lists' | 'coins';
 const manageSwitch = ref<TManageSwitch>('coins');
