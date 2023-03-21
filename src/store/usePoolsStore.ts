@@ -378,7 +378,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     coinY?: string,
     version?: TVersionType,
   ): string | false {
-    console.log('!!getCurveType version', version); //verno
     if (!coinX || !coinY) return false;
     const [sortedX, sortedY] = is_sorted(coinX, coinY)
       ? [coinX, coinY]
