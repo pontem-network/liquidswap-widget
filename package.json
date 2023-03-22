@@ -50,7 +50,7 @@
     "@metamask/jazzicon": "2.0.0",
     "@pontem/aptos-wallet-adapter": "^0.6.8",
     "@pontem/coins-registry": "^1.0.4",
-    "@pontem/liquidswap-sdk": "0.6.0",
+    "@pontem/liquidswap-sdk": "^0.6.1",
     "@tsconfig/recommended": "^1.0.1",
     "@types/lodash": "4.14.182",
     "@vueuse/core": "^8.9.4",
