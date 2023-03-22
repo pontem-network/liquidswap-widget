@@ -62,7 +62,10 @@
           <SwapInfo />
         </div>
         <div v-if="curveType" class="swap__row">
-          <CurveInfo :type="curveType" />
+          <CurveInfo :type="curveType" :version="version"/>
+        </div>
+        <div v-show="canSwitchContract" class="swap__row -version">
+          <ContractSwitch type="swap" />
         </div>
         <div class="swap__row">
           <p-button
@@ -128,19 +131,27 @@ import { CurveSwitch } from '@/components/CurveSwitch';
 import { InputToggle } from '@/components/InputToggle';
 import { ReservesContainer } from '@/components/ReservesContainer';
 import { TxSettingsDialog } from '@/components/TxSettingsDialog';
+import { ContractSwitch } from '@/components/ContractSwitch';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
 import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
+import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
+import { getCurve } from '@/utils/contracts';
+import { TVersionType } from "@/types";
 
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
 
-const { curves, account, insideNativeWallet } = mainStore;
+const { account } = mainStore;
+const version = computed(() => swapStore.version);
+
+const stableCurve = computed(() => getCurve('stable', version.value));
+const unstableCurve = computed(() => getCurve('uncorrelated', version.value));
 
 const connected = computed(() => Boolean(account.value));
 
@@ -148,6 +159,7 @@ const curveType = computed(() =>
   poolsStore.getCurveType(
     swapStore.fromCurrency?.token,
     swapStore.toCurrency?.token,
+    version.value as TVersionType,
   ),
 );
 
@@ -156,9 +168,9 @@ watch(
   (curve) => {
     if (curve) {
       swapStore.curve =
-        curve === curves.stable || curve === 'stable'
-          ? curves.stable
-          : curves.uncorrelated;
+        curve === stableCurve.value || curve === 'stable'
+          ? stableCurve.value
+          : unstableCurve.value;
     }
   },
   {
@@ -219,6 +231,13 @@ watchDebounced(
   {
     debounce: 200,
   },
+);
+
+const canSwitchContract = computed(
+    () =>
+        swapStore.toCurrency?.token &&
+        (curveType.value === false ||
+            [CURVE_STABLE_V05, CURVE_STABLE].includes(swapStore.curve)),
 );
 
 const buttonState = computed(() => {

@@ -38,11 +38,15 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import { useTimeoutPoll } from '@vueuse/core';
 import { RECALCULATION_TIME } from '@/constants/constants';
+import { TVersionType } from "@/types";
+import { getCurve, getShortCurveFromFull } from "@/utils/contracts";
 
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
 const swapStore = useSwapStore();
-const { modules, curves, sdk } = useStore();
+const { modules, sdk } = useStore();
+
+const curveType = getShortCurveFromFull(swapStore.curve);
 
 const view = ref<'root' | 'tx'>('root');
 const ratesHasChanged = ref(false);
@@ -56,7 +60,8 @@ const payload = computed<AptosTxPayload>(() => sdk.value.Swap.createSwapTransact
   interactiveToken: swapStore.lastInteractiveField,
   slippage: swapStore.slippage,
   stableSwapType: swapStore.stableSwapType,
-  curveType: swapStore.curve === curves.stable ? 'stable' : 'uncorrelated',
+  curveType: curveType as 'stable' | 'uncorrelated',
+  version: swapStore.version as TVersionType,
 }));
 
 watch(
@@ -76,7 +81,7 @@ useTimeoutPoll(() => swapStore.refetchRates(true), RECALCULATION_TIME, {
   immediate: true,
 });
 
-const isCurveStable = computed(() => swapStore.curve === curves.stable);
+const isCurveStable = computed(() => swapStore.curve === getCurve('stable', swapStore.version));
 
 function onSwapConfirm() {
   cachedPayload.value = cloneDeep(unref(payload.value));

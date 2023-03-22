@@ -3,13 +3,13 @@
     <div
       class="stable-switch-container__switch"
       :class="{
-        isSelected: store.curve === curves.uncorrelated,
+        isSelected: store.curve === curveUncorrelated,
         busy: isBusy,
       }"
-      @click="switchSelected(curves.uncorrelated)"
+      @click="switchSelected(curveUncorrelated)"
     >
       <img src="../../assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
-      <p>Unstable</p>
+      <p>Uncorrelated</p>
       <ToolTip position="top" :tooltipText="'Using x*y=K formula'">
         <i class="pi pi-info-circle" />
       </ToolTip>
@@ -17,11 +17,11 @@
 
     <div
       :class="{
-        isSelected: store.curve === curves.stable,
+        isSelected: store.curve === curveStable,
         busy: isBusy,
       }"
       class="stable-switch-container__switch"
-      @click="switchSelected(curves.stable)"
+      @click="switchSelected(curveStable)"
     >
       <img
         :style="{ marginTop: '-2px', marginBottom: '2px' }"
@@ -42,10 +42,10 @@ import { useToast } from 'primevue/usetoast';
 import PToast from 'primevue/toast';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import {
-  useStore,
   useSwapStore,
   useTokensStore,
 } from '@/store';
+import { getCurve } from '@/utils/contracts';
 
 const toast = useToast();
 
@@ -55,9 +55,12 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const { curves } = useStore();
 const store = useSwapStore();
 const tokenStore = useTokensStore();
+
+const version = computed(() => store.version);
+const curveStable = computed(() => getCurve('stable', version.value));
+const curveUncorrelated = computed(() => getCurve('uncorrelated', version.value));
 
 const isBusy = computed(() =>
   store.isBusy !== undefined ? store.isBusy.value : false,
@@ -73,10 +76,11 @@ watch(
     () => store.fromCurrency.token,
     () => store.toCurrency.token,
     () => store.curve,
+    () => store.version,
   ],
   () => {
     if (
-      store.curve === curves.stable &&
+      store.curve === curveStable.value &&
       (tokenStore.tokens[store.fromCurrency.token as string]?.decimals > 8 ||
         tokenStore.tokens[store.toCurrency.token as string]?.decimals > 8)
     ) {

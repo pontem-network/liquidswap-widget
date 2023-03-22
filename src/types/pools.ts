@@ -1,10 +1,12 @@
-import { TCurveType } from './index';
+import { TCurveType, TVersionType } from './index';
 
 export interface IPoolInfo {
   coinX: string;
   coinY: string;
   curve: TCurveType;
   networkId: number;
+  contract?: TVersionType;
+
 }
 
 export interface IPoolBase {
@@ -12,6 +14,7 @@ export interface IPoolBase {
   coinY: string;
   curve: string;
   networkId: number;
+  contract?: TVersionType;
 }
 
 export interface IPersistedPool extends IPoolInfo {

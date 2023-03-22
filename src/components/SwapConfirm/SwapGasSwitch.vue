@@ -30,13 +30,19 @@
 </template>
 
 <script lang="ts" setup>
-import {useStore, useSwapStore} from '@/store';
+import { useSwapStore } from '@/store';
 import { TStableSwapType } from '@/types';
 import { computed, ref } from 'vue';
+import { getCurve } from '@/utils/contracts';
+import { VERSION_0 } from '@/constants/constants';
 
 const swapStore = useSwapStore();
-const { curves } = useStore();
-const isAvailable = computed(() => swapStore.curve === curves.stable);
+const version = computed(() => swapStore.version);
+const isAvailable = computed(
+    () =>
+        swapStore.version === VERSION_0 &&
+        swapStore.curve === getCurve('stable', version.value),
+);
 const type = ref<TStableSwapType>('normal');
 
 function switchType(_type: TStableSwapType) {
