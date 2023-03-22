@@ -431,7 +431,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
             priceImpactFormatted: ComputedRef<string>;
-        }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: ComputedRef<string | false>;
+        }, "curve" | "version" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
             check: () => Promise<void>;
             isBusy: ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: ComputedRef<boolean>;
@@ -463,7 +465,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
             priceImpactFormatted: ComputedRef<string>;
-        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: ComputedRef<string | false>;
+        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted" | "predefinedCurve">, Pick<{
             check: () => Promise<void>;
             isBusy: ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: ComputedRef<boolean>;
@@ -495,6 +499,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: ComputedRef<number>;
             priceImpactFormatted: ComputedRef<string>;
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: ComputedRef<string | false>;
         }, "check" | "toggleCurrencies" | "refetchRates">>;
         emits: (event: "close", ...args: any[]) => void;
         getToken: () => Promise<void>;

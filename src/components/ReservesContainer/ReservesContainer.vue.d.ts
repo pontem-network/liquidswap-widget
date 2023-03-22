@@ -1,3 +1,4 @@
+import { TVersionType } from '../../types';
 declare const _sfc_main: import("vue").DefineComponent<{
     type: {
         type: StringConstructor;
@@ -37,7 +38,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
-    }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
+    }, "curve" | "version" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
         isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -69,7 +72,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
-    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
+    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted" | "predefinedCurve">, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
         isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -101,12 +106,14 @@ declare const _sfc_main: import("vue").DefineComponent<{
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
     }, "check" | "toggleCurrencies" | "refetchRates">>;
     poolsStore: import("pinia").Store<"poolsStore", import("pinia")._UnwrapAll<Pick<{
         isLoading: import("vue").Ref<boolean>;
         isReady: import("vue").Ref<boolean>;
-        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<import("../../types/pools").IPersistedPool>>;
-        getCurveType: (coinX?: string | undefined, coinY?: string | undefined) => string | false;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
         fetchPoolsList: () => Promise<void>;
         pools: import("vue").Ref<{
             title: string;
@@ -119,8 +126,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
             apr?: number | undefined;
             coinX: string;
             coinY: string;
-            curve: import("../../types").TCurveType;
+            curve: import('../../types').TCurveType;
             networkId: number;
+            contract?: TVersionType | undefined;
         }[]>;
         poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
         poolsTitleMap: Record<string, string>;
@@ -128,8 +136,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
     }, "isLoading" | "isReady" | "pools" | "poolsMap" | "poolsTitleMap">>, Pick<{
         isLoading: import("vue").Ref<boolean>;
         isReady: import("vue").Ref<boolean>;
-        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<import("../../types/pools").IPersistedPool>>;
-        getCurveType: (coinX?: string | undefined, coinY?: string | undefined) => string | false;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
         fetchPoolsList: () => Promise<void>;
         pools: import("vue").Ref<{
             title: string;
@@ -142,8 +150,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
             apr?: number | undefined;
             coinX: string;
             coinY: string;
-            curve: import("../../types").TCurveType;
+            curve: import('../../types').TCurveType;
             networkId: number;
+            contract?: TVersionType | undefined;
         }[]>;
         poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
         poolsTitleMap: Record<string, string>;
@@ -151,8 +160,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
     }, "getPool" | "defaultPools">, Pick<{
         isLoading: import("vue").Ref<boolean>;
         isReady: import("vue").Ref<boolean>;
-        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<import("../../types/pools").IPersistedPool>>;
-        getCurveType: (coinX?: string | undefined, coinY?: string | undefined) => string | false;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
         fetchPoolsList: () => Promise<void>;
         pools: import("vue").Ref<{
             title: string;
@@ -165,8 +174,9 @@ declare const _sfc_main: import("vue").DefineComponent<{
             apr?: number | undefined;
             coinX: string;
             coinY: string;
-            curve: import("../../types").TCurveType;
+            curve: import('../../types').TCurveType;
             networkId: number;
+            contract?: TVersionType | undefined;
         }[]>;
         poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
         poolsTitleMap: Record<string, string>;
@@ -236,6 +246,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         isTokenVerified: (type: string) => boolean;
         fetchCoinsList: () => Promise<void>;
     }, "getToken" | "registerToken" | "searchToken" | "getTokenInfo" | "removeToken" | "isTokenVerified" | "fetchCoinsList">>;
+    version: import("vue").ComputedRef<number>;
     poolRes: import("vue").Ref<{
         coinX: string;
         coinY: string;

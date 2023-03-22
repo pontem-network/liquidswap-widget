@@ -33,7 +33,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
-    }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
+    }, "curve" | "version" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
         isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -65,7 +67,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
-    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
+    }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted" | "predefinedCurve">, Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
         isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -97,6 +101,8 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
         stableSwapType: import("vue").Ref<"high" | "normal">;
         priceImpact: import("vue").ComputedRef<number>;
         priceImpactFormatted: import("vue").ComputedRef<string>;
+        version: import("vue").WritableComputedRef<number>;
+        predefinedCurve: import("vue").ComputedRef<string | false>;
     }, "check" | "toggleCurrencies" | "refetchRates">>;
     tokensStore: import("pinia").Store<"tokensStore", import("pinia")._UnwrapAll<Pick<{
         getLogoUrl: import("vue").ComputedRef<(symbol: string) => any>;
@@ -341,7 +347,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
-        }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
+        }, "curve" | "version" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
             check: () => Promise<void>;
             isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -373,7 +381,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
-        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
+        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted" | "predefinedCurve">, Pick<{
             check: () => Promise<void>;
             isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -405,11 +415,10 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
         }, "check" | "toggleCurrencies" | "refetchRates">>;
-        curves: {
-            stable: string;
-            uncorrelated: string;
-        };
+        version: import("vue").ComputedRef<number>;
         isAvailable: import("vue").ComputedRef<boolean>;
         type: import("vue").Ref<import("../../types").TStableSwapType>;
         switchType: (_type: import("../../types").TStableSwapType) => void;
@@ -447,7 +456,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
-        }, "curve" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
+        }, "curve" | "version" | "convertRate" | "convertFee" | "convertFeeAmount" | "fromCurrency" | "interactiveField" | "isUpdatingRate" | "lastInteractiveField" | "slippage" | "slippageIsDefault" | "toCurrency" | "poolExists" | "convertError" | "stableSwapType">>, Pick<{
             check: () => Promise<void>;
             isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -479,7 +490,9 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
-        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted">, Pick<{
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
+        }, "networkId" | "isBusy" | "isPoolAbsence" | "slippageAmount" | "priceImpact" | "priceImpactFormatted" | "predefinedCurve">, Pick<{
             check: () => Promise<void>;
             isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
             isPoolAbsence: import("vue").ComputedRef<boolean>;
@@ -511,11 +524,10 @@ declare const _sfc_main: import("vue").DefineComponent<{}, {
             stableSwapType: import("vue").Ref<"high" | "normal">;
             priceImpact: import("vue").ComputedRef<number>;
             priceImpactFormatted: import("vue").ComputedRef<string>;
+            version: import("vue").WritableComputedRef<number>;
+            predefinedCurve: import("vue").ComputedRef<string | false>;
         }, "check" | "toggleCurrencies" | "refetchRates">>;
-        curves: {
-            stable: string;
-            uncorrelated: string;
-        };
+        version: import("vue").ComputedRef<number>;
         fromToken: import("vue").ComputedRef<string | undefined>;
         toToken: import("vue").ComputedRef<string | undefined>;
         slippageAmount: import("vue").ComputedRef<number>;

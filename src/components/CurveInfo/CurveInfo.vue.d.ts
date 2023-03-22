@@ -3,13 +3,16 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: StringConstructor;
         required: true;
     };
-}, {
-    curves: {
-        stable: string;
-        uncorrelated: string;
+    version: {
+        type: NumberConstructor;
+        required: true;
     };
+}, {
     props: any;
-    curve: import("vue").ComputedRef<"stable" | "uncorrelated">;
+    type: import("vue").Ref<string>;
+    version: import("vue").Ref<number>;
+    stableCurve: import("vue").ComputedRef<string>;
+    curve: import("vue").ComputedRef<"uncorrelated" | "stable">;
     ToolTip: {
         name: string;
         props: {
@@ -26,6 +29,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     type: {
         type: StringConstructor;
+        required: true;
+    };
+    version: {
+        type: NumberConstructor;
         required: true;
     };
 }>>, {}>;

@@ -1,12 +1,79 @@
-import PToast from 'primevue/toast';
-declare const _sfc_main: import("vue").DefineComponent<{
-    curve: {
-        type: StringConstructor;
-        required: false;
-    };
-}, {
-    toast: import("primevue/toastservice").ToastServiceMethods;
-    props: any;
+import SelectButton from "primevue/selectbutton";
+import { TVersionType } from '../../types';
+declare const _sfc_main: import("vue").DefineComponent<{}, {
+    poolsStore: import("pinia").Store<"poolsStore", import("pinia")._UnwrapAll<Pick<{
+        isLoading: import("vue").Ref<boolean>;
+        isReady: import("vue").Ref<boolean>;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
+        fetchPoolsList: () => Promise<void>;
+        pools: import("vue").Ref<{
+            title: string;
+            reserveX: number;
+            reserveY: number;
+            addedX: number;
+            addedY: number;
+            lp: number;
+            isDefault: boolean;
+            apr?: number | undefined;
+            coinX: string;
+            coinY: string;
+            curve: import('../../types').TCurveType;
+            networkId: number;
+            contract?: TVersionType | undefined;
+        }[]>;
+        poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
+        poolsTitleMap: Record<string, string>;
+        defaultPools: import("vue").ComputedRef<import("../../types/pools").IPersistedPool[]>;
+    }, "isLoading" | "isReady" | "pools" | "poolsMap" | "poolsTitleMap">>, Pick<{
+        isLoading: import("vue").Ref<boolean>;
+        isReady: import("vue").Ref<boolean>;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
+        fetchPoolsList: () => Promise<void>;
+        pools: import("vue").Ref<{
+            title: string;
+            reserveX: number;
+            reserveY: number;
+            addedX: number;
+            addedY: number;
+            lp: number;
+            isDefault: boolean;
+            apr?: number | undefined;
+            coinX: string;
+            coinY: string;
+            curve: import('../../types').TCurveType;
+            networkId: number;
+            contract?: TVersionType | undefined;
+        }[]>;
+        poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
+        poolsTitleMap: Record<string, string>;
+        defaultPools: import("vue").ComputedRef<import("../../types/pools").IPersistedPool[]>;
+    }, "getPool" | "defaultPools">, Pick<{
+        isLoading: import("vue").Ref<boolean>;
+        isReady: import("vue").Ref<boolean>;
+        getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType | undefined) => Promise<import("../../types/pools").IPersistedPool>>;
+        getCurveType: (coinX?: string | undefined, coinY?: string | undefined, version?: TVersionType | undefined) => string | false;
+        fetchPoolsList: () => Promise<void>;
+        pools: import("vue").Ref<{
+            title: string;
+            reserveX: number;
+            reserveY: number;
+            addedX: number;
+            addedY: number;
+            lp: number;
+            isDefault: boolean;
+            apr?: number | undefined;
+            coinX: string;
+            coinY: string;
+            curve: import('../../types').TCurveType;
+            networkId: number;
+            contract?: TVersionType | undefined;
+        }[]>;
+        poolsMap: Record<string, import("../../types/pools").IPersistedPool>;
+        poolsTitleMap: Record<string, string>;
+        defaultPools: import("vue").ComputedRef<import("../../types/pools").IPersistedPool[]>;
+    }, "getCurveType" | "fetchPoolsList">>;
     store: import("pinia").Store<"swapStore", import("pinia")._UnwrapAll<Pick<{
         check: () => Promise<void>;
         isBusy: import("vue").ComputedRef<import("vue").Ref<boolean>>;
@@ -110,76 +177,19 @@ declare const _sfc_main: import("vue").DefineComponent<{
         version: import("vue").WritableComputedRef<number>;
         predefinedCurve: import("vue").ComputedRef<string | false>;
     }, "check" | "toggleCurrencies" | "refetchRates">>;
-    tokenStore: import("pinia").Store<"tokensStore", import("pinia")._UnwrapAll<Pick<{
-        getLogoUrl: import("vue").ComputedRef<(symbol: string) => any>;
-        getToken: (type?: string | undefined) => import("../../store/useTokenStore").IPersistedTokenExtended | undefined;
-        tokens: Record<string, import("../../store/useTokenStore").IPersistedTokenExtended>;
-        token: import("vue").ComputedRef<() => import("../../store/useTokenStore").IPersistedToken | undefined>;
-        registerToken: (token: import("../../store/useTokenStore").IPersistedToken, { rewrite }: {
-            rewrite?: boolean | undefined;
-        }) => import("../../store/useTokenStore").IPersistedTokenExtended;
-        searchToken: {
-            (type: string, withCancel?: false | undefined): Promise<any>;
-            (type: string, withCancel: true): {
-                request: Promise<any>;
-                cancel: (message?: string | undefined) => void;
-            };
-        };
-        getTokenInfo: (token: string, remote?: boolean | undefined) => Promise<import("../../store/useTokenStore").IPersistedToken | undefined>;
-        importedTokens: import("vue").ComputedRef<import("../../store/useTokenStore").IPersistedTokenExtended[]>;
-        removeToken: (token: import("../../store/useTokenStore").IPersistedToken) => void;
-        isReady: import("vue").Ref<boolean>;
-        isTokenVerified: (type: string) => boolean;
-        fetchCoinsList: () => Promise<void>;
-    }, "isReady" | "tokens">>, Pick<{
-        getLogoUrl: import("vue").ComputedRef<(symbol: string) => any>;
-        getToken: (type?: string | undefined) => import("../../store/useTokenStore").IPersistedTokenExtended | undefined;
-        tokens: Record<string, import("../../store/useTokenStore").IPersistedTokenExtended>;
-        token: import("vue").ComputedRef<() => import("../../store/useTokenStore").IPersistedToken | undefined>;
-        registerToken: (token: import("../../store/useTokenStore").IPersistedToken, { rewrite }: {
-            rewrite?: boolean | undefined;
-        }) => import("../../store/useTokenStore").IPersistedTokenExtended;
-        searchToken: {
-            (type: string, withCancel?: false | undefined): Promise<any>;
-            (type: string, withCancel: true): {
-                request: Promise<any>;
-                cancel: (message?: string | undefined) => void;
-            };
-        };
-        getTokenInfo: (token: string, remote?: boolean | undefined) => Promise<import("../../store/useTokenStore").IPersistedToken | undefined>;
-        importedTokens: import("vue").ComputedRef<import("../../store/useTokenStore").IPersistedTokenExtended[]>;
-        removeToken: (token: import("../../store/useTokenStore").IPersistedToken) => void;
-        isReady: import("vue").Ref<boolean>;
-        isTokenVerified: (type: string) => boolean;
-        fetchCoinsList: () => Promise<void>;
-    }, "token" | "getLogoUrl" | "importedTokens">, Pick<{
-        getLogoUrl: import("vue").ComputedRef<(symbol: string) => any>;
-        getToken: (type?: string | undefined) => import("../../store/useTokenStore").IPersistedTokenExtended | undefined;
-        tokens: Record<string, import("../../store/useTokenStore").IPersistedTokenExtended>;
-        token: import("vue").ComputedRef<() => import("../../store/useTokenStore").IPersistedToken | undefined>;
-        registerToken: (token: import("../../store/useTokenStore").IPersistedToken, { rewrite }: {
-            rewrite?: boolean | undefined;
-        }) => import("../../store/useTokenStore").IPersistedTokenExtended;
-        searchToken: {
-            (type: string, withCancel?: false | undefined): Promise<any>;
-            (type: string, withCancel: true): {
-                request: Promise<any>;
-                cancel: (message?: string | undefined) => void;
-            };
-        };
-        getTokenInfo: (token: string, remote?: boolean | undefined) => Promise<import("../../store/useTokenStore").IPersistedToken | undefined>;
-        importedTokens: import("vue").ComputedRef<import("../../store/useTokenStore").IPersistedTokenExtended[]>;
-        removeToken: (token: import("../../store/useTokenStore").IPersistedToken) => void;
-        isReady: import("vue").Ref<boolean>;
-        isTokenVerified: (type: string) => boolean;
-        fetchCoinsList: () => Promise<void>;
-    }, "getToken" | "registerToken" | "searchToken" | "getTokenInfo" | "removeToken" | "isTokenVerified" | "fetchCoinsList">>;
     version: import("vue").ComputedRef<number>;
-    curveStable: import("vue").ComputedRef<string>;
-    curveUncorrelated: import("vue").ComputedRef<string>;
-    isBusy: import("vue").ComputedRef<boolean>;
-    switchSelected: (curve: string) => void;
-    PToast: typeof PToast;
+    predefinedCurve: import("vue").ComputedRef<string | false>;
+    poolVersionOptions: import("vue").ComputedRef<({
+        id: number;
+        label: string;
+        value: number;
+        disabled?: undefined;
+    } | {
+        id: number;
+        label: string;
+        value: number;
+        disabled: boolean;
+    })[]>;
     ToolTip: {
         name: string;
         props: {
@@ -193,10 +203,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
             };
         };
     };
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    curve: {
-        type: StringConstructor;
-        required: false;
-    };
-}>>, {}>;
+    SelectButton: typeof SelectButton;
+}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>>, {}>;
 export default _sfc_main;

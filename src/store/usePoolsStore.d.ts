@@ -1,9 +1,10 @@
 import { IPersistedPool } from '../types/pools';
+import { TVersionType } from '../types';
 export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore", import("pinia")._UnwrapAll<Pick<{
     isLoading: import("vue").Ref<boolean>;
     isReady: import("vue").Ref<boolean>;
-    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
-    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string, version?: TVersionType) => string | false;
     fetchPoolsList: () => Promise<void>;
     pools: import("vue").Ref<{
         title: string;
@@ -18,6 +19,7 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
         coinY: string;
         curve: import('../types').TCurveType;
         networkId: number;
+        contract?: TVersionType | undefined;
     }[]>;
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
@@ -25,8 +27,8 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
 }, "isLoading" | "isReady" | "pools" | "poolsMap" | "poolsTitleMap">>, Pick<{
     isLoading: import("vue").Ref<boolean>;
     isReady: import("vue").Ref<boolean>;
-    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
-    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string, version?: TVersionType) => string | false;
     fetchPoolsList: () => Promise<void>;
     pools: import("vue").Ref<{
         title: string;
@@ -41,6 +43,7 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
         coinY: string;
         curve: import('../types').TCurveType;
         networkId: number;
+        contract?: TVersionType | undefined;
     }[]>;
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
@@ -48,8 +51,8 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
 }, "getPool" | "defaultPools">, Pick<{
     isLoading: import("vue").Ref<boolean>;
     isReady: import("vue").Ref<boolean>;
-    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string) => Promise<IPersistedPool>>;
-    getCurveType: (coinX?: string, coinY?: string) => string | false;
+    getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType) => Promise<IPersistedPool>>;
+    getCurveType: (coinX?: string, coinY?: string, version?: TVersionType) => string | false;
     fetchPoolsList: () => Promise<void>;
     pools: import("vue").Ref<{
         title: string;
@@ -64,6 +67,7 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
         coinY: string;
         curve: import('../types').TCurveType;
         networkId: number;
+        contract?: TVersionType | undefined;
     }[]>;
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
