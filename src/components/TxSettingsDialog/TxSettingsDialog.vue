@@ -85,16 +85,19 @@ import InputNumber from "primevue/inputnumber";
 import PDialog from 'primevue/dialog';
 import { DialogHeader } from '@/components/DialogHeader';
 import { useWalletProviderStore } from "@pontem/aptos-wallet-adapter";
-import { useStore, useSwapStore } from '@/store';
+import { useStore, useSwapStore, usePoolsStore } from '@/store';
 import { storeToRefs } from "pinia";
 import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
 import { getCurve } from "@/utils/contracts";
+import { TVersionType } from "@/types";
 
 interface IProps {
   isDefault?: boolean;
   modelValue?: number;
   toToken?: string;
   fromToken?: string;
+  curveType?: string;
+  version?: TVersionType;
 }
 
 const props = defineProps<IProps>();
@@ -106,6 +109,7 @@ const { connected: connectedWallet } = storeToRefs(adapter);
 
 const { insideNativeWallet } = useStore();
 const swapStore = useSwapStore();
+const poolsStore = usePoolsStore();
 const connected = computed(() => insideNativeWallet.value ? false : connectedWallet );
 
 const { copy: onCopyUrl } = useClipboard();
@@ -113,7 +117,8 @@ const { copy: onCopyUrl } = useClipboard();
 const display = ref(false);
 const dialog = ref();
 
-const version = computed(() => swapStore.version);
+const curve = computed(() => props.curveType);
+const version = computed(() => props.version);
 
 const error = ref<{ message?: string; type?: string }>({
   message: undefined,
@@ -126,10 +131,10 @@ const size = ref<number | undefined>(
 
 const slippageIsDefault = createSyncRef('isDefault');
 const slippage = createSyncRef('modelValue');
+
 const hasSlippage = computed(
   () =>
-      (version.value === VERSION_0 &&
-          swapStore.curve === getCurve('uncorrelated', version.value)) ||
+      (version.value === VERSION_0 && curve.value === getCurve('uncorrelated', version.value)) ||
       version.value === VERSION_0_5,
 );
 

@@ -115,6 +115,8 @@
       v-model="swapStore.slippage"
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
+      :version="version"
+      :curveType="curveType"
       @close="txSettingsDialogDisplay = false"
     />
   </div>
@@ -164,8 +166,9 @@ const curveType = computed(() =>
 );
 
 watch(
-  curveType,
-  (curve) => {
+  [curveType, stableCurve, unstableCurve],
+  (args) => {
+    const [curve] = args;
     if (curve) {
       swapStore.curve =
         curve === stableCurve.value || curve === 'stable'
@@ -294,7 +297,7 @@ const buttonState = computed(() => {
 
   return {
     disabled: false,
-    text: `Swap ${fromBalance.alias.value} to ${toBalance.alias.value}`,
+    text: `Swap`,
   };
 });
 
