@@ -14,6 +14,9 @@ export function usePoolExistence() {
 
   async function checkExistence(params: IPoolExist): Promise<boolean> {
     isFetching.value = true;
+    if (params.curve === undefined) {
+      throw new Error('Curve type is undefined');
+    }
     try {
       const response = await sdk.value.Swap.getLiquidityPoolResource({
         fromToken: params.fromCoin,
@@ -43,7 +46,7 @@ export function usePoolExistence() {
   function watchChanges(
     from: ICreateToken,
     to: ICreateToken,
-    curve: Ref<string>,
+    curve: Ref<CurveType>,
     version: Ref<TVersionType>,
   ) {
     watch(

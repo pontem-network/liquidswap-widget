@@ -115,8 +115,6 @@
       v-model="swapStore.slippage"
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
-      :version="version"
-      :curveType="curveType"
       @close="txSettingsDialogDisplay = false"
     />
   </div>
@@ -141,7 +139,7 @@ import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
-import { getCurve } from '@/utils/contracts';
+import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TVersionType } from "@/types";
 
 const mainStore = useStore();
@@ -165,21 +163,28 @@ const curveType = computed(() =>
   ),
 );
 
-watch(
-  [curveType, stableCurve, unstableCurve],
-  (args) => {
-    const [curve] = args;
-    if (curve) {
+watch([curveType, stableCurve, unstableCurve], () => {
+  console.log('swapStore.fromCurrency?.token', swapStore.fromCurrency?.token);
+    console.log('swapStore.toCurrency?.token', swapStore.toCurrency?.token);
+    console.log('version', version.value);
+    console.log('newCurve', curveType.value);
+
+    if (curveType.value) {
       swapStore.curve =
-        curve === stableCurve.value || curve === 'stable'
+          curveType.value === stableCurve.value || curveType.value === 'stable'
           ? stableCurve.value
           : unstableCurve.value;
+    }
+    else {
+      const shortName = getShortCurveFromFull(swapStore.curve);
+      swapStore.curve = getCurve(shortName, version.value);
     }
   },
   {
     immediate: true,
-  },
-);
+  }
+)
+
 const fromBalance = useCurrentAccountBalance(
   computed(() => swapStore.fromCurrency?.token),
 );
