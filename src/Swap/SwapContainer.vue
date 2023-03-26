@@ -164,11 +164,6 @@ const curveType = computed(() =>
 );
 
 watch([curveType, stableCurve, unstableCurve], () => {
-  console.log('swapStore.fromCurrency?.token', swapStore.fromCurrency?.token);
-    console.log('swapStore.toCurrency?.token', swapStore.toCurrency?.token);
-    console.log('version', version.value);
-    console.log('newCurve', curveType.value);
-
     if (curveType.value) {
       swapStore.curve =
           curveType.value === stableCurve.value || curveType.value === 'stable'
