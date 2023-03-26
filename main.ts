@@ -7,13 +7,14 @@ import { walletsList } from "@/constants/wallets";
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 
-import appStyles from './src/styles/index.scss';
+import appStyles from './src/styles/index.scss?inline';
 
 const plugins = [PrimeVue, ToastService];
 
 export const LiquidSwapWidget = defineCustomElement({
   props: App.props,
   setup(props) {
+    // @ts-ignore
     const app = createApp();
     const pinia = createPinia();
     const adapter = useWalletProviderStore(pinia);
@@ -32,9 +33,10 @@ export const LiquidSwapWidget = defineCustomElement({
 
     const inst = getCurrentInstance();
     if (inst === null) return;
-    Object.assign(inst!.appContext, app._context);
+    Object.assign(inst.appContext, app._context);
+    // @ts-ignore
     Object.assign(inst.provides, app._context.provides);
-    Object.assign(inst!.appContext.provides, app._context.provides);
+    Object.assign(inst.appContext.provides, app._context.provides);
 
     return () => h(App, props)
   },

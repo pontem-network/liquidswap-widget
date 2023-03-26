@@ -12,6 +12,8 @@ import { usePoolsStore, useStore, useTokensStore } from "@/store";
 import { ConnectWalletDialog } from '@/components/ConnectWalletDialog';
 import { SwapConfirmDialog } from '@/components/SwapConfirmDialog';
 import { InvalidNetworkDialog } from '@/components/InvalidNetworkDialog';
+import './styles/index.scss';
+
 
 const props = defineProps<{
   dataAccount?: string; // account address like 0x....da14
