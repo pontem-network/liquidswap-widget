@@ -24,7 +24,6 @@ $gray: var(--surface-card);
   &:after {
     content: attr(tooltip);
 
-    font-family: Helvetica, sans-serif;
     text-align: center;
 
     z-index: 1000;

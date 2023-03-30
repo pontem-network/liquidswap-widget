@@ -16,7 +16,7 @@
       />
       <p>{{ type === stableCurve ? 'Stable' : 'Uncorrelated' }}</p>
       <ToolTip position="top-left" :tooltip-text="`Using formula optimized for ${curve} coins swaps`">
-        <i class="pi pi-info-circle"/>
+        <i class="pi pi-info-circle" :style="{ paddingTop: '2px' }"/>
       </ToolTip>
     </div>
   </div>
