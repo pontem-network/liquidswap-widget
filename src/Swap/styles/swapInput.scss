@@ -1,10 +1,16 @@
 .swap-input {
   border: 1px solid transparent;
   background-color: #31314e;
-  border-radius: 20px;
+  border-radius: 12px;
 
   &:hover {
     border: 1px solid rgba(#e5e4fa, 0.15);
+  }
+
+  .balance {
+    color: #E5E4FA;
+    font-weight: 600;
+    opacity: 0.6;
   }
 }
 

@@ -22,3 +22,8 @@ export function titleForToken(token: IPersistedToken) {
   const prefix = TITLES[token.source] ?? '';
   return prefix.length ? `${prefix} • ${token.name}` : `${token.name}`;
 }
+
+export function providerForToken(token: IPersistedToken) {
+  const provider = TITLES[token.source] ?? '';
+  return provider;
+}
