@@ -316,6 +316,13 @@ export const useSwapStore = defineStore('swapStore', () => {
     formatter.format(priceImpact.value),
   );
 
+  const priceImpactState = computed(() => {
+    if (+priceImpactFormatted.value <= 10) return 'normal';
+    if (+priceImpactFormatted.value >= 10 && +priceImpactFormatted.value < 20)
+      return 'warning';
+    return 'alert';
+  });
+
   return {
     check,
     isBusy,
@@ -340,6 +347,7 @@ export const useSwapStore = defineStore('swapStore', () => {
     stableSwapType,
     priceImpact,
     priceImpactFormatted,
+    priceImpactState,
     version,
     predefinedCurve,
   };

@@ -6,13 +6,30 @@
     &:not(:last-child) {
       margin-bottom: 8px;
     }
+  }
+}
 
-    span:first-child {
-      color: #9594aa;
-      font-weight: 500;
-      letter-spacing: 0.44px;
-      line-height: 18px;
-      font-size: 15px;
+.swap-info {
+  &__price-impact-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    padding: 8px;
+    border-radius: 7px;
+    color: white;
+
+    &_success {
+      background-color: var(--accent-success);
+    }
+
+    &_warning {
+      background-color: var(--accent-warning);
+    }
+
+    &_alert {
+      background-color: var(--accent-error);
     }
   }
 }
@@ -88,14 +105,4 @@
       margin-left: auto;
     }
   }
-}
-
-.-green {
-  color: var(--green-500);
-}
-.-yellow {
-  color: var(--yellow-500);
-}
-.-red {
-  color: var(--red-500);
 }

@@ -50,12 +50,25 @@
   </PAccordion>
   <div class="swap-info__info">
     <div class="list">
-      <div class="list__item">
+      <div
+          v-if="swap.fromCurrency.reserve && swap.toCurrency.reserve"
+          class="list__item"
+      >
         <span>Price Impact</span>
         <span v-if="swap.isUpdatingRate"
-          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
+        ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
         /></span>
-        <span v-else :class="priceImpactClass">{{ priceImpact }}%</span>
+        <span
+            v-else
+            class="swap-info__price-impact-wrapper"
+            :class="priceImpactClass"
+        >
+          <img
+              v-if="swap.priceImpactState !== 'normal'"
+              src="@/assets/alert-white.svg"
+              class="mr-1"
+          /><span class="-white">{{ priceImpact }}%</span></span
+        >
       </div>
       <div class="list__item">
         <span>Fee ({{ convertFee }}%)</span>
@@ -126,10 +139,10 @@ const activeIndex = computed({
 });
 
 const priceImpactClass = computed(() => {
-  return +priceImpact.value < 0.2
-    ? '-green'
-    : +priceImpact.value < 0.5
-    ? '-yellow'
-    : '-red';
+  return swap.priceImpactState === 'normal'
+      ? 'swap-info__price-impact-wrapper_success'
+      : swap.priceImpactState === 'warning'
+          ? 'swap-info__price-impact-wrapper_warning'
+          : 'swap-info__price-impact-wrapper_alert';
 });
 </script>
