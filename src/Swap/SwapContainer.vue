@@ -57,7 +57,7 @@
             swapStore.toCurrency.amount &&
             swapStore.fromCurrency.amount
           "
-          class="swap__row"
+          class="swap__row swap__row--no-padding"
         >
           <SwapInfo />
         </div>
@@ -67,6 +67,7 @@
         <div v-show="canSwitchContract" class="swap__row -version">
           <ContractSwitch type="swap" />
         </div>
+        <ReservesContainer type="swap" />
         <div class="swap__row">
           <p-button
             v-if="!connected"
@@ -89,7 +90,6 @@
         </div>
       </form>
     </div>
-    <ReservesContainer type="swap" />
     <ImportTokenDialog
       ref="importFromDialog"
       :token="routeFromToken"

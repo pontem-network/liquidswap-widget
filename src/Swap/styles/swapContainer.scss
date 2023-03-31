@@ -101,6 +101,10 @@
 
   &__row {
     padding: 0 8px 8px;
+
+    &--no-padding {
+      padding: 0;
+    }
   }
 
   &__button {

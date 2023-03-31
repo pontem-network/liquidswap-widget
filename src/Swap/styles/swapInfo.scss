@@ -1,6 +1,5 @@
 .swap-info__info {
-  margin: 8px 0 0;
-  padding: 0.25rem 1.25rem 0;
+  margin: 8px 0 8px;
 
   .list__item {
     &:not(:last-child) {
@@ -44,12 +43,12 @@
 
     .p-accordion-header-link {
       width: 100%;
-      padding: 4px 12px !important;
       background: transparent !important;
       border: 0;
-      border-radius: 12px !important;
       min-height: 40px;
       box-shadow: none !important;
+      padding: 0;
+      border-radius: 0;
 
       &:focus {
         box-shadow: none !important;
@@ -63,8 +62,8 @@
     .p-accordion-content {
       margin-top: 8px;
       background: transparent !important;
-      border-radius: 16px !important;
-      border: 1px solid #24243a !important;
+      padding: 0;
+      border: none;
     }
   }
 
@@ -73,6 +72,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 0 16px;
 
     span:first-child {
       font-size: 13px;
@@ -80,7 +80,7 @@
     }
 
     span:last-child {
-      padding: 0 5px;
+      padding-right: 5px;
     }
   }
   .p-accordion-header-action {
@@ -95,6 +95,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  padding: 0 16px;
 
   &__item {
     display: flex;

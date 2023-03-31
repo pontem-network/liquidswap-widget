@@ -45,6 +45,13 @@
           /></span>
           <span v-else>{{ slippageOutputTokens.formatted.value }}</span>
         </div>
+        <div class="list__item">
+          <span>Fee ({{ convertFee }}%)</span>
+          <span v-if="swap.isUpdatingRate"
+          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
+          /></span>
+          <span v-else> {{ convertFeeAmount.formatted.value }}</span>
+        </div>
       </div>
     </PAccordionTab>
   </PAccordion>
@@ -56,13 +63,6 @@
           ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
         /></span>
         <span v-else :class="priceImpactClass">{{ priceImpact }}%</span>
-      </div>
-      <div class="list__item">
-        <span>Fee ({{ convertFee }}%)</span>
-        <span v-if="swap.isUpdatingRate"
-          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
-        /></span>
-        <span v-else> {{ convertFeeAmount.formatted.value }}</span>
       </div>
     </div>
   </div>
