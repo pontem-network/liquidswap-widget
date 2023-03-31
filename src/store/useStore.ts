@@ -235,6 +235,7 @@ export const useStore = createGlobalState(() => {
     dappWalletAccount,
     dappNetworkData,
     dappStatusTransaction,
-    dappTransactionHash
+    dappTransactionHash,
+    walletName
   }
 });

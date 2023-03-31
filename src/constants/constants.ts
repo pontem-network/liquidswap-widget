@@ -72,3 +72,9 @@ export const CORRECT_CHAIN_ID =
 export const VERSION_0 = 0;
 export const VERSION_0_5 = 0.5;
 export const VALID_VERSIONS = [VERSION_0, VERSION_0_5];
+
+export const WALLET_GOOGLE_PLAY_URL =
+  'https://play.google.com/store/apps/details?id=com.pontemmobilewallet&hl=en&gl=US';
+export const WALLET_CHROME_STORE_URL =
+  'https://chrome.google.com/webstore/detail/pontem-aptos-wallet/phkbamefinggmakgklpkljjmgibohnba';
+

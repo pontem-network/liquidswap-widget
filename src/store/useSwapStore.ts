@@ -1,7 +1,7 @@
 import isFinite from 'lodash/isFinite';
 import { defineStore } from 'pinia';
 import { reactive, watch, computed, ref, onMounted } from 'vue';
-import { watchDebounced } from '@vueuse/core';
+import { watchDebounced, useStorage } from '@vueuse/core';
 
 import { getPoolStr } from '@/utils/pools';
 import { useStore } from '@/store/useStore';
@@ -51,6 +51,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const lastInteractiveField = ref<'from' | 'to'>('from');
   const convertError = ref<string>();
   const isUpdatingRate = ref(false);
+  const isFrontrunEnable = useStorage('is-frontrun-enable', false);
 
   const tokensStore = useTokensStore();
   const aptos = mainStore.client;
@@ -350,5 +351,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     priceImpactState,
     version,
     predefinedCurve,
+    isFrontrunEnable,
   };
 });
