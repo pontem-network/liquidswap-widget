@@ -55,8 +55,6 @@ export function useNumberFormat(
       maximumFractionDigits: fixed,
     });
 
-    console.log('suffix, bridge', suffix, bridge);
-
     const suffixWithBridge = [suffix, bridge].filter(Boolean).join(' • ');
 
     formatted.value = [
@@ -109,7 +107,6 @@ export function useCurrencyFormat(
       ? tokensStore.getToken(unref(token) as string)
       : undefined;
 
-    console.log('tokenEntity?.source', tokenEntity?.source);
     return tokenEntity ? providerForToken(tokenEntity) : '';
   });
 

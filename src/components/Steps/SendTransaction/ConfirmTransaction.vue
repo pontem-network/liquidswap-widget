@@ -16,11 +16,6 @@
           :style="{ width: '60px', height: '60px' }"
         />
         <h3 class="confirmation__title">Waiting For Confirmation</h3>
-        <slot name="description" v-bind="{ description }">
-          <p v-if="description" class="confirmation__description">
-            {{ description }}
-          </p>
-        </slot>
         <p class="confirmation__help">
           Confirm this transaction in your wallet
         </p>
@@ -38,6 +33,7 @@
 import { computed, onMounted, watch } from 'vue';
 import { AptosCreateTx } from '@/types/aptosResources';
 import { useSendTransaction } from '@/composables/useSendTransaction';
+import { useSignTransaction } from '@/composables/useSignTransaction';
 import { useTimeout } from '@vueuse/core';
 
 import ProgressSpinner from 'primevue/progressspinner';
@@ -45,22 +41,20 @@ import PButton from "primevue/button";
 
 interface IProps {
   tx: AptosCreateTx;
-  description?: string;
+  frontrun?: boolean;
 }
 
 const props = defineProps<IProps>();
 const emits = defineEmits(['rejected', 'submitted', 'close']);
 
-const { state, error, execute } = useSendTransaction();
+
+const { state, error, execute } =
+    props?.frontrun === true ? useSignTransaction() : useSendTransaction();
 
 const timeout = useTimeout(30000, { immediate: true });
 
 const tx = computed(() => {
   return props.tx;
-});
-
-const description = computed(() => {
-  return props.description;
 });
 
 onMounted(() => execute(tx));

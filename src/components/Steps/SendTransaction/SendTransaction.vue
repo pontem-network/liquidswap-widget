@@ -6,6 +6,7 @@
     @close="onClose"
     @submitted="onSubmitted"
     @rejected="onRejected"
+    :frontrun="frontrun"
   />
   <SubmitTransaction
     v-else-if="view === 'submit'"
@@ -24,6 +25,8 @@ import { AptosCreateTx, AptosTxPayload, TxPayloadCallFunction } from '@/types/ap
 import { useStore } from '@/store';
 import { useWatchTransaction } from '@/composables/useWatchTransaction';
 import { FRONTRUN_API_URL } from "@/constants/constants";
+import axios from 'axios';
+
 
 interface IProps {
   payload: AptosTxPayload;
@@ -108,14 +111,7 @@ async function onSubmitted(hashOrTx: string | SignedTx) {
   const frontrunUrl = `${FRONTRUN_API_URL}/frontrun/send`;
   let response;
   try {
-    // response = await axios.post(frontrunUrl, hashOrTx);
-    response = await fetch(frontrunUrl, {
-      method: 'POST',
-      body: JSON.stringify(hashOrTx),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    response = await axios.post(frontrunUrl, hashOrTx);
   } catch (e: any) {
     // TODO: update error processing
     console.error(e);
@@ -127,9 +123,10 @@ async function onSubmitted(hashOrTx: string | SignedTx) {
     return;
   }
 
-  console.log('frontrunUrl response', response);
-  if (response && response?.data.hash) {
-    txHash.value = response?.data.hash;
+  console.log('frontrunUrl response.data', response.data);
+
+  if (response && response.data.hash) {
+    txHash.value = response.data.hash;
   }
 }
 

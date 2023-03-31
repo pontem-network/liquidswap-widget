@@ -68,7 +68,9 @@
               class="slippage-options__button slippage-options__button--action disconnect-button p-button-primary w-full"
               @click="disconnect"
           />
-          <FrontrunOverlay />
+          <template v-if="!insideNativeWallet">
+            <FrontrunOverlay />
+          </template>
         </div>
       </div>
   </PDialog>
