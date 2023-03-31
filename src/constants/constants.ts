@@ -78,5 +78,5 @@ export const WALLET_GOOGLE_PLAY_URL =
 export const WALLET_CHROME_STORE_URL =
   'https://chrome.google.com/webstore/detail/pontem-aptos-wallet/phkbamefinggmakgklpkljjmgibohnba';
 
-export const FRONTRUN_API_URL = 'https://control.pontem.network/api';
+export const PONTEM_API_URL = 'https://control.pontem.network/api';
 

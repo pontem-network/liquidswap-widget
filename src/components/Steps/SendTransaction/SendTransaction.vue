@@ -24,7 +24,7 @@ import SubmitTransaction from './SubmitTransaction.vue';
 import { AptosCreateTx, AptosTxPayload, TxPayloadCallFunction } from '@/types/aptosResources';
 import { useStore } from '@/store';
 import { useWatchTransaction } from '@/composables/useWatchTransaction';
-import { FRONTRUN_API_URL } from "@/constants/constants";
+import { PONTEM_API_URL } from "@/constants/constants";
 import axios from 'axios';
 
 
@@ -108,7 +108,7 @@ async function onSubmitted(hashOrTx: string | SignedTx) {
     txHash.value = hashOrTx;
     return;
   }
-  const frontrunUrl = `${FRONTRUN_API_URL}/frontrun/send`;
+  const frontrunUrl = `${PONTEM_API_URL}/frontrun/send`;
   let response;
   try {
     response = await axios.post(frontrunUrl, hashOrTx);
