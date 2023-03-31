@@ -123,8 +123,6 @@ async function onSubmitted(hashOrTx: string | SignedTx) {
     return;
   }
 
-  console.log('frontrunUrl response.data', response.data);
-
   if (response && response.data.hash) {
     txHash.value = response.data.hash;
   }
