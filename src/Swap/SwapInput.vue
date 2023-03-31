@@ -31,9 +31,8 @@
       </div>
     </div>
     <div class="swap-input__row">
-      <!-- wallet is connected  -->
       <div v-if="mainStore.account.value && token" class="input-label">
-        <div class="input-label__both balance">
+        <div class="input-label__right balance">
           <template
             v-if="
               tokenBalance.isFetching.value &&
@@ -43,6 +42,12 @@
             Loading balance ...
           </template>
           <template v-else>
+            <span v-if="tokenBalance.isExists.value || props.mode === 'from'"
+              >Balance:
+              <span class="cursor-pointer" @click="onClickMaxBalance">{{
+                tokenBalance.formatted.value
+              }}</span></span
+            >
             <ToolTip
                 v-else
                 position="bottom-left"
@@ -142,7 +147,6 @@ function onClickMaxBalance() {
   swapStore.interactiveField = props.mode;
   state.amount = balance;
 }
-
 
 const amount = computed(() => {
   if (state.amount === undefined) {
