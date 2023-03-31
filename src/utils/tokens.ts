@@ -23,6 +23,11 @@ export function titleForToken(token: IPersistedToken) {
   return prefix.length ? `${prefix} • ${token.name}` : `${token.name}`;
 }
 
+export function titleForTokenSymbol(token: IPersistedToken) {
+  const postfix = TITLES[token.source] ?? '';
+  return postfix.length ? `${token.symbol} • ${postfix}` : `${token.symbol}`;
+}
+
 export function providerForToken(token: IPersistedToken) {
   const provider = TITLES[token.source] ?? '';
   return provider;

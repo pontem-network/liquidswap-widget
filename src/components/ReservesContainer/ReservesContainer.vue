@@ -12,7 +12,7 @@
             class="img"
             size="24"
           />
-          {{ fromTokenEntity?.alias }}
+          {{ titleForTokenSymbol(fromTokenEntity) }}
         </div>
         <span>
           {{ reserveFrom.formatted.value }}
@@ -26,7 +26,7 @@
             class="img"
             size="24"
           />
-          {{ toTokenEntity?.alias }}
+          {{ titleForTokenSymbol(toTokenEntity) }}
         </div>
         <span
           :class="{
@@ -50,6 +50,7 @@ import {
 import { is_sorted } from '@/utils/utils';
 import { TokenIcon } from '@/components/TokenIcon';
 import { TVersionType } from "@/types";
+import { titleForTokenSymbol } from '@/utils/tokens';
 
 interface IProps {
   type: 'swap';

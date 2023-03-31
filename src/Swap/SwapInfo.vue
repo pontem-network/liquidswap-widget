@@ -50,25 +50,12 @@
   </PAccordion>
   <div class="swap-info__info">
     <div class="list">
-      <div
-          v-if="swap.fromCurrency.reserve && swap.toCurrency.reserve"
-          class="list__item"
-      >
+      <div class="list__item">
         <span>Price Impact</span>
         <span v-if="swap.isUpdatingRate"
-        ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
+          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
         /></span>
-        <span
-            v-else
-            class="swap-info__price-impact-wrapper"
-            :class="priceImpactClass"
-        >
-          <img
-              v-if="swap.priceImpactState !== 'normal'"
-              src="@/assets/alert-white.svg"
-              class="mr-1"
-          /><span class="-white">{{ priceImpact }}%</span></span
-        >
+        <span v-else :class="priceImpactClass">{{ priceImpact }}%</span>
       </div>
       <div class="list__item">
         <span>Fee ({{ convertFee }}%)</span>
@@ -85,7 +72,6 @@
 import { useSwapStore } from '@/store';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
-import { useUnverifiedCoins } from '@/composables/useUnverifiedCoins';
 import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
 import { getCurve } from '@/utils/contracts';
 
@@ -95,8 +81,6 @@ import PAccordionTab from 'primevue/accordiontab';
 const swap = useSwapStore();
 
 const version = computed(() => swap.version);
-
-const uc = useUnverifiedCoins();
 
 const slippageAmount = computed(() => swap.slippageAmount);
 const hasSlippage = computed(
@@ -116,10 +100,10 @@ const slippageToken = computed(() =>
 
 const priceImpact = computed(() => swap.priceImpactFormatted);
 
-const rateTokens = useCurrencyFormat(1, fromToken);
-const outputTokens = useCurrencyFormat(toAmount, toToken);
+const rateTokens = useCurrencyFormat(1, fromToken, { useBridge: true });
+const outputTokens = useCurrencyFormat(toAmount, toToken, { useBridge: true });
 const slippageOutputTokens = useCurrencyFormat(slippageAmount, slippageToken);
-const convertRateTokens = useCurrencyFormat(convertRate, toToken);
+const convertRateTokens = useCurrencyFormat(convertRate, toToken, { useBridge: true });
 const convertFee = computed(() => swap.convertFee);
 const convertFeeAmount = useCurrencyFormat(
   computed(() => swap.convertFeeAmount),
@@ -139,10 +123,10 @@ const activeIndex = computed({
 });
 
 const priceImpactClass = computed(() => {
-  return swap.priceImpactState === 'normal'
-      ? 'swap-info__price-impact-wrapper_success'
-      : swap.priceImpactState === 'warning'
-          ? 'swap-info__price-impact-wrapper_warning'
-          : 'swap-info__price-impact-wrapper_alert';
+  return +priceImpact.value < 0.2
+    ? '-green'
+    : +priceImpact.value < 0.5
+    ? '-yellow'
+    : '-red';
 });
 </script>

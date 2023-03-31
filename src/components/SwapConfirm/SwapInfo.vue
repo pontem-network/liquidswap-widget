@@ -87,11 +87,11 @@ const slippageToken = computed(() =>
   swapStore.lastInteractiveField === 'from' ? toToken.value : fromToken.value,
 );
 
-const rateTokens = useCurrencyFormat(1, fromToken);
+const rateTokens = useCurrencyFormat(1, fromToken, { useBridge: true });
 const outputTokens = useCurrencyFormat(
   computed(() => swapStore.toCurrency.amount),
   toToken,
 );
 const slippageOutputTokens = useCurrencyFormat(slippageAmount, slippageToken);
-const convertRateTokens = useCurrencyFormat(convertRate, toToken);
+const convertRateTokens = useCurrencyFormat(convertRate, toToken, { useBridge: true });
 </script>

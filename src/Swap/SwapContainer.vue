@@ -281,7 +281,7 @@ const buttonState = computed(() => {
   if (!haveBalance) {
     return {
       disabled: true,
-      text: `Insufficient ${fromBalance.alias.value} balance`,
+      text: `Insufficient ${fromBalance.symbol.value} balance`,
     };
   }
 
@@ -291,7 +291,7 @@ const buttonState = computed(() => {
   ) {
     return {
       disabled: false,
-      text: `Register ${toBalance.alias.value} and Swap`,
+      text: `Register ${toBalance.symbol.value} and Swap`,
     };
   }
 

@@ -12,7 +12,7 @@
               class="img"
               size="24"
             />
-            {{ fromAmount.alias.value }}
+            {{ titleForTokenSymbol(fromToken) }}
           </div>
         </div>
         <div class="swap-tokens__toggle">
@@ -29,7 +29,7 @@
               class="img"
               size="24"
             />
-            {{ toAmount.alias.value }}
+            {{ titleForTokenSymbol(toToken) }}
           </div>
         </div>
       </div>
@@ -60,6 +60,7 @@ import { useSwapStore, useTokensStore } from '@/store';
 import { computed, ref, watch } from 'vue';
 import SwapGasSwitch from './SwapGasSwitch.vue';
 import SwapInfo from './SwapInfo.vue';
+import { titleForTokenSymbol } from '@/utils/tokens';
 
 import PButton from "primevue/button";
 
@@ -116,7 +117,7 @@ const animation = ref(
 const fromAmount = useCurrencyFormat(
   computed(() => swapStore.fromCurrency.amount),
   computed(() => swapStore.fromCurrency.token),
-  { useSuffix: false },
+  { useBridge: false },
 );
 const toAmount = useCurrencyFormat(
   computed(() => swapStore.toCurrency.amount),
