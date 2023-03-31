@@ -1,11 +1,13 @@
 .frontrun-settings-overlay {
+  max-width: 300px;
+  margin-top: 16px;
+
   &__title {
     display: flex;
     flex-direction: row;
     grid-gap: 12px;
     font-size: 1rem;
     color: var(--surface-200);
-    margin-bottom: 8px;
     font-weight: 500;
   }
 

@@ -2,7 +2,7 @@
   <PDialog
       v-model:visible="display"
       :draggable="false"
-      :modal="false"
+      :modal="true"
       :show-header="false"
       :style="{ maxWidth: '483px', marginTop: '61px'}"
       position="top"
@@ -68,6 +68,7 @@
               class="slippage-options__button slippage-options__button--action disconnect-button p-button-primary w-full"
               @click="disconnect"
           />
+          <FrontrunOverlay />
         </div>
       </div>
   </PDialog>
@@ -89,6 +90,7 @@ import { useStore, useSwapStore } from '@/store';
 import { storeToRefs } from "pinia";
 import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
 import { getCurve } from "@/utils/contracts";
+import { FrontrunOverlay } from "@/components/FrontrunOverlay";
 
 interface IProps {
   isDefault?: boolean;
@@ -98,7 +100,7 @@ interface IProps {
 }
 
 const props = defineProps<IProps>();
-const emits = defineEmits(['update:isDefault', 'update:modelValue', 'close']);
+const emits = defineEmits(['update:isDefault', 'update:modelValue', 'hide']);
 
 const adapter = useWalletProviderStore();
 
@@ -210,7 +212,7 @@ function show() {
 
 function hide() {
   display.value = false;
-  emits('close');
+  emits('hide');
 }
 
 const urlToCopy = computed(() => {

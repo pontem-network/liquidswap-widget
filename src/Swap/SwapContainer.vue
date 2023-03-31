@@ -13,7 +13,7 @@
           <span class="font-medium">Swap</span>
           <div ref="overlayAnchor" class="swap__anchor" />
           <div class="swap__settings">
-            <button type="button" class="btn btn-config" @click="toggleConfig">
+            <button type="button" class="btn btn-config" @click="openSettingsDialog">
               <svg
                 class="config-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@
             type="submit"
             tabindex="5"
             class="swap__button"
-            :class="{ 'p-disabled': buttonState.disabled }"
+            :class="[{ 'p-disabled': buttonState.disabled }, priceImpactClass]"
             :disabled="buttonState.disabled"
           >
             <span>{{ buttonState.text }}</span>
@@ -115,7 +115,6 @@
       v-model="swapStore.slippage"
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
-      @close="txSettingsDialogDisplay = false"
     />
   </div>
 </template>
@@ -142,10 +141,12 @@ import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TVersionType } from "@/types";
 
+
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
+
 
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
@@ -187,7 +188,6 @@ const toBalance = useCurrentAccountBalance(
   computed(() => swapStore.toCurrency?.token),
 );
 const txSettingsDialog = ref();
-const txSettingsDialogDisplay = ref(false);
 const overlayAnchor = ref();
 const importToDialog = ref();
 const importFromDialog = ref();
@@ -301,6 +301,14 @@ const buttonState = computed(() => {
   };
 });
 
+const priceImpactClass = computed(() => {
+  return swapStore.priceImpactState === 'normal'
+      ? 'p-button-primary'
+      : swapStore.priceImpactState === 'warning'
+          ? 'p-button-warning_custom'
+          : 'p-button-alert';
+});
+
 function submitForm(e: Event) {
   const isNextButton = (e.target as HTMLElement)?.enterKeyHint === 'next';
   const isSubmitDisabled = buttonState.value.disabled;
@@ -325,14 +333,8 @@ function showSwapDialog() {
   mainStore.showDialog('swapConfirm');
 }
 
-function toggleConfig() {
-  if (!txSettingsDialogDisplay.value) {
-    txSettingsDialog.value.show();
-    txSettingsDialogDisplay.value = true;
-  } else {
-    txSettingsDialogDisplay.value = false;
-    txSettingsDialog.value.hide();
-  }
+function openSettingsDialog() {
+  txSettingsDialog.value.show();
 }
 
 swapStore.check();

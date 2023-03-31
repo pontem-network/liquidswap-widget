@@ -118,10 +118,12 @@
     font-size: 1.1rem;
     font-weight: 500;
 
-    &.p-disabled {
-      background: #24243a !important;
-      opacity: 1;
-      color: var(--surface-400) !important;
+    &_warning {
+      background: linear-gradient(89.82deg, #e57106 0.08%, #ee5d0c 99.85%);
+    }
+
+    &_alert {
+      background: linear-gradient(89.82deg, #d75050 0.08%, #c62828 99.85%);
     }
   }
 

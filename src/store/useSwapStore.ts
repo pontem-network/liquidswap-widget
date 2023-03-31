@@ -13,6 +13,7 @@ import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import { IStoredToken, TVersionType } from '@/types';
 import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/contracts';
+import { PontemWalletName } from "@pontem/aptos-wallet-adapter";
 
 
 const DEFAULT_SLIPPAGE = 0.005;
@@ -323,6 +324,18 @@ export const useSwapStore = defineStore('swapStore', () => {
       return 'warning';
     return 'alert';
   });
+
+  watch(
+    () => mainStore.walletName.value,
+    () => {
+      if (mainStore.walletName.value !== PontemWalletName) {
+        isFrontrunEnable.value = false;
+      }
+    },
+    {
+      immediate: true,
+    },
+  );
 
   return {
     check,

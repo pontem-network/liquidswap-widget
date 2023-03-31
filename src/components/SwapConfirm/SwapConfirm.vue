@@ -14,6 +14,7 @@
     @close="onClose"
     @success="onSuccess"
     @reject="onRejected"
+    :frontrun="isFrontrun"
   >
     <template #tx-params>
       <SwapInfo />
@@ -44,9 +45,11 @@ import { getCurve, getShortCurveFromFull } from "@/utils/contracts";
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
 const swapStore = useSwapStore();
-const { modules, sdk } = useStore();
+const { sdk } = useStore();
 
 const curveType = getShortCurveFromFull(swapStore.curve);
+
+const isFrontrun = computed(() => swapStore.isFrontrunEnable);
 
 const view = ref<'root' | 'tx'>('root');
 const ratesHasChanged = ref(false);
