@@ -34,3 +34,6 @@ export declare const CORRECT_CHAIN_ID: number;
 export declare const VERSION_0 = 0;
 export declare const VERSION_0_5 = 0.5;
 export declare const VALID_VERSIONS: number[];
+export declare const WALLET_GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.pontemmobilewallet&hl=en&gl=US";
+export declare const WALLET_CHROME_STORE_URL = "https://chrome.google.com/webstore/detail/pontem-aptos-wallet/phkbamefinggmakgklpkljjmgibohnba";
+export declare const PONTEM_API_URL = "https://control.pontem.network/api";
