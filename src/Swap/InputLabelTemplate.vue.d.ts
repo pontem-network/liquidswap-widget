@@ -39,7 +39,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         suffix: TUsdEquivalentSuffix;
     }) => string;
     addNines: (value: string, decimal: number) => string;
-    usdBenefitPercentClass: import("vue").ComputedRef<"" | "-green" | "-red" | undefined>;
+    usdBenefitPercentClass: import("vue").ComputedRef<"" | "-red" | "-green" | undefined>;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "click:maxBalance"[], "click:maxBalance", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     isLoading: {
         type: BooleanConstructor;
