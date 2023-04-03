@@ -35,6 +35,8 @@
 
 .swap-info-tab {
   .p-accordion-tab {
+    margin-bottom: 0;
+
     &.p-accordion-tab-active {
       .p-accordion-header-link {
         background: #24243a !important;
@@ -65,8 +67,6 @@
       padding: 0;
       border: none;
     }
-
-    margin-bottom: 0;
   }
 
   &__header {

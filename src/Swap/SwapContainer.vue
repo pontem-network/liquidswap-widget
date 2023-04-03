@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="swap-container">
+    <div class="swap-container {{ insideNativeWallet && 'swap-container-wallet' }} ">
       <form
         class="swap"
         action=""
@@ -150,6 +150,7 @@ const tokensStore = useTokensStore();
 
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
+const insideNativeWallet = computed(() => mainStore.insideNativeWallet);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
 const unstableCurve = computed(() => getCurve('uncorrelated', version.value));
