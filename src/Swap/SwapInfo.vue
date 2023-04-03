@@ -21,7 +21,7 @@
           </span>
         </div>
       </template>
-      <div class="list">
+      <div class="list list--bottom-border">
         <div class="list__item">
           <span>Expected Output</span>
           <span v-if="swap.isUpdatingRate"

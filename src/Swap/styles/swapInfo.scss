@@ -99,10 +99,16 @@
   row-gap: 8px;
   padding: 0 16px;
 
+  &--bottom-border {
+    border-bottom: 1px solid #2d2942;
+    padding-bottom: 8px;
+  }
+
   &__item {
     display: flex;
     font-weight: 400;
     font-size: 14px;
+    align-items: center;
 
     span:last-child {
       margin-left: auto;
