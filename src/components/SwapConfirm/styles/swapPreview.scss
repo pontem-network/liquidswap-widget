@@ -79,6 +79,11 @@
     height: 44px;
     background: linear-gradient(90deg, #6E42CA 0%, #8D29C1 100%);
 
+    &:enabled:hover {
+      background: linear-gradient(90deg, #8d6ad5, #6f42ca);
+      color: white;
+    }
+
     span {
       position: absolute;
       margin: auto;

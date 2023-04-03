@@ -130,6 +130,13 @@
     &_alert {
       background: linear-gradient(89.82deg, #d75050 0.08%, #c62828 99.85%);
     }
+
+    transition: all .25s ease-in-out;
+
+    &:enabled:hover {
+      background: linear-gradient(90deg, #8d6ad5, #6f42ca);
+      color: white;
+    }
   }
 
   &__toggle {
@@ -154,4 +161,3 @@
     }
   }
 }
-
