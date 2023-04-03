@@ -73,7 +73,7 @@
             v-if="!connected"
             type="submit"
             tabindex="5"
-            class="swap__button is-connect"
+            class="swap__button is-connect p-button-primary"
           >
             <span>Connect Wallet</span>
           </p-button>
@@ -81,7 +81,7 @@
             v-else
             type="submit"
             tabindex="5"
-            class="swap__button"
+            class="swap__button p-button-primary"
             :class="[{ 'p-disabled': buttonState.disabled }, priceImpactClass]"
             :disabled="buttonState.disabled"
           >
