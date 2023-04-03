@@ -1,5 +1,5 @@
 import { useTokensStore } from '@/store';
-import { fetchPrices, getUSDEquivalent } from '@/composables/useCoinPrice.ts';
+import { getUSDEquivalent, useCurrencyConversionRate } from './useCoinPrice';
 import { ICreateToken } from '@/types';
 import { d, decimalsMultiplier } from '@/utils/utils';
 import { useNumberFormat } from './useCurrencyFormat';
@@ -24,13 +24,11 @@ export const getAmountWithDecimal = (
 export const getStoredTokenUsdEquivalent = async (
   storedToken: ICreateToken,
 ) => {
-  const tokensStore = useTokensStore();
-  const data = await fetchPrices(
-    tokensStore.getToken(storedToken.token)?.symbol,
-  );
-  if (!data?.length) return;
 
-  const { price } = data[0];
+  const priceResponse = useCurrencyConversionRate(storedToken.token).value;
+  if (!priceResponse.value?.length) return;
+
+  const { price } = priceResponse.value[0];
   if (!price) return;
 
   const decimal = getTokenDecimal(storedToken.token);
