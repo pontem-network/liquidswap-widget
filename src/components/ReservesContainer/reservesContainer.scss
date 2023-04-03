@@ -6,28 +6,46 @@
   background: var(--surface-card);
   box-shadow: rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px,
   rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 
   .insufficient-reserves {
     color: #e74c3c;
   }
 }
 .reserves-heading {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
 }
 .reserves-header {
-  padding: 20px 16px 4px 16px;
+  padding: 11px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+
+  span:first-child {
+    font-size: 15px;
+    font-weight: 700 !important;
+  }
+
+  span:last-child {
+    padding: 0 5px;
+  }
 }
 .reserves-content {
-  padding: 5px 16px 20px 16px;
+  padding: 0 16px 3px 16px;
+  border-bottom: 1px solid #2d2942;
 }
 
 .reserves-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 16px;
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .swap-tokens {
@@ -51,10 +69,10 @@
     display: flex;
     align-items: center;
 
-    font-size: 15px;
+    font-size: 14px;
     letter-spacing: 0.05em;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 400;
 
     img,
     .img {

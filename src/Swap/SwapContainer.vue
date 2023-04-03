@@ -13,7 +13,7 @@
           <span class="font-medium">Swap</span>
           <div ref="overlayAnchor" class="swap__anchor" />
           <div class="swap__settings">
-            <button type="button" class="btn btn-config" @click="toggleConfig">
+            <button type="button" class="btn btn-config" @click="openSettingsDialog">
               <svg
                 class="config-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
             swapStore.toCurrency.amount &&
             swapStore.fromCurrency.amount
           "
-          class="swap__row"
+          class="swap__row swap__row--no-padding"
         >
           <SwapInfo />
         </div>
@@ -67,6 +67,7 @@
         <div v-show="canSwitchContract" class="swap__row -version">
           <ContractSwitch type="swap" />
         </div>
+        <ReservesContainer type="swap" />
         <div class="swap__row">
           <p-button
             v-if="!connected"
@@ -81,7 +82,7 @@
             type="submit"
             tabindex="5"
             class="swap__button"
-            :class="{ 'p-disabled': buttonState.disabled }"
+            :class="[{ 'p-disabled': buttonState.disabled }, priceImpactClass]"
             :disabled="buttonState.disabled"
           >
             <span>{{ buttonState.text }}</span>
@@ -89,7 +90,6 @@
         </div>
       </form>
     </div>
-    <ReservesContainer type="swap" />
     <ImportTokenDialog
       ref="importFromDialog"
       :token="routeFromToken"
@@ -115,7 +115,6 @@
       v-model="swapStore.slippage"
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
-      @close="txSettingsDialogDisplay = false"
     />
   </div>
 </template>
@@ -142,10 +141,12 @@ import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TVersionType } from "@/types";
 
+
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
+
 
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
@@ -187,7 +188,6 @@ const toBalance = useCurrentAccountBalance(
   computed(() => swapStore.toCurrency?.token),
 );
 const txSettingsDialog = ref();
-const txSettingsDialogDisplay = ref(false);
 const overlayAnchor = ref();
 const importToDialog = ref();
 const importFromDialog = ref();
@@ -281,7 +281,7 @@ const buttonState = computed(() => {
   if (!haveBalance) {
     return {
       disabled: true,
-      text: `Insufficient ${fromBalance.alias.value} balance`,
+      text: `Insufficient ${fromBalance.symbol.value} balance`,
     };
   }
 
@@ -291,7 +291,7 @@ const buttonState = computed(() => {
   ) {
     return {
       disabled: false,
-      text: `Register ${toBalance.alias.value} and Swap`,
+      text: `Register ${toBalance.symbol.value} and Swap`,
     };
   }
 
@@ -299,6 +299,14 @@ const buttonState = computed(() => {
     disabled: false,
     text: `Swap`,
   };
+});
+
+const priceImpactClass = computed(() => {
+  return swapStore.priceImpactState === 'normal'
+      ? 'p-button-primary'
+      : swapStore.priceImpactState === 'warning'
+          ? 'p-button-warning_custom'
+          : 'p-button-alert';
 });
 
 function submitForm(e: Event) {
@@ -325,14 +333,8 @@ function showSwapDialog() {
   mainStore.showDialog('swapConfirm');
 }
 
-function toggleConfig() {
-  if (!txSettingsDialogDisplay.value) {
-    txSettingsDialog.value.show();
-    txSettingsDialogDisplay.value = true;
-  } else {
-    txSettingsDialogDisplay.value = false;
-    txSettingsDialog.value.hide();
-  }
+function openSettingsDialog() {
+  txSettingsDialog.value.show();
 }
 
 swapStore.check();

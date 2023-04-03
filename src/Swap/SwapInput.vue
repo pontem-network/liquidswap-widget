@@ -23,38 +23,16 @@
           @keyup="onInput"
           @blur="onBlur"
         />
-        <PButton
-          v-if="!state.token"
+        <ButtonToken
+          :token-entity="tokenEntity"
           :tabindex="isFrom ? 1 : 2"
-          icon-pos="right"
-          class="currency-input__select p-button-rounded ml-2"
           @click="showSelectCurrencyModal"
-        >
-          <span class="mr-1">Select coin</span>
-          <i class="pi pi-angle-down" />
-        </PButton>
-        <PButton
-          v-else
-          :tabindex="isFrom ? 2 : 3"
-          icon-pos="right"
-          class="currency-input__select is-selected p-button-rounded ml-2"
-          @click="showSelectCurrencyModal"
-        >
-          <TokenIcon
-            :logo="tokenEntity?.logo"
-            :type="tokenEntity?.type"
-            size="24"
-          />
-          <span class="mr-1 ml-2"
-            >{{ tokenEntity?.alias }}<token-alert :type="tokenEntity?.type"
-          /></span>
-          <i class="pi pi-angle-down" />
-        </PButton>
+        />
       </div>
     </div>
     <div class="swap-input__row">
       <div v-if="mainStore.account.value && token" class="input-label">
-        <div class="input-label__right">
+        <div class="input-label__right balance">
           <template
             v-if="
               tokenBalance.isFetching.value &&
@@ -99,14 +77,13 @@ import { useStore, useSwapStore, useTokensStore } from '@/store';
 import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { d, decimalsMultiplier } from '@/utils/utils';
+import { providerForToken } from '@/utils/tokens';
 import { InputNumberBlurEvent } from 'primevue/inputnumber';
 import { splitValue } from '@/utils/utils';
-import { TokenAlert } from '@/components/TokenAlert';
 import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
-import { TokenIcon } from '@/components//TokenIcon';
 import InputNumber from 'primevue/inputnumber';
-import PButton from 'primevue/button';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
+import { ButtonToken } from "@/components/ButtonToken";
 
 interface IProps {
   mode: 'to' | 'from';
@@ -214,6 +191,13 @@ const tokenEntity = computed(() => {
     return tokensStore.getToken(state.token);
   }
   return undefined;
+});
+
+const tokenProvider = computed(() => {
+  if (tokenEntity.value?.type.length && tokenEntity.value?.type.length > 0) {
+    return providerForToken(tokenEntity.value);
+  }
+  return '';
 });
 
 const tokenDecimals = computed(() => {

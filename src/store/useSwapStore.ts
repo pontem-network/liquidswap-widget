@@ -1,7 +1,7 @@
 import isFinite from 'lodash/isFinite';
 import { defineStore } from 'pinia';
 import { reactive, watch, computed, ref, onMounted } from 'vue';
-import { watchDebounced } from '@vueuse/core';
+import { watchDebounced, useStorage } from '@vueuse/core';
 
 import { getPoolStr } from '@/utils/pools';
 import { useStore } from '@/store/useStore';
@@ -13,6 +13,7 @@ import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import { IStoredToken, TVersionType } from '@/types';
 import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/contracts';
+import { PontemWalletName } from "@pontem/aptos-wallet-adapter";
 
 
 const DEFAULT_SLIPPAGE = 0.005;
@@ -51,6 +52,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const lastInteractiveField = ref<'from' | 'to'>('from');
   const convertError = ref<string>();
   const isUpdatingRate = ref(false);
+  const isFrontrunEnable = useStorage('is-frontrun-enable', false);
 
   const tokensStore = useTokensStore();
   const aptos = mainStore.client;
@@ -316,6 +318,25 @@ export const useSwapStore = defineStore('swapStore', () => {
     formatter.format(priceImpact.value),
   );
 
+  const priceImpactState = computed(() => {
+    if (+priceImpactFormatted.value <= 10) return 'normal';
+    if (+priceImpactFormatted.value >= 10 && +priceImpactFormatted.value < 20)
+      return 'warning';
+    return 'alert';
+  });
+
+  watch(
+    () => mainStore.walletName.value,
+    () => {
+      if (mainStore.walletName.value !== PontemWalletName) {
+        isFrontrunEnable.value = false;
+      }
+    },
+    {
+      immediate: true,
+    },
+  );
+
   return {
     check,
     isBusy,
@@ -340,7 +361,9 @@ export const useSwapStore = defineStore('swapStore', () => {
     stableSwapType,
     priceImpact,
     priceImpactFormatted,
+    priceImpactState,
     version,
     predefinedCurve,
+    isFrontrunEnable,
   };
 });

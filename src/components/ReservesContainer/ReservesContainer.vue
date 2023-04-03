@@ -1,46 +1,96 @@
 <template>
-  <div v-if="hasReserves" class="reserves-container">
-    <div class="reserves-header">
-      <span class="reserves-heading">Currency Reserves</span>
-    </div>
-    <div class="reserves-content">
-      <div class="reserves-row">
-        <div class="swap-tokens__symbol">
-          <TokenIcon
-            :logo="fromTokenEntity?.logo"
-            :type="fromTokenEntity?.type"
-            class="img"
-            size="24"
-          />
-          {{ fromTokenEntity?.alias }}
+  <PAccordion v-if="hasReserves" v-model:activeIndex="activeIndex" lazy class="swap-info-tab">
+    <PAccordionTab>
+      <template #header>
+        <div class="reserves-header">
+          <span class="reserves-heading">Currency Reserves</span>
+          <span>
+            <i
+                class="pi pi-chevron-down"
+                :class="[isToggled ? 'pi-chevron-up' : 'pi-chevron-down']"
+            />
+          </span>
         </div>
-        <span>
-          {{ reserveFrom.formatted.value }}
-        </span>
-      </div>
-      <div class="reserves-row">
-        <div class="swap-tokens__symbol">
-          <TokenIcon
-            :logo="toTokenEntity?.logo"
-            :type="toTokenEntity?.type"
-            class="img"
-            size="24"
-          />
-          {{ toTokenEntity?.alias }}
+      </template>
+      <div class="reserves-container">
+        <div class="reserves-content">
+          <div class="reserves-row">
+            <div class="swap-tokens__symbol">
+              <TokenIcon
+                  :logo="fromTokenEntity?.logo"
+                  :type="fromTokenEntity?.type"
+                  class="img"
+                  size="24"
+              />
+              {{ titleForTokenSymbol(fromTokenEntity) }}
+            </div>
+            <span>
+            {{ reserveFrom.formatted.value }}
+          </span>
+          </div>
+          <div class="reserves-row">
+            <div class="swap-tokens__symbol">
+              <TokenIcon
+                  :logo="toTokenEntity?.logo"
+                  :type="toTokenEntity?.type"
+                  class="img"
+                  size="24"
+              />
+              {{ titleForTokenSymbol(toTokenEntity) }}
+            </div>
+            <span
+                :class="{
+              'insufficient-reserves': props.type == 'swap' && store.convertError,
+            }"
+            >{{ reserveTo.formatted.value }}</span
+            >
+          </div>
         </div>
-        <span
-          :class="{
-            'insufficient-reserves': props.type == 'swap' && store.convertError,
-          }"
-          >{{ reserveTo.formatted.value }}</span
-        >
       </div>
-    </div>
-  </div>
+    </PAccordionTab>
+  </PAccordion>
+<!--  <div v-if="hasReserves" class="reserves-container">-->
+<!--    <div class="reserves-header">-->
+<!--      <span class="reserves-heading">Currency Reserves</span>-->
+<!--    </div>-->
+<!--    <div class="reserves-content">-->
+<!--      <div class="reserves-row">-->
+<!--        <div class="swap-tokens__symbol">-->
+<!--          <TokenIcon-->
+<!--            :logo="fromTokenEntity?.logo"-->
+<!--            :type="fromTokenEntity?.type"-->
+<!--            class="img"-->
+<!--            size="24"-->
+<!--          />-->
+<!--          {{ titleForTokenSymbol(fromTokenEntity) }}-->
+<!--        </div>-->
+<!--        <span>-->
+<!--          {{ reserveFrom.formatted.value }}-->
+<!--        </span>-->
+<!--      </div>-->
+<!--      <div class="reserves-row">-->
+<!--        <div class="swap-tokens__symbol">-->
+<!--          <TokenIcon-->
+<!--            :logo="toTokenEntity?.logo"-->
+<!--            :type="toTokenEntity?.type"-->
+<!--            class="img"-->
+<!--            size="24"-->
+<!--          />-->
+<!--          {{ titleForTokenSymbol(toTokenEntity) }}-->
+<!--        </div>-->
+<!--        <span-->
+<!--          :class="{-->
+<!--            'insufficient-reserves': props.type == 'swap' && store.convertError,-->
+<!--          }"-->
+<!--          >{{ reserveTo.formatted.value }}</span-->
+<!--        >-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onBeforeMount } from 'vue';
+import {computed, ref, watch, onBeforeMount, nextTick} from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import {
   useSwapStore,
@@ -50,6 +100,9 @@ import {
 import { is_sorted } from '@/utils/utils';
 import { TokenIcon } from '@/components/TokenIcon';
 import { TVersionType } from "@/types";
+import { titleForTokenSymbol } from '@/utils/tokens';
+import PAccordion from 'primevue/accordion';
+import PAccordionTab from 'primevue/accordiontab';
 
 interface IProps {
   type: 'swap';
@@ -154,5 +207,17 @@ const reserveTo = computed(() => {
   return useCurrencyFormat(val, poolRes.value[toCoin.value], {
     useSuffix: false,
   });
+});
+
+const isToggled = ref(false);
+const activeIndex = computed({
+  get() {
+    return isToggled.value ? 0 : undefined;
+  },
+  set(value?: number) {
+    nextTick(() => {
+      isToggled.value = value === 0;
+    });
+  },
 });
 </script>

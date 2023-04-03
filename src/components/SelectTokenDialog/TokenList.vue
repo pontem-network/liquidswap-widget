@@ -35,7 +35,7 @@
               <div class="token-list-item__content">
                 <div class="token-list-item__symbol flex">
                   <TextHighlight
-                    :text="item.token.alias"
+                    :text="item.token.symbol"
                     :regexp="searchRegexp"
                   /><token-alert :type="item.token.type" />
                 </div>

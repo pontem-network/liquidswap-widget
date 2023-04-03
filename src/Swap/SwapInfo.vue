@@ -45,6 +45,13 @@
           /></span>
           <span v-else>{{ slippageOutputTokens.formatted.value }}</span>
         </div>
+        <div class="list__item">
+          <span>Fee ({{ convertFee }}%)</span>
+          <span v-if="swap.isUpdatingRate"
+          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
+          /></span>
+          <span v-else> {{ convertFeeAmount.formatted.value }}</span>
+        </div>
       </div>
     </PAccordionTab>
   </PAccordion>
@@ -57,13 +64,6 @@
         /></span>
         <span v-else :class="priceImpactClass">{{ priceImpact }}%</span>
       </div>
-      <div class="list__item">
-        <span>Fee ({{ convertFee }}%)</span>
-        <span v-if="swap.isUpdatingRate"
-          ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
-        /></span>
-        <span v-else> {{ convertFeeAmount.formatted.value }}</span>
-      </div>
     </div>
   </div>
 </template>
@@ -72,7 +72,6 @@
 import { useSwapStore } from '@/store';
 import { ref, computed, nextTick } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
-import { useUnverifiedCoins } from '@/composables/useUnverifiedCoins';
 import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
 import { getCurve } from '@/utils/contracts';
 
@@ -82,8 +81,6 @@ import PAccordionTab from 'primevue/accordiontab';
 const swap = useSwapStore();
 
 const version = computed(() => swap.version);
-
-const uc = useUnverifiedCoins();
 
 const slippageAmount = computed(() => swap.slippageAmount);
 const hasSlippage = computed(
@@ -103,10 +100,10 @@ const slippageToken = computed(() =>
 
 const priceImpact = computed(() => swap.priceImpactFormatted);
 
-const rateTokens = useCurrencyFormat(1, fromToken);
-const outputTokens = useCurrencyFormat(toAmount, toToken);
+const rateTokens = useCurrencyFormat(1, fromToken, { useBridge: true });
+const outputTokens = useCurrencyFormat(toAmount, toToken, { useBridge: true });
 const slippageOutputTokens = useCurrencyFormat(slippageAmount, slippageToken);
-const convertRateTokens = useCurrencyFormat(convertRate, toToken);
+const convertRateTokens = useCurrencyFormat(convertRate, toToken, { useBridge: true });
 const convertFee = computed(() => swap.convertFee);
 const convertFeeAmount = useCurrencyFormat(
   computed(() => swap.convertFeeAmount),

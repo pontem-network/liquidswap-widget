@@ -11,7 +11,7 @@
       <img src="../../assets/curves/uncorrelated.svg" alt="uncorrelated curve" />
       <p>Uncorrelated</p>
       <ToolTip position="top" :tooltipText="'Using x*y=K formula'">
-        <i class="pi pi-info-circle" />
+        <i class="pi pi-info-circle" :style="{ paddingTop: '2px' }"/>
       </ToolTip>
     </div>
 
@@ -30,7 +30,7 @@
       />
       <p>Stable</p>
       <ToolTip position="top-left" :tooltipText="'Using formula optimized for stable coins swaps'">
-        <i class="pi pi-info-circle"/>
+        <i class="pi pi-info-circle" :style="{ paddingTop: '2px'}"/>
       </ToolTip>
     </div>
     <PToast position="top-right" group="tr" />

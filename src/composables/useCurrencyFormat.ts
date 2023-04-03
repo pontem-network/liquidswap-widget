@@ -1,6 +1,7 @@
 import { MaybeRef } from '@vueuse/core';
 import { ref, computed, isRef, unref, watchEffect } from 'vue';
 import { useTokensStore } from '@/store/useTokenStore';
+import {providerForToken} from "@/utils/tokens";
 
 const cutTrailingZerosFromString = (numberAsString: string) => {
   if (numberAsString.length === 1) return numberAsString;
@@ -15,7 +16,8 @@ export function useNumberFormat(
   options: {
     decimals: MaybeRef<number>;
     suffix: MaybeRef<string | undefined>;
-  } = { decimals: 1, suffix: '' },
+    bridge: MaybeRef<string | undefined>;
+  } = { decimals: 1, suffix: '', bridge: '' },
 ) {
   const formatted = ref('');
 
@@ -23,6 +25,7 @@ export function useNumberFormat(
     amount: undefined | string | number,
     decimals: number,
     suffix?: string,
+    bridge?: string,
   ) {
     let value = +(amount || 0) / Math.pow(10, decimals);
     let fixed = decimals;
@@ -51,20 +54,24 @@ export function useNumberFormat(
       minimumFractionDigits: fixed,
       maximumFractionDigits: fixed,
     });
+
+    const suffixWithBridge = [suffix, bridge].filter(Boolean).join(' • ');
+
     formatted.value = [
       prefix + cutTrailingZerosFromString(formatter.format(value)),
-      suffix,
+      suffixWithBridge,
     ]
       .filter(Boolean)
       .join(' ');
   }
 
-  if (isRef(amount) || isRef(options.decimals) || isRef(options.suffix)) {
+  if (isRef(amount) || isRef(options.decimals) || isRef(options.suffix) || isRef(options.bridge)) {
     watchEffect(() => {
       formatCurrency(
         unref(amount),
         unref(options.decimals),
         unref(options.suffix),
+        unref(options.bridge)
       );
     });
   } else {
@@ -72,6 +79,7 @@ export function useNumberFormat(
       unref(amount),
       unref(options.decimals),
       unref(options.suffix),
+      unref(options.bridge)
     );
   }
 
@@ -81,17 +89,25 @@ export function useNumberFormat(
 export function useCurrencyFormat(
   amount: MaybeRef<string | number | undefined>,
   token: MaybeRef<string | undefined>,
-  options?: { useSuffix?: boolean; _decimals?: number },
+  options?: { useBridge?: boolean; _decimals?: number, useSuffix?: boolean },
 ) {
   const tokensStore = useTokensStore();
-  const { useSuffix = true, _decimals } = options || {};
+  const { useSuffix = true, useBridge = false, _decimals } = options || {};
 
   const symbol = computed(() => {
     const tokenEntity = unref(token)
       ? tokensStore.getToken(unref(token) as string)
       : undefined;
 
-    return tokenEntity ? tokenEntity.symbol : ''; // TODO refactor all
+    return tokenEntity ? tokenEntity.symbol : '';
+  });
+
+  const source = computed(() => {
+    const tokenEntity = unref(token)
+      ? tokensStore.getToken(unref(token) as string)
+      : undefined;
+
+    return tokenEntity ? providerForToken(tokenEntity) : '';
   });
 
   const alias = computed(() => {
@@ -111,7 +127,8 @@ export function useCurrencyFormat(
 
   const formatted = useNumberFormat(amount, {
     decimals,
-    suffix: useSuffix ? alias : '',
+    suffix: useSuffix ? symbol : '',
+    bridge: useBridge ? source : ''
   });
 
   return {
