@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="dialog-step__footer mt-4">
-      <p-button class="justify-content-center w-full" @click="onComplete">
+      <p-button class="justify-content-center swap-tokens__button w-full" @click="onComplete">
         {{ isSuccess ? 'Close' : 'Dismiss' }}
       </p-button>
     </div>

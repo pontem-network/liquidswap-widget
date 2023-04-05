@@ -42,7 +42,7 @@
             Loading balance ...
           </template>
           <template v-else>
-            <span v-if="tokenBalance.isExists.value || props.mode === 'from'"
+            <span v-if="isTokenExisted"
               >Balance:
               <span class="cursor-pointer" @click="onClickMaxBalance">{{
                 tokenBalance.formatted.value
@@ -103,6 +103,8 @@ const token = computed(() => state.token);
 const secondaryToken = swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurrency'];
 
 const tokenBalance = useCurrentAccountBalance(token, { useSuffix: false });
+
+const isTokenExisted = computed(() => tokenBalance.isExists.value);
 
 const isUpdating = computed(() => {
   return props.mode !== swapStore.interactiveField && swapStore.isUpdatingRate;

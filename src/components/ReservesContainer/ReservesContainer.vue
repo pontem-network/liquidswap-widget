@@ -49,44 +49,6 @@
       </div>
     </PAccordionTab>
   </PAccordion>
-<!--  <div v-if="hasReserves" class="reserves-container">-->
-<!--    <div class="reserves-header">-->
-<!--      <span class="reserves-heading">Currency Reserves</span>-->
-<!--    </div>-->
-<!--    <div class="reserves-content">-->
-<!--      <div class="reserves-row">-->
-<!--        <div class="swap-tokens__symbol">-->
-<!--          <TokenIcon-->
-<!--            :logo="fromTokenEntity?.logo"-->
-<!--            :type="fromTokenEntity?.type"-->
-<!--            class="img"-->
-<!--            size="24"-->
-<!--          />-->
-<!--          {{ titleForTokenSymbol(fromTokenEntity) }}-->
-<!--        </div>-->
-<!--        <span>-->
-<!--          {{ reserveFrom.formatted.value }}-->
-<!--        </span>-->
-<!--      </div>-->
-<!--      <div class="reserves-row">-->
-<!--        <div class="swap-tokens__symbol">-->
-<!--          <TokenIcon-->
-<!--            :logo="toTokenEntity?.logo"-->
-<!--            :type="toTokenEntity?.type"-->
-<!--            class="img"-->
-<!--            size="24"-->
-<!--          />-->
-<!--          {{ titleForTokenSymbol(toTokenEntity) }}-->
-<!--        </div>-->
-<!--        <span-->
-<!--          :class="{-->
-<!--            'insufficient-reserves': props.type == 'swap' && store.convertError,-->
-<!--          }"-->
-<!--          >{{ reserveTo.formatted.value }}</span-->
-<!--        >-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script setup lang="ts">

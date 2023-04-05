@@ -8,6 +8,9 @@
   border: none;
   cursor: pointer;
   width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .config-icon {
     display: block;
@@ -43,6 +46,51 @@
   box-shadow: rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px,
   rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;
   margin-bottom: 20px;
+}
+
+.container .swap-container-wallet {
+  @media (max-width: 400px) {
+    background: transparent;
+    position: relative;
+
+    .swap__header {
+      padding: 0;
+      height: 0;
+      > span {
+        display: none;
+      }
+    }
+
+    .swap-input {
+      margin: 0 8px;
+    }
+
+    .swap__settings {
+      position: absolute;
+      top: -70px;
+      right: 64px;
+      z-index: 9;
+
+      button {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: rgba(28, 28, 51, 1);
+
+        &:active {
+          background: #3E3E52;
+          > svg {
+            stroke: rgba(212, 196, 237, 1);
+          }
+        }
+      }
+    }
+
+
+    .swap__row:last-of-type {
+      padding: 0 16px 8px;
+    }
+  }
 }
 
 .carousel-heading {
@@ -105,6 +153,11 @@
     &--no-padding {
       padding: 0;
     }
+
+    &--extra-padding {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   &__button {
@@ -117,6 +170,7 @@
     height: 54px;
     font-size: 1.1rem;
     font-weight: 500;
+    background: linear-gradient(90deg, #6E42CA 0%, #8D29C1 100%);
 
     &_warning {
       background: linear-gradient(89.82deg, #e57106 0.08%, #ee5d0c 99.85%);
@@ -124,6 +178,13 @@
 
     &_alert {
       background: linear-gradient(89.82deg, #d75050 0.08%, #c62828 99.85%);
+    }
+
+    transition: all .25s ease-in-out;
+
+    &:enabled:hover {
+      background: linear-gradient(90deg, #8d6ad5, #6f42ca);
+      color: white;
     }
   }
 
@@ -149,4 +210,3 @@
     }
   }
 }
-

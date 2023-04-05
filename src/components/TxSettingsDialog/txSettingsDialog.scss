@@ -43,12 +43,18 @@
     height: 32px;
     padding: 3px 16px;
     font-size: 0.875rem;
+    background: linear-gradient(90deg, #6E42CA 0%, #8D29C1 100%);
+    border: none;
+
+
     &--action {
       height: 32px;
       padding: 3px 16px;
       font-size: 0.875rem;
-      background: #43395B;
-      border: none;
+    }
+    &:enabled:hover {
+      background: linear-gradient(90deg, #8d6ad5, #6f42ca);
+      color: white;
     }
   }
 
