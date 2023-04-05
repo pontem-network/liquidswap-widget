@@ -8,6 +8,9 @@
   border: none;
   cursor: pointer;
   width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .config-icon {
     display: block;
@@ -45,8 +48,48 @@
   margin-bottom: 20px;
 }
 
-.swap-container-wallet {
-  background: transparent;
+.container .swap-container-wallet {
+  @media (max-width: 400px) {
+    background: transparent;
+    position: relative;
+
+    .swap__header {
+      padding: 0;
+      height: 0;
+      > span {
+        display: none;
+      }
+    }
+
+    .swap-input {
+      margin: 0 8px;
+    }
+
+    .swap__settings {
+      position: absolute;
+      top: -70px;
+      right: 64px;
+      z-index: 10;
+
+      button {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: rgba(28, 28, 51, 1);
+
+        &:active {
+          background: #3E3E52;
+          > svg {
+            stroke: rgba(212, 196, 237, 1);
+          }
+        }
+      }
+    }
+
+    .swap__row:last-of-type {
+      padding: 0 16px 8px;
+    }
+  }
 }
 
 .carousel-heading {

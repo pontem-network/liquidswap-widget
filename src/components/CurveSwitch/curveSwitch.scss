@@ -8,6 +8,11 @@
   border-radius: 57px;
   width: 100%;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
   &__switch {
     display: flex;
     flex-direction: row;

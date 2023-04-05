@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="swap-container {{ insideNativeWallet && 'swap-container-wallet' }} ">
+    <div class="swap-container" :class="[mainStore.insideNativeWallet.value && 'swap-container-wallet']">
       <form
         class="swap"
         action=""
@@ -141,16 +141,14 @@ import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TVersionType } from "@/types";
 
-
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
 
-
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
-const insideNativeWallet = computed(() => mainStore.insideNativeWallet);
+const insideNativeWallet = computed(() => mainStore.insideNativeWallet.value);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
 const unstableCurve = computed(() => getCurve('uncorrelated', version.value));
