@@ -1,5 +1,4 @@
 import { PropType } from 'vue';
-declare type TUsdEquivalentSuffix = 'M' | 'B' | 'T' | undefined;
 declare const _sfc_main: import("vue").DefineComponent<{
     isLoading: {
         type: BooleanConstructor;
@@ -28,19 +27,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         require: boolean;
         default: () => string;
     };
-}, {
-    props: any;
-    usdBenefitPercent: import("vue").ComputedRef<string | undefined>;
-    usdEquivalent: import("vue").ComputedRef<string | undefined>;
-    amount2NoENotation: (amount: string, prefix: string) => string;
-    getOrderedString: (numberOrder: number, value: string, option: {
-        decimal: number;
-        prefix: string;
-        suffix: TUsdEquivalentSuffix;
-    }) => string;
-    addNines: (value: string, decimal: number) => string;
-    usdBenefitPercentClass: import("vue").ComputedRef<"" | "-red" | "-green" | undefined>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "click:maxBalance"[], "click:maxBalance", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "click:maxBalance"[], "click:maxBalance", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     isLoading: {
         type: BooleanConstructor;
     };

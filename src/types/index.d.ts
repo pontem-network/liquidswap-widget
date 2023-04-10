@@ -1,6 +1,6 @@
 import { AptosWalletAdapter, MartianWalletAdapter, PontemWalletAdapter, FewchaWalletAdapter, RiseWalletAdapter, MsafeWalletAdapter, WalletName } from '@pontem/aptos-wallet-adapter';
 import { VERSION_0, VERSION_0_5 } from '../constants/constants';
-export declare type AptosCoinInfoResource = {
+export type AptosCoinInfoResource = {
     decimals: string;
     name: string;
     supply: {
@@ -11,7 +11,7 @@ export declare type AptosCoinInfoResource = {
 export interface IStorageBasic {
     version: number;
 }
-export declare type Resource<T = any> = {
+export type Resource<T = any> = {
     type: string;
     data: T;
 };
@@ -22,9 +22,9 @@ export interface IWallet {
     adapter: typeof PontemWalletAdapter | typeof AptosWalletAdapter | typeof MartianWalletAdapter | typeof FewchaWalletAdapter | typeof RiseWalletAdapter | typeof MsafeWalletAdapter;
     options?: any;
 }
-export declare type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
-export declare type TStableSwapType = 'normal' | 'high';
-export declare type Network = {
+export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
+export type TStableSwapType = 'normal' | 'high';
+export type Network = {
     id: number;
     title: string;
     shortTitle: string;
@@ -45,11 +45,11 @@ export interface ICreateToken {
 export interface IStoredToken extends ICreateToken {
     reserve: number;
 }
-export declare type TVersionType = typeof VERSION_0 | typeof VERSION_0_5;
+export type TVersionType = typeof VERSION_0 | typeof VERSION_0_5;
 export interface IPoolExist {
     fromCoin: string;
     toCoin: string;
     curve: string;
     version: TVersionType;
 }
-export declare type TStatusTransaction = "success" | "pending" | "error" | "rejected";
+export type TStatusTransaction = "success" | "pending" | "error" | "rejected";

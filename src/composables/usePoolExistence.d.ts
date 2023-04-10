@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 import { ICreateToken, IPoolExist, TVersionType } from '../types';
-declare type CurveType = 'stable' | 'uncorrelated';
+type CurveType = 'stable' | 'uncorrelated';
 export declare function usePoolExistence(): {
     isFetching: Ref<boolean>;
     poolExists: Ref<boolean>;

@@ -1,17 +1,6 @@
-import PDialog from 'primevue/dialog';
-import PButton from 'primevue/button';
 declare const _sfc_main: import("vue").DefineComponent<{}, {
-    uc: {
-        checkAndConfirm: (coin: string) => boolean;
-    };
-    display: import("vue").Ref<boolean>;
-    emits: (event: "close", ...args: any[]) => void;
-    checkAndShow: (token: string) => void;
-    show: () => void;
     hide: () => void;
-    onClose: () => void;
-    PDialog: typeof PDialog;
-    PButton: typeof PButton;
+    checkAndShow: (token: string) => void;
 }, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "close"[], "close", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
     onClose?: ((...args: any[]) => any) | undefined;
 }, {}>;

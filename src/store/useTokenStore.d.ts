@@ -39,7 +39,7 @@ export declare const useTokensStore: import("pinia").StoreDefinition<"tokensStor
     isReady: import("vue").Ref<boolean>;
     isTokenVerified: (type: string) => boolean;
     fetchCoinsList: () => Promise<void>;
-}, "isReady" | "tokens">>, Pick<{
+}, "tokens" | "isReady">>, Pick<{
     getLogoUrl: ComputedRef<(symbol: string) => any>;
     getToken: (type?: string) => IPersistedTokenExtended | undefined;
     tokens: Record<string, IPersistedTokenExtended>;
@@ -60,7 +60,7 @@ export declare const useTokensStore: import("pinia").StoreDefinition<"tokensStor
     isReady: import("vue").Ref<boolean>;
     isTokenVerified: (type: string) => boolean;
     fetchCoinsList: () => Promise<void>;
-}, "token" | "getLogoUrl" | "importedTokens">, Pick<{
+}, "getLogoUrl" | "token" | "importedTokens">, Pick<{
     getLogoUrl: ComputedRef<(symbol: string) => any>;
     getToken: (type?: string) => IPersistedTokenExtended | undefined;
     tokens: Record<string, IPersistedTokenExtended>;

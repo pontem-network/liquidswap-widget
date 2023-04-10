@@ -1,6 +1,6 @@
 import { MaybeRef } from '@vueuse/core';
 import { AptosCreateTx } from '../types/aptosResources';
-declare type TxParams = MaybeRef<AptosCreateTx | undefined>;
+type TxParams = MaybeRef<AptosCreateTx | undefined>;
 export declare function useSendTransaction(): {
     state: import("vue").Ref<string | undefined>;
     isReady: import("vue").Ref<boolean>;

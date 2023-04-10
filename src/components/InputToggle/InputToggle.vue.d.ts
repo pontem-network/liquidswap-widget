@@ -1,15 +1,12 @@
-import PButton from 'primevue/button';
+import type { PropType as __PropType } from 'vue';
 declare const _sfc_main: import("vue").DefineComponent<{
     onClick: {
-        type: FunctionConstructor;
+        type: __PropType<() => void>;
         required: true;
     };
-}, {
-    props: any;
-    PButton: typeof PButton;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     onClick: {
-        type: FunctionConstructor;
+        type: __PropType<() => void>;
         required: true;
     };
 }>>, {}>;

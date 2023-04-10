@@ -1,5 +1,5 @@
 import { MaybeRef } from '@vueuse/core';
-declare type TxParams = MaybeRef<{
+type TxParams = MaybeRef<{
     sender: MaybeRef<string>;
     payload: MaybeRef<{
         type: MaybeRef<string>;
