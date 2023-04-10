@@ -5,7 +5,7 @@
     :modal="true"
     :closable="false"
     :show-header="false"
-    :style="{ maxWidth: '483px', alignSelf: 'flex-start', marginTop: '61px', maxHeight: '700px' }"
+    :style="{ maxWidth: '483px', alignSelf: 'flex-start', marginTop: '61px', maxHeight: '700px', width: '90%' }"
     class="stepped-dialog stepped-dialog--panel"
   >
     <div class="warning-container">
