@@ -56,7 +56,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   const pools = ref<IPersistedPool[]>([]);
 
   async function fetchPoolsList() {
-    const pools = CoinsRegistry.getPoolsFor(CORRECT_CHAIN);
+    const pools = CoinsRegistry.getPoolsFor(CORRECT_CHAIN) as IPoolInfo[];
     registerPools(pools);
     fetchAndFillAPRs();
   }

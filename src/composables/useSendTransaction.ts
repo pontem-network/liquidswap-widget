@@ -5,7 +5,7 @@ import { camelCaseKeysToUnderscore, getFormattedValidationCode } from '@/utils/u
 import { computed, unref } from 'vue';
 import { useStore } from "@/store";
 
-type TxParams = MaybeRef<AptosCreateTx | undefined>;
+export type TxParams = MaybeRef<AptosCreateTx | undefined>;
 
 export function useSendTransaction() {
   const adapter = useWalletProviderStore();
@@ -26,7 +26,7 @@ export function useSendTransaction() {
             composed: true,
             bubbles: true,
         });
-        document.querySelector('liquidswap-widget')!.dispatchEvent(event);
+        document.querySelector('liquidswap-widget')?.dispatchEvent(event);
 
         // @TODO need to use abort controller here instead of promise. In case closing confirm window - setInterval still running.
         return new Promise((resolve, reject) => {

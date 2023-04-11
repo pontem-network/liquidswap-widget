@@ -31,22 +31,20 @@
 
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue';
-import { AptosCreateTx } from '@/types/aptosResources';
-import { useSendTransaction } from '@/composables/useSendTransaction';
-import { useSignTransaction } from '@/composables/useSignTransaction';
+import { useSendTransaction, TxParams as SendTxParams } from '@/composables/useSendTransaction';
+import { useSignTransaction, TxParams as SignTxParams } from '@/composables/useSignTransaction';
 import { useTimeout } from '@vueuse/core';
 
 import ProgressSpinner from 'primevue/progressspinner';
 import PButton from "primevue/button";
 
 interface IProps {
-  tx: AptosCreateTx;
+  tx: SignTxParams | SendTxParams;
   frontrun?: boolean;
 }
 
 const props = defineProps<IProps>();
 const emits = defineEmits(['rejected', 'submitted', 'close']);
-
 
 const { state, error, execute } =
     props?.frontrun === true ? useSignTransaction() : useSendTransaction();
@@ -57,7 +55,8 @@ const tx = computed(() => {
   return props.tx;
 });
 
-onMounted(() => execute(tx));
+// @ts-ignore
+onMounted(() => execute(tx.value));
 
 watch(error, () => {
   emits('rejected', error.value);

@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-step">
-    <DialogHeader title="Select Tokens" @close="onClose" />
+    <DialogHeader title="Select a Token" @close="onClose" />
     <div class="search">
       <InputText
         v-model.trim="search"

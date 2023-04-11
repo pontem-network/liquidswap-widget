@@ -16,8 +16,44 @@ import AptshibaLogo from '../assets/tokens/aptshiba.svg';
 import UsdaLogo from '../assets/tokens/usda.svg';
 import TaptLogo from '../assets/tokens/tapt.svg';
 import UsddLogo from '../assets/tokens/usdd.svg';
+import AbelLogo from '../assets/tokens/abel.svg';
+import AltLogo from '../assets/tokens/alt.svg';
+import AptSwapLogo from '../assets/tokens/aptswap.svg';
+import CakeLogo from '../assets/tokens/cake.svg';
+import DgenLogo from '../assets/tokens/dgen.svg';
+import DlcLogo from '../assets/tokens/dlc.svg';
+import PontTokenLogo from '../assets/tokens/pont-token.svg';
+
 
 export const tokensList = [
+  {
+    symbol: "pont-token",
+    logo: PontTokenLogo
+  },
+  {
+    symbol: "dlc",
+    logo: DlcLogo
+  },
+  {
+    symbol: "dgen",
+    logo: DgenLogo
+  },
+  {
+    symbol: "cake",
+    logo: CakeLogo
+  },
+  {
+    symbol: "aptswap",
+    logo: AptSwapLogo
+  },
+  {
+    symbol: "abel",
+    logo: AbelLogo
+  },
+  {
+    symbol: "alt",
+    logo: AltLogo
+  },
   {
     symbol: "apt",
     logo: AptLogo
@@ -90,4 +126,4 @@ export const tokensList = [
     symbol: "usdd",
     logo: UsddLogo
   }
-]
+];

@@ -4,7 +4,7 @@ import { AptosCreateTx } from '@/types/aptosResources';
 import { camelCaseKeysToUnderscore, getFormattedValidationCode } from '@/utils/utils';
 import { unref } from 'vue';
 
-type TxParams = MaybeRef<
+export type TxParams = MaybeRef<
   | {
       sender: MaybeRef<string>;
       payload: MaybeRef<{

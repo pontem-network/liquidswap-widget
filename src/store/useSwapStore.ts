@@ -179,6 +179,7 @@ export const useSwapStore = defineStore('swapStore', () => {
         });
       } catch(_e) {
       }
+
       convertError.value =
         to.amount && to.reserve < to.amount
           ? 'Insufficient funds in Liquidity Pool'
