@@ -1,6 +1,6 @@
 import { MaybeRef } from '@vueuse/core';
 import { AptosCreateTx } from '../types/aptosResources';
-type TxParams = MaybeRef<AptosCreateTx | undefined>;
+export type TxParams = MaybeRef<AptosCreateTx | undefined>;
 export declare function useSendTransaction(): {
     state: import("vue").Ref<string | undefined>;
     isReady: import("vue").Ref<boolean>;
@@ -8,4 +8,3 @@ export declare function useSendTransaction(): {
     error: import("vue").Ref<unknown>;
     execute: (txParams: TxParams) => Promise<string | undefined>;
 };
-export {};

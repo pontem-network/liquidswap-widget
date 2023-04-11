@@ -1,5 +1,5 @@
 import { MaybeRef } from '@vueuse/core';
-type TxParams = MaybeRef<{
+export type TxParams = MaybeRef<{
     sender: MaybeRef<string>;
     payload: MaybeRef<{
         type: MaybeRef<string>;
@@ -68,4 +68,3 @@ export declare function useSignTransaction(): {
     error: import("vue").Ref<unknown>;
     execute: (txParams: TxParams) => Promise<Uint8Array>;
 };
-export {};
