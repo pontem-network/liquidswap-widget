@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
     "importHelpers": true,
     "outDir": "./dist/tsc",
-    "types": ["node", "webpack-env"],
+    "types": ["node", "vite/client"],
     "lib": ["ES7", "DOM", "esnext"],
     "paths": {
       "@/*": ["./src/*"]

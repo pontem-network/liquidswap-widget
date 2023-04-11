@@ -7,6 +7,11 @@ declare module '*.scss' {
   export default content;
 }
 
+declare module '*.scss?inline' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.svg' {
   const content: any
   export default content

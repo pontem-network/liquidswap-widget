@@ -9,7 +9,7 @@ export const loadWidget = (tagName = 'liquidswap-widget') => {
     customElements.define(tagName, LiquidSwapWidget);
 
     customElements.whenDefined('liquidswap-widget').then(() => {
-      if (import.meta.env.PROD) {
+      if (import.meta?.env.PROD) {
         const el = document.createElement('style');
         el.type = 'text/css';
         el.textContent = styles;

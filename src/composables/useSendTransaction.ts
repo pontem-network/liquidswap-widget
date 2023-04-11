@@ -5,7 +5,7 @@ import { camelCaseKeysToUnderscore, getFormattedValidationCode } from '@/utils/u
 import { computed, unref } from 'vue';
 import { useStore } from "@/store";
 
-type TxParams = MaybeRef<AptosCreateTx | undefined>;
+export type TxParams = MaybeRef<AptosCreateTx | undefined>;
 
 export function useSendTransaction() {
   const adapter = useWalletProviderStore();

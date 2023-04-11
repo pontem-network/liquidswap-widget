@@ -121,6 +121,7 @@ function onBlur(evt: InputNumberBlurEvent) {
       .mul(decimalsMultiplier(tokenDecimals.value))
       .toFixed(0));
   }
+  return;
 }
 
 function onInput(evt: KeyboardEvent) {
