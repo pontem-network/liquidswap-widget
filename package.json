@@ -1,6 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "description": "LiquidSwap widget as custom web component",
   "files": [
@@ -65,7 +65,7 @@
     "sass": "1.61.0",
     "sass-loader": "13.0.0",
     "tslib": "2.5.0",
-    "typescript": "5.0.4",
+    "typescript": "4.9.5",
     "vite": "4.2.1",
     "vue": "3.2.40"
   }
