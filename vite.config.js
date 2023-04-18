@@ -9,6 +9,7 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 import dts from 'vite-plugin-dts';
 
+process.env.VUE_APP_CORRECT_CHAIN = 'testnet';
 
 export default defineConfig({
   plugins: [
@@ -56,7 +57,15 @@ export default defineConfig({
     sourcemap: true,
   },
 
-  define: { 'process.env.NODE_ENV': '"production"' },
+  define: {
+    'process.env.NODE_ENV': '"production"',
+    'process.env.VUE_APP_CORRECT_CHAIN': '"testnet"',
+    'process.env.VUE_APP_MODULES_ACCOUNT': '"0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12"',
+    'process.env.VUE_APP_MODULES_V05_ACCOUNT': '"0x45ef7a3a1221e7c10d190a550aa30fa5bc3208ed06ee3661ec0afa3d8b418580"',
+    'process.env.VUE_APP_RESOURCES_ACCOUNT': '"0x05a97986a9d031c4567e15b797be516910cfcb4156312482efc6a19c0a30c948"',
+    'process.env.VUE_APP_RESOURCES_V05_ACCOUNT': '"0x9cc3c27b8d398ab6fc82cbc9dc6b43bb9164f72da465631628163822662a8580"',
+    'process.env.VUE_APP_COINS_ACCOUNT': '"0x43417434fd869edee76cca2a4d2301e528a1551b1d719b75c350c3c97d15b8b9"'
+  },
 
   base: '/liquidswap-widget/',
 });
