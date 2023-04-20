@@ -21,7 +21,8 @@
     "declaration": false,
     "outDir": "./dist/tsc",
     "types": ["node", "vite/client"],
-    "lib": ["ES7", "DOM", "esnext"],
+    "lib": ["esnext", "DOM"],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
