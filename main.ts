@@ -12,7 +12,8 @@ import appStyles from './src/styles/index.scss?inline';
 const plugins = [PrimeVue, ToastService];
 
 export const LiquidSwapWidget = defineCustomElement({
-  setup(props = App.props) {
+  props: App.props,
+  setup(props) {
     // @ts-ignore
     const app = createApp();
     const pinia = createPinia();

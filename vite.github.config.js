@@ -40,8 +40,10 @@ export default defineConfig({
     outDir: 'docs',
   },
 
-  define: { 'process.env.NODE_ENV': '"production"' },
-
+  define: {
+    'process.env.NODE_ENV': '"production"',
+    'process.env.VUE_APP_CORRECT_CHAIN': '"mainnet"',
+  },
 
   base: '/liquidswap-widget/',
   }

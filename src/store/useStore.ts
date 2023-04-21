@@ -32,7 +32,7 @@ const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
 
   const sdk = new SDK({
     nodeUrl: nodeUrl,
-    networkOptions: networkOptions
+    networkOptions: networkOptions,
   });
   return sdk;
 }
@@ -49,6 +49,11 @@ export const useStore = createGlobalState(() => {
       moduleAccount: MODULES_ACCOUNT,
       resourceAccountV05: RESOURCES_V05_ACCOUNT,
       moduleAccountV05: MODULES_V05_ACCOUNT,
+      modules: {
+        CoinStore: '0x1::coin::CoinStore',
+        CoinInfo: '0x1::coin::CoinInfo',
+        Scripts: `${MODULES_ACCOUNT}::scripts_v2`
+      }
     }
   }));
 
