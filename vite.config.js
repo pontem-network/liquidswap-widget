@@ -9,7 +9,7 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 import dts from 'vite-plugin-dts';
 
-process.env.VUE_APP_CORRECT_CHAIN = 'testnet';
+process.env.VUE_APP_CORRECT_CHAIN = "mainnet";
 
 export default defineConfig({
   plugins: [

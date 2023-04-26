@@ -95,6 +95,18 @@
           </p-button>
         </div>
       </form>
+      <div class="full_version">
+        <h4 class="full_version__header">
+          More features in full-size version
+        </h4>
+        <p class="full_version__description">
+          Go to the web dApp to add liquidity or stake LP tokens in farms
+        </p>
+        <a class="full_version__link" href="https://liquidswap.com" target="_blank">
+          <img class="full_version__img" src="./../assets/expand.svg">
+          <span>liquidswap.com</span>
+        </a>
+      </div>
     </div>
     <ImportTokenDialog
       ref="importFromDialog"

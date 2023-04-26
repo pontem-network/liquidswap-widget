@@ -210,3 +210,47 @@
     }
   }
 }
+
+.full_version {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding-bottom: 8px;
+
+  &__header {
+    font-size: 13px;
+    letter-spacing: -0.5px;
+    line-height: 15px;
+    color: white;
+    opacity: 0.8;
+    margin: 0 0 8px;
+  }
+
+  &__description {
+    color: #9594AA;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: -0.5px;
+    padding: 0 60px;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__link {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #D4C4ED;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.5px;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+}
