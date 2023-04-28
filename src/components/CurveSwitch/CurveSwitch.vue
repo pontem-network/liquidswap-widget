@@ -49,12 +49,6 @@ import { getCurve } from '@/utils/contracts';
 
 const toast = useToast();
 
-interface IProps {
-  curve?: string;
-}
-
-const props = defineProps<IProps>();
-
 const store = useSwapStore();
 const tokenStore = useTokensStore();
 

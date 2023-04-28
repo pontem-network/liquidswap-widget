@@ -3,7 +3,7 @@ import { TCurveType, TVersionType } from './index';
 export interface IPoolInfo {
   coinX: string;
   coinY: string;
-  curve: TCurveType;
+  curve: string;
   networkId: number;
   contract?: TVersionType;
 
