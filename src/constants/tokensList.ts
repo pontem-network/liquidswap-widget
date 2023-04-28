@@ -23,6 +23,8 @@ import CakeLogo from '../assets/tokens/cake.svg';
 import DgenLogo from '../assets/tokens/dgen.svg';
 import DlcLogo from '../assets/tokens/dlc.svg';
 import PontTokenLogo from '../assets/tokens/pont-token.svg';
+import MoveLogo from '../assets/tokens/move.svg';
+import ThlLogo from '../assets/tokens/thl.svg';
 
 
 export const tokensList = [
@@ -125,5 +127,13 @@ export const tokensList = [
   {
     symbol: "usdd",
     logo: UsddLogo
+  },
+  {
+    symbol: "move",
+    logo: MoveLogo
+  },
+  {
+    symbol: "thl",
+    logo: ThlLogo
   }
 ];

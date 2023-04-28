@@ -18,6 +18,7 @@ import {
 } from '@/utils/pools';
 
 import { useStore } from './useStore';
+import {CurveType} from "@pontem/liquidswap-sdk/dist/tsc/types/aptos";
 
 interface IStorage extends IStorageBasic {
   pools: IPersistedPool[];
@@ -30,7 +31,7 @@ type Resource<T = any> = {
 
 export const usePoolsStore = defineStore('poolsStore', () => {
   const mainStore = useStore();
-  const { client: aptos } = mainStore;
+  const { client: aptos, sdk } = mainStore;
   const isLoading = ref(true);
   const poolsMap = reactive<Record<string, IPersistedPool>>({});
   const poolsTitleMap = reactive<Record<string, string>>({});
@@ -57,7 +58,8 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
   async function fetchPoolsList() {
     const pools = CoinsRegistry.getPoolsFor(CORRECT_CHAIN) as IPoolInfo[];
-    registerPools(pools);
+    const mappedPools = pools.map(item => ({ ...item, curve: item.curve === 'unstable' ? 'uncorrelated' : item.curve }));
+    registerPools(mappedPools);
     fetchAndFillAPRs();
   }
 
@@ -154,7 +156,10 @@ export const usePoolsStore = defineStore('poolsStore', () => {
           {},
         );
       }
-      poolsMap[poolStr].lp = +element.data.coin.value;
+
+      if (poolsMap[poolStr]) {
+        poolsMap[poolStr].lp = +element.data.coin.value;
+      }
     });
   }
 
@@ -235,7 +240,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     pool: IPoolBase,
     { rewrite = false, isDefault = false, lazy = true },
   ) {
-    const { coinX, coinY, curve, networkId, contract = VERSION_0 } = pool as IPoolInfo;
+    const { coinX, coinY, curve, networkId, contract } = pool as IPoolInfo;
 
     const isSorted = is_sorted(coinX, coinY);
     const [sortedX, sortedY] = isSorted ? [coinX, coinY] : [coinY, coinX];
@@ -247,22 +252,40 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       : curve;
 
     const liquidityPool = getPoolStr(sortedX, sortedY, curveType, contract);
+
+    let isPoolExist = false;
+    try {
+      const response = await sdk.value.Swap.getLiquidityPoolResource({fromToken: sortedX, toToken: sortedY, curveType: curve as CurveType, version: contract});
+      if (response && response.liquidityPoolResource) {
+        isPoolExist = true;
+      }
+    } catch (e) {
+      console.error('Error loading the pool:', e);
+    }
+
+    /**
+     * If the pool does not exist in the resource account,
+     * then we don't need to register it.
+     */
+    if (!isPoolExist) {
+      return undefined;
+    }
     if (!rewrite && poolsMap[liquidityPool]) {
       return poolsMap[liquidityPool];
     }
 
     if (isDefault && ['stable', 'uncorrelated'].includes(curve)) {
       predefinedCurves[curve as 'stable' | 'uncorrelated'].add(
-        `${sortedX}-${sortedY}`,
+        `${sortedX}-${sortedY}-${contract}`,
       );
     }
 
-    const title = getTitleForPool(sortedX, sortedY, curve, contract);
+    const title = getTitleForPool(sortedX, sortedY);
     const persistedPool: IPersistedPool = reactive({
       title,
       coinX: sortedX,
       coinY: sortedY,
-      curve,
+      curve: curveType,
       reserveX: 0,
       reserveY: 0,
       addedX: 0,
@@ -294,24 +317,21 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   function registerPools(list: IPoolInfo[]): void {
     if (!list || !Array.isArray(list)) return;
     const registerPoolOptions = { rewrite: true, isDefault: true };
+    const { networkId } = mainStore;
 
-    // register pools, if it is with selectable curve - register both pools
+    // pools has 'stable' and remapped 'uncorrelated' curve from coin-registry
     list.map((poolInfo: IPoolInfo) => {
-      const { coinX, coinY, curve, contract = VERSION_0 } = poolInfo;
-      const curves =
-        curve === 'selectable' ? ['stable', 'uncorrelated'] : [curve];
-
-      for (const curveType of curves) {
-        registerPool(
-          {
-            coinX,
-            coinY,
-            curve: curveType,
-            contract,
-          } as IPoolBase,
-          registerPoolOptions,
-        );
-      }
+      const { coinX, coinY, curve, contract } = poolInfo;
+      registerPool(
+        {
+          coinX,
+          coinY,
+          curve,
+          networkId: networkId.value,
+          contract,
+        } as IPoolBase,
+        registerPoolOptions,
+      );
     });
 
     fetchAccountLps();
@@ -336,7 +356,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
         const liquidityPool = getPoolStr(coinX, coinY, curve, contract);
         let registeredPool = poolsMap[liquidityPool];
         if (!registeredPool) {
-          const mainStore = useStore();
           const { networkId } = mainStore;
           registeredPool = await registerPool(
             {
@@ -350,7 +369,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
               rewrite: true,
               lazy: false,
             },
-          );
+          ) as IPersistedPool;
         }
         return registeredPool;
       },
@@ -373,13 +392,13 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   function getCurveType(
     coinX?: string,
     coinY?: string,
-    version?: TVersionType,
+    version?: number,
   ): string | false {
     if (!coinX || !coinY) return false;
     const [sortedX, sortedY] = is_sorted(coinX, coinY)
       ? [coinX, coinY]
       : [coinY, coinX];
-    const tokenPair = `${sortedX}-${sortedY}`;
+    const tokenPair = `${sortedX}-${sortedY}-${version}`;
     return predefinedCurves.stable.has(tokenPair)
       ? getCurve('stable', version)
       : predefinedCurves.uncorrelated.has(tokenPair)

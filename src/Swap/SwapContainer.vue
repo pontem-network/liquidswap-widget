@@ -41,7 +41,7 @@
           <SwapInput mode="to" />
         </div>
         <div
-            v-if="tokensChosen && !curveType"
+            v-if="tokensChosen && !curveType.value"
             class="swap__row"
             :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']">
           <PInlineMessage class="mt-1" :class="'curve-warning'" severity="warn"
@@ -51,10 +51,10 @@
           >
         </div>
         <div
-            v-show="tokensChosen && !curveType"
+            v-show="tokensChosen && !fullCurveOfDefaultPool"
             class="swap__row"
             :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']">
-          <CurveSwitch mode="swap" />
+          <CurveSwitch />
         </div>
         <div
           v-if="
@@ -67,8 +67,8 @@
         >
           <SwapInfo />
         </div>
-        <div v-if="curveType" class="swap__row">
-          <CurveInfo :type="curveType" :version="version"/>
+        <div v-if="fullCurveOfDefaultPool" class="swap__row">
+          <CurveInfo :type="fullCurveOfDefaultPool" :version="version"/>
         </div>
         <div v-show="canSwitchContract" class="swap__row -version">
           <ContractSwitch type="swap" />
@@ -95,6 +95,18 @@
           </p-button>
         </div>
       </form>
+      <div class="full_version">
+        <h4 class="full_version__header">
+          More features in full-size version
+        </h4>
+        <p class="full_version__description">
+          Go to the web dApp to add liquidity or stake LP tokens in farms
+        </p>
+        <a class="full_version__link" href="https://liquidswap.com" target="_blank">
+          <img class="full_version__img" src="./../assets/expand.svg">
+          <span>liquidswap.com</span>
+        </a>
+      </div>
     </div>
     <ImportTokenDialog
       ref="importFromDialog"
@@ -143,7 +155,14 @@ import { d } from '@/utils/utils';
 import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
-import { CURVE_STABLE_V05, CURVE_STABLE } from '@/constants/constants';
+import {
+  CURVE_STABLE_V05,
+  CURVE_STABLE,
+  VERSION_0,
+  VERSION_0_5,
+  CURVE_UNCORRELATED_V05,
+  CURVE_UNCORRELATED
+} from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TVersionType } from "@/types";
 
@@ -168,6 +187,60 @@ const curveType = computed(() =>
     version.value as TVersionType,
   ),
 );
+
+/**
+ * We call "default" pools - pools from the coins-registry.
+ * Returns false if we don't know about the pool with the selected token pair.
+ */
+const fullCurveOfDefaultPool = computed(() => {
+  // Now all known pools have version 0
+  const isExistsDefaultPoolV0 = poolsStore.getCurveType(
+      swapStore.fromCurrency?.token,
+      swapStore.toCurrency?.token,
+      VERSION_0,
+  );
+
+  const isExistsDefaultPoolV05 = poolsStore.getCurveType(
+      swapStore.fromCurrency?.token,
+      swapStore.toCurrency?.token,
+      VERSION_0_5,
+  );
+
+  const hasDefaultPoolStableCurveV0 = [CURVE_STABLE, CURVE_STABLE_V05].includes(
+      '' + isExistsDefaultPoolV0,
+  );
+
+  const hasDefaultPoolStableCurveV05 = [
+    CURVE_STABLE,
+    CURVE_STABLE_V05,
+  ].includes('' + isExistsDefaultPoolV05);
+
+  const hasDefaultPoolUncorrelatedCurveV0 = [
+    CURVE_UNCORRELATED,
+    CURVE_UNCORRELATED_V05,
+  ].includes('' + isExistsDefaultPoolV0);
+
+  const hasDefaultPoolUncorrelatedCurveV05 = [
+    CURVE_UNCORRELATED,
+    CURVE_UNCORRELATED_V05,
+  ].includes('' + isExistsDefaultPoolV05);
+
+  if (
+      (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
+      (hasDefaultPoolStableCurveV0 || hasDefaultPoolStableCurveV05)
+  ) {
+    return version.value === VERSION_0_5 ? CURVE_STABLE_V05 : CURVE_STABLE;
+  }
+
+  if (
+      (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
+      (hasDefaultPoolUncorrelatedCurveV0 || hasDefaultPoolUncorrelatedCurveV05)
+  ) {
+    return version.value === VERSION_0_5 ? CURVE_UNCORRELATED_V05 : CURVE_UNCORRELATED;
+  }
+
+  return false;
+});
 
 watch([curveType, stableCurve, unstableCurve], () => {
     if (curveType.value) {
@@ -227,6 +300,20 @@ const importToToken = () => {
   }
 };
 
+const canSwitchContract = computed(() => {
+  const isToTokenChosen = swapStore.toCurrency?.token;
+
+  const isDefaultPool = !!fullCurveOfDefaultPool.value;
+  const hasDefaultPoolStableCurve = [CURVE_STABLE_V05, CURVE_STABLE].includes(
+      '' + fullCurveOfDefaultPool.value,
+  );
+  const isPoolUnknown = fullCurveOfDefaultPool.value === false;
+  const canSwitch =
+      (isDefaultPool && hasDefaultPoolStableCurve) || isPoolUnknown;
+
+  return isToTokenChosen && canSwitch;
+});
+
 watchDebounced(
   () => [routeFromToken.value, routeToToken.value, tokensStore.isReady],
   () => {
@@ -239,13 +326,6 @@ watchDebounced(
   {
     debounce: 200,
   },
-);
-
-const canSwitchContract = computed(
-    () =>
-        swapStore.toCurrency?.token &&
-        (curveType.value === false ||
-            [CURVE_STABLE_V05, CURVE_STABLE].includes(swapStore.curve)),
 );
 
 const buttonState = computed(() => {

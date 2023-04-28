@@ -44,26 +44,6 @@ export function getPoolLpInfoStr(lp: string): string {
   return composeType(NETWORKS_MODULES.CoinInfo, [lp]);
 }
 
-export function getTitleForPool(
-  coinX: string,
-  coinY: string,
-  curve: string,
-  contract?: number,
-) {
-  if (!coinX || !coinY) return '';
-  const tokensStore = useTokensStore();
-  const [sortedX, sortedY] = is_sorted(coinX, coinY)
-    ? [coinX, coinY]
-    : [coinY, coinX];
-  const tokenX = tokensStore.getToken(sortedX);
-  const tokenY = tokensStore.getToken(sortedY);
-  if (!tokenX || !tokenY) return '';
-  const { alias: aliasX } = tokenX;
-  const { alias: aliasY } = tokenY;
-  const curveStar = curve === getCurve('stable', contract) ? '*' : '';
-  return `${aliasX}/${aliasY}${curveStar}`;
-}
-
 export function destructCoinStorePoolStr(type: string): string[] {
   if (type.length === 0) return [];
   return (
@@ -74,4 +54,19 @@ export function destructCoinStorePoolStr(type: string): string[] {
       .replaceAll(' ', '')
       .split(',')
   );
+}
+
+export function getTitleForPool(coinX: string, coinY: string) {
+  if (!coinX || !coinY) return '';
+  const tokensStore = useTokensStore();
+  const [sortedX, sortedY] = is_sorted(coinX, coinY)
+    ? [coinX, coinY]
+    : [coinY, coinX];
+  const tokenX = tokensStore.getToken(sortedX);
+  const tokenY = tokensStore.getToken(sortedY);
+  if (!tokenX || !tokenY) return '';
+  const { alias: symbolX } = tokenX;
+  const { alias: symbolY } = tokenY;
+
+  return `${symbolX}/${symbolY}`;
 }

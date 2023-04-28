@@ -6,10 +6,8 @@ import { resolve } from 'path';
 import svgLoader from 'vite-svg-loader';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
-
 import dts from 'vite-plugin-dts';
 
-process.env.VUE_APP_CORRECT_CHAIN = 'testnet';
 
 export default defineConfig({
   plugins: [
