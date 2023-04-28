@@ -60,6 +60,11 @@ export declare function useSignTransaction(): {
         values: () => IterableIterator<number>;
         includes: (searchElement: number, fromIndex?: number | undefined) => boolean;
         at: (index: number) => number | undefined;
+        findLast: {
+            <S extends number>(predicate: (value: number, index: number, array: Uint8Array) => value is S, thisArg?: any): S | undefined;
+            (predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any): number | undefined;
+        };
+        findLastIndex: (predicate: (value: number, index: number, array: Uint8Array) => unknown, thisArg?: any) => number;
         [Symbol.iterator]: () => IterableIterator<number>;
         readonly [Symbol.toStringTag]: "Uint8Array";
     }>;
