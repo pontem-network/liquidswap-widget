@@ -91,8 +91,8 @@ export const useSwapStore = defineStore('swapStore', () => {
     to.amount = undefined;
     to.reserve = 0;
     convertError.value = undefined;
-    from.usdEquivalent = 0;
-    to.usdEquivalent = 0;
+    from.usdEquivalent = undefined;
+    to.usdEquivalent = undefined;
   }
 
   function convertToDecimals(
