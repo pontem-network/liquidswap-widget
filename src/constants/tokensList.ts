@@ -137,3 +137,21 @@ export const tokensList = [
     logo: ThlLogo
   }
 ];
+
+export const knownTokens = [
+  'btc',
+  'eth',
+  'apt',
+  'usdc',
+  'usdt',
+  'weth',
+  'dai',
+  'wbtc',
+  'bnb',
+  'aptoge',
+  'mojo',
+  'stapt',
+  'sol',
+  'cake',
+  'tapt',
+];

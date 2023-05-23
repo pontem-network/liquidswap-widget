@@ -1,15 +1,13 @@
 import { PONTEM_API_URL } from '@/constants/constants';
 import { d } from '@/utils/utils';
-import { computedAsync, MaybeRef, useMemoize } from '@vueuse/core';
-import { useTokensStore } from '@/store';
-import { computed, unref } from 'vue';
-
+import { knownTokens } from '@/constants/tokensList';
+import { useMemoize } from '@vueuse/core';
 
 type TFiatPricesResponse = {
   currency: string;
   price: number;
   lastUpdate: string;
-}[];
+};
 
 export const getUSDEquivalent = (
   coinAmount: number | undefined,
@@ -19,43 +17,27 @@ export const getUSDEquivalent = (
   return d(coinAmount).mul(d(usdRate)).toNumber();
 };
 
-const fetchPrices = async (
-  coinSymbols: string | undefined,
-): Promise<TFiatPricesResponse | undefined> => {
-  if (!coinSymbols) return;
+const fetchPrice = async (): Promise<TFiatPricesResponse[] | undefined> => {
   try {
-    const res = await fetch(
-      `${PONTEM_API_URL}/integrations/fiat-prices?currencies=${coinSymbols.toLowerCase()}`,
-      { cache: 'no-cache' },
+    const response = await fetch(
+      `${PONTEM_API_URL}/integrations/fiat-prices?currencies=${knownTokens.join(',')}`,
     );
-
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    console.error('err', err);
-    return;
+    return response.json() as unknown as TFiatPricesResponse[];
+  } catch (e) {
+    console.error(e);
   }
+  return;
 };
 
+const fetchPriceMemo = useMemoize(fetchPrice);
 
-/**
- * New hook implementation for currency conversion with caching support
- */
-export const useCurrencyConversionRate = (
-  tokenType: MaybeRef<string | undefined>,
-) => {
-  const tokensStore = useTokensStore();
+export const getTokenPrice = async (
+  coinSymbol: string | undefined,
+): Promise<number | undefined> => {
+  if (!coinSymbol) return;
 
-  const token = computed(() => tokensStore.getToken(unref(tokenType)));
+  const prices = await fetchPriceMemo();
 
-  const fetchRate = useMemoize((symbol: string) => {
-    return fetchPrices(symbol);
-  });
-
-  return {
-    value: computedAsync(() =>
-      token.value?.symbol ? fetchRate(token.value?.symbol) : undefined,
-    ),
-    refetch: () => token.value?.symbol && fetchRate.load(token.value?.symbol),
-  };
+  return prices?.find((price) => price.currency === coinSymbol.toLowerCase())
+    ?.price;
 };

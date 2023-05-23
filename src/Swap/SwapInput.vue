@@ -13,10 +13,15 @@
           :tabindex="isFrom ? 1 : 4"
           class="currency-input__input"
           placeholder="0.0"
-          inputmode="decimal"
+          :input-props="{
+            type: 'text',
+            inputmode: 'decimal',
+            pattern: '^[0-9]*[.,]?[0-9]*$',
+            autocomplete: 'off',
+            autocorrect: 'off',
+            spellcheck: 'false',
+          }"
           locale="en-US"
-          mode="decimal"
-          autocomplete="off"
           :min="0"
           :min-fraction-digits="0"
           :max-fraction-digits="tokenDecimals"
@@ -32,7 +37,7 @@
     </div>
     <div class="swap-input__row">
       <div v-if="mainStore.account.value && token" class="input-label">
-        <div class="input-label__right balance">
+        <div class="input-label__both balance">
           <template
             v-if="
               tokenBalance.isFetching.value &&
@@ -42,12 +47,18 @@
             Loading balance ...
           </template>
           <template v-else>
-            <span v-if="isTokenExisted"
-              >Balance:
-              <span class="cursor-pointer" @click="onClickMaxBalance">{{
-                tokenBalance.formatted.value
-              }}</span></span
-            >
+            <template v-if="tokenBalance.isExists.value">
+              <InputLabelTemplate
+                  :mode="mode"
+                  :amount="amount"
+                  :usd-equivalent="usdEquivalentFixed"
+                  :usd-benefit-percent="usdBenefitPercent"
+                  :balance="tokenBalance.formatted.value"
+                  :is-loading="usdEquivalentLoader"
+                  show-balance
+                  @click:max-balance="onClickMaxBalance"
+              />
+            </template>
             <ToolTip
                 v-else
                 position="bottom-left"
@@ -73,6 +84,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
+import { watchDebounced } from '@vueuse/core';
 import { useStore, useSwapStore, useTokensStore } from '@/store';
 import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
@@ -84,6 +96,8 @@ import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 import InputNumber from 'primevue/inputnumber';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import { ButtonToken } from "@/components/ButtonToken";
+import InputLabelTemplate from "@/Swap/InputLabelTemplate.vue";
+import { getStoredTokenUsdEquivalent } from '@/composables/useInputServices';
 
 interface IProps {
   mode: 'to' | 'from';
@@ -96,6 +110,8 @@ const mainStore = useStore();
 const swapStore = useSwapStore();
 const tokensStore = useTokensStore();
 const state = swapStore[props.mode === 'to' ? 'toCurrency' : 'fromCurrency'];
+const usdBenefitPercent = ref<number>();
+const usdEquivalentLoader = ref(false);
 
 const dialog = ref();
 const cautionAlert = ref();
@@ -143,13 +159,15 @@ function onInput(evt: KeyboardEvent) {
 function onClickMaxBalance() {
   let balance = tokenBalance.balance.value;
   if (state.token === mainStore.defaultToken.value) {
-    // Bind 2000 tokens for gas
-    balance = Math.max(balance - 2000, 0);
+    // Bind 7500 tokens for gas
+    balance = Math.max(balance - 7500, 0);
   }
 
   swapStore.interactiveField = props.mode;
   state.amount = balance;
 }
+
+const usdEquivalentFixed = computed(() => state.usdEquivalent?.toFixed(4));
 
 const amount = computed(() => {
   if (state.amount === undefined) {
@@ -196,6 +214,49 @@ const tokenEntity = computed(() => {
   return undefined;
 });
 
+watchDebounced(
+    () => [swapStore.fromCurrency.amount, swapStore.toCurrency.amount],
+    async () => {
+      usdBenefitPercent.value = undefined;
+
+      if (!tokenEntity.value || !amount.value === undefined) return;
+
+      if (!amount.value && props.mode === 'from') {
+        swapStore.toCurrency.usdEquivalent = undefined;
+        swapStore.toCurrency.amount = undefined;
+        usdBenefitPercent.value = undefined;
+        return;
+      }
+
+      usdEquivalentLoader.value = true;
+
+      await updateUsdEquivalents();
+
+      if (
+          props.mode === 'to' &&
+          swapStore.fromCurrency.usdEquivalent &&
+          swapStore.toCurrency.usdEquivalent
+      ) {
+        usdBenefitPercent.value = d(swapStore.fromCurrency.usdEquivalent)
+            .div(d(swapStore.toCurrency.usdEquivalent))
+            .minus(1)
+            .mul(100)
+            .mul(-1)
+            .toNumber();
+      }
+
+      //we make a delay so that the loader does not blink
+      setTimeout(() => {
+        usdEquivalentLoader.value = false;
+      }, 1000);
+    },
+    {
+      immediate: true,
+      debounce: 1000,
+      maxWait: 5000,
+    },
+);
+
 const tokenProvider = computed(() => {
   if (tokenEntity.value?.type.length && tokenEntity.value?.type.length > 0) {
     return providerForToken(tokenEntity.value);
@@ -209,5 +270,35 @@ const tokenDecimals = computed(() => {
 
 function showSelectCurrencyModal() {
   dialog.value.show();
+}
+
+async function updateUsdEquivalents() {
+  if (props.mode === 'to') {
+    if (!swapStore.toCurrency.amount) {
+      return;
+    }
+
+    swapStore.fromCurrency.usdEquivalent = undefined;
+    swapStore.toCurrency.usdEquivalent = undefined;
+
+    // req 'from' data must be first
+    swapStore.fromCurrency.usdEquivalent = await getStoredTokenUsdEquivalent(
+        swapStore.fromCurrency,
+    );
+    //req 'to' data
+    swapStore.toCurrency.usdEquivalent = await getStoredTokenUsdEquivalent(
+        swapStore.toCurrency,
+    );
+
+    return;
+  }
+
+  if (!swapStore.fromCurrency.amount) {
+    return;
+  }
+
+  swapStore.fromCurrency.usdEquivalent = await getStoredTokenUsdEquivalent(
+      swapStore.fromCurrency,
+  );
 }
 </script>

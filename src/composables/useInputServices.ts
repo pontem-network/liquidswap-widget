@@ -1,8 +1,8 @@
-import { useTokensStore } from '@/store';
-import { getUSDEquivalent, useCurrencyConversionRate } from './useCoinPrice';
-import { ICreateToken } from '@/types';
-import { d, decimalsMultiplier } from '@/utils/utils';
-import { useNumberFormat } from './useCurrencyFormat';
+import {useTokensStore} from '@/store';
+import {getTokenPrice, getUSDEquivalent} from './useCoinPrice';
+import {ICreateToken} from '@/types';
+import {d, decimalsMultiplier} from '@/utils/utils';
+import {useNumberFormat} from './useCurrencyFormat';
 
 export const getTokenDecimal = (token: string | undefined) => {
   const tokensStore = useTokensStore();
@@ -24,22 +24,19 @@ export const getAmountWithDecimal = (
 export const getStoredTokenUsdEquivalent = async (
   storedToken: ICreateToken,
 ) => {
-
-  const priceResponse = useCurrencyConversionRate(storedToken.token).value;
-  if (!priceResponse.value?.length) return;
-
-  const { price } = priceResponse.value[0];
+  const tokensStore = useTokensStore();
+  const price = await getTokenPrice(
+    tokensStore.getToken(storedToken.token)?.symbol,
+  );
   if (!price) return;
 
   const decimal = getTokenDecimal(storedToken.token);
   if (decimal === undefined) return;
 
-  const usdEquivalent = getUSDEquivalent(
+  return getUSDEquivalent(
     getAmountWithDecimal(storedToken.amount, decimal),
     price,
   );
-
-  return usdEquivalent;
 };
 
 /**

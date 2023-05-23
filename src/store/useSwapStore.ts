@@ -23,12 +23,15 @@ export const useSwapStore = defineStore('swapStore', () => {
     token: undefined,
     amount: undefined,
     reserve: 0,
+    usdEquivalent: undefined,
   });
 
   const to = reactive<IStoredToken>({
     token: undefined,
     amount: undefined,
     reserve: 0,
+    usdEquivalent: undefined,
+
   });
 
   const { version } = useContractVersion();
@@ -88,6 +91,8 @@ export const useSwapStore = defineStore('swapStore', () => {
     to.amount = undefined;
     to.reserve = 0;
     convertError.value = undefined;
+    from.usdEquivalent = 0;
+    to.usdEquivalent = 0;
   }
 
   function convertToDecimals(
