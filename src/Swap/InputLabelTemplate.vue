@@ -17,15 +17,6 @@
     >
       {{ usdBenefitPercentComp }}%
     </ToolTip>
-<!--    <span-->
-<!--      v-tooltip.bottom="{-->
-<!--        value:-->
-<!--          'The estimated difference between the USD values of input and output amounts.',-->
-<!--        class: 'input-label__tooltip',-->
-<!--      }"-->
-<!--      :class="['input-label__tooltip-title', 'ml-1', usdBenefitPercentClass]"-->
-<!--      >{{ usdBenefitPercent }}%</span-->
-<!--    >-->
   </span>
   <!-- balance section -->
   <span

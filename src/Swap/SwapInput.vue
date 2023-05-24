@@ -219,7 +219,7 @@ watchDebounced(
     async () => {
       usdBenefitPercent.value = undefined;
 
-      if (!tokenEntity.value || !amount.value === undefined) return;
+      if (!tokenEntity.value) return;
 
       if (!amount.value && props.mode === 'from') {
         swapStore.toCurrency.usdEquivalent = undefined;
@@ -248,7 +248,7 @@ watchDebounced(
       //we make a delay so that the loader does not blink
       setTimeout(() => {
         usdEquivalentLoader.value = false;
-      }, 1000);
+      }, 0);
     },
     {
       immediate: true,
