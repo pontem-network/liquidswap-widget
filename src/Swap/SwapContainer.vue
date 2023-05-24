@@ -41,7 +41,7 @@
           <SwapInput mode="to" />
         </div>
         <div
-            v-if="tokensChosen && !curveType.value"
+            v-if="tokensChosen && !fullCurveOfDefaultPool"
             class="swap__row"
             :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']">
           <PInlineMessage class="mt-1" :class="'curve-warning'" severity="warn"
@@ -338,7 +338,7 @@ const buttonState = computed(() => {
   }
 
   if (!swapStore.fromCurrency.token || !swapStore.toCurrency.token) {
-    return { disabled: true, text: 'Select coin' };
+    return { disabled: true, text: 'Select token' };
   }
 
   if (swapStore.isPoolAbsence) {
