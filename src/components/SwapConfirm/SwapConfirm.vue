@@ -7,7 +7,7 @@
   </SwapPreview>
   <SendTransaction
     v-if="view === 'tx'"
-    title="Swap Coins"
+    title="Swap Tokens"
     :payload="payload"
     :stable="isCurveStable"
     @back="onBack"

@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-step">
-    <DialogHeader title="Swap Coins" @close="onClose" />
+    <DialogHeader title="Swap Tokens" @close="onClose" />
     <div class="dialog-step__content">
       <div class="swap-tokens">
         <div class="swap-tokens__token">
@@ -117,12 +117,12 @@ const animation = ref(
 const fromAmount = useCurrencyFormat(
   computed(() => swapStore.fromCurrency.amount),
   computed(() => swapStore.fromCurrency.token),
-  { useBridge: false },
+  { useBridge: false, useSuffix: false },
 );
 const toAmount = useCurrencyFormat(
   computed(() => swapStore.toCurrency.amount),
   computed(() => swapStore.toCurrency.token),
-  { useSuffix: false },
+  { useBridge: false, useSuffix: false },
 );
 
 function onClose() {
