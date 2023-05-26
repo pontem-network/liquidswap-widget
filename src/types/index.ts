@@ -68,6 +68,7 @@ export interface ICreateToken {
 
 export interface IStoredToken extends ICreateToken {
   reserve: number;
+  usdEquivalent?: number;
 }
 
 export type TVersionType = typeof VERSION_0 | typeof VERSION_0_5;

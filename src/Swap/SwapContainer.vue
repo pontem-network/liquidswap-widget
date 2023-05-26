@@ -108,25 +108,6 @@
         </a>
       </div>
     </div>
-    <ImportTokenDialog
-      ref="importFromDialog"
-      :token="routeFromToken"
-      store="swap"
-      mode="from"
-      @close="
-        () => {
-          routeFromToken = false;
-          importToToken();
-        }
-      "
-    />
-    <ImportTokenDialog
-      ref="importToDialog"
-      :token="routeToToken"
-      store="swap"
-      mode="to"
-      @close="routeToToken = false"
-    />
     <TxSettingsDialog
       ref="txSettingsDialog"
       v-model:isDefault="swapStore.slippageIsDefault"
@@ -138,7 +119,6 @@
 </template>
 
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/shared';
 import { computed, ref, watch } from 'vue';
 import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
@@ -152,7 +132,6 @@ import { ContractSwitch } from '@/components/ContractSwitch';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
-import { ImportTokenDialog } from '@/components/ImportTokenDialog';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
 import {
@@ -254,9 +233,6 @@ watch([curveType, stableCurve, unstableCurve], () => {
       swapStore.curve = getCurve(shortName, version.value);
     }
   },
-  {
-    immediate: true,
-  }
 )
 
 const fromBalance = useCurrentAccountBalance(
@@ -267,39 +243,10 @@ const toBalance = useCurrentAccountBalance(
 );
 const txSettingsDialog = ref();
 const overlayAnchor = ref();
-const importToDialog = ref();
-const importFromDialog = ref();
-
-const routeToToken = ref();
-const routeFromToken = ref();
 
 const tokensChosen = computed(
   () => !!swapStore.fromCurrency.token && !!swapStore.toCurrency.token,
 );
-
-const importFromToken = () => {
-  if (!routeFromToken.value) return;
-  const fromTokenParam = tokensStore.getToken(routeFromToken.value);
-  if (!fromTokenParam) {
-    if (!tokensStore.isReady) return;
-    importFromDialog.value.show();
-  } else {
-    swapStore.fromCurrency.token = fromTokenParam.type;
-    importToToken();
-  }
-};
-
-const importToToken = () => {
-  if (!routeToToken.value) return;
-  const toTokenParam = tokensStore.getToken(routeToToken.value);
-  if (!toTokenParam) {
-    if (!tokensStore.isReady) return;
-    importToDialog.value.show();
-  } else {
-    swapStore.toCurrency.token = toTokenParam.type;
-  }
-};
-
 const canSwitchContract = computed(() => {
   const isToTokenChosen = swapStore.toCurrency?.token;
 
@@ -313,20 +260,6 @@ const canSwitchContract = computed(() => {
 
   return isToTokenChosen && canSwitch;
 });
-
-watchDebounced(
-  () => [routeFromToken.value, routeToToken.value, tokensStore.isReady],
-  () => {
-    if (routeFromToken.value) {
-      importFromToken();
-    } else if (routeToToken.value) {
-      importToToken();
-    }
-  },
-  {
-    debounce: 200,
-  },
-);
 
 const buttonState = computed(() => {
   if (swapStore.isBusy.value) {

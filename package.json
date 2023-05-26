@@ -53,7 +53,7 @@
     "@pontem/liquidswap-sdk": "0.6.1",
     "@tsconfig/recommended": "1.0.2",
     "@types/lodash": "4.14.182",
-    "@vueuse/core": "8.9.4",
+    "@vueuse/core": "9.13.0",
     "@vueuse/shared": "9.11.0",
     "axios": "0.27.2",
     "decimal.js": "10.4.3",

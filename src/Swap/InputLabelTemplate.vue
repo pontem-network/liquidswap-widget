@@ -3,21 +3,20 @@
     <i class="pi pi-spin pi-spinner" style="font-size: 12px" />
   </div>
   <span
-    v-else-if="amount && usdEquivalent"
+    v-else-if="amount && usdEquivalentComp"
     class="input-label__text_secondary input-label__text_loaded"
   >
-    {{ usdEquivalent }}
+    {{ usdEquivalentComp }}
     <!-- show usd benefit for second input -->
-    <span
-      v-if="mode === 'to' && usdBenefitPercent"
-      v-tooltip.bottom="{
-        value:
-          'The estimated difference between the USD values of input and output amounts.',
-        class: 'input-label__tooltip',
-      }"
+
+    <ToolTip
+      v-if="mode === 'to' && usdBenefitPercentComp"
+      position='bottom'
+      :tooltipText="'The estimated difference between the USD values of input and output amounts.'"
       :class="['input-label__tooltip-title', 'ml-1', usdBenefitPercentClass]"
-      >{{ usdBenefitPercent }}%</span
     >
+      {{ usdBenefitPercentComp }}%
+    </ToolTip>
   </span>
   <!-- balance section -->
   <span
@@ -33,7 +32,7 @@
 <script setup lang="ts">
 import { useNumberFormat } from '@/composables/useCurrencyFormat';
 import { computed, PropType } from 'vue';
-
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
 
 const props = defineProps({
   isLoading: {
@@ -67,13 +66,13 @@ const props = defineProps({
 
 type TUsdEquivalentSuffix = 'M' | 'B' | 'T' | undefined;
 
-const usdBenefitPercent = computed(() => {
+const usdBenefitPercentComp = computed(() => {
   if (!props.usdBenefitPercent) return;
 
   return amount2NoENotation(props.usdBenefitPercent + '', '');
 });
 
-const usdEquivalent = computed(() => {
+const usdEquivalentComp = computed(() => {
   if (!props.usdEquivalent) return;
   let prefix = '$';
   if (
