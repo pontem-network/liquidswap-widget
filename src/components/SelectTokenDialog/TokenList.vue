@@ -7,7 +7,6 @@
         spellcheck="false"
         class="search__input"
         placeholder="Put name or address"
-        autofocus
       />
     </div>
     <div class="dialog-step__divider" />
