@@ -8,7 +8,7 @@ import { useStore } from '@/store/useStore';
 import { is_sorted, d, decimalsMultiplier } from '@/utils/utils';
 import { usePoolsStore, useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
-import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
+import {DENOMINATOR, VERSION_0_5, VERSION_0, CURVE_STABLE, CURVE_STABLE_V05} from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import { IStoredToken, TVersionType } from '@/types';
@@ -231,7 +231,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   }
 
   async function check() {
-    if (!from?.token || !to?.token) return;
+    if (!from?.token || !to?.token || !curve.value) return;
     await poolExistence.check({
       fromCoin: from.token,
       toCoin: to.token,
@@ -251,7 +251,7 @@ export const useSwapStore = defineStore('swapStore', () => {
       to.token,
       curve
     ],
-    async () => {
+    async (_newState,_oldState) => {
       // if we switch tokens to a new value
       if (
         predefinedCurve.value !== false &&

@@ -74,15 +74,28 @@
           /><span class="-white">{{ priceImpact }}%</span></span
         >
       </div>
+      <div class="list__item">
+        <span>Fee ({{ convertFee }}%)</span>
+        <span v-if="swap.isUpdatingRate"
+        ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
+        /></span>
+        <span v-else>
+          <span v-if="feeUSDEquivalent" class="secondary">
+            ~{{ feeUSDEquivalent }}$
+          </span>
+          {{ convertFeeAmount.formatted.value }}</span
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useSwapStore } from '@/store';
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed, nextTick, watch } from 'vue';
 import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
+import { getTokenPrice, getUSDEquivalent } from '@/composables/useCoinPrice';
 import { getCurve } from '@/utils/contracts';
 
 import PAccordion from 'primevue/accordion';
@@ -93,6 +106,7 @@ const swap = useSwapStore();
 const version = computed(() => swap.version);
 
 const slippageAmount = computed(() => swap.slippageAmount);
+
 const hasSlippage = computed(
     () =>
         (version.value === VERSION_0 &&
@@ -121,6 +135,9 @@ const convertFeeAmount = useCurrencyFormat(
   fromToken,
 );
 
+const feeUSDEquivalent = ref<string | undefined>(undefined);
+
+
 const isToggled = ref(false);
 const activeIndex = computed({
   get() {
@@ -132,6 +149,26 @@ const activeIndex = computed({
     });
   },
 });
+
+watch(
+    () => swap.convertFeeAmount,
+    async () => {
+      const feeAmount = useCurrencyFormat(
+          computed(() => swap.convertFeeAmount),
+          fromToken,
+          { useSuffix: false },
+      );
+
+      const price = await getTokenPrice(feeAmount.symbol.value);
+      if (!price) return;
+
+      feeUSDEquivalent.value = getUSDEquivalent(
+          +feeAmount.formatted.value,
+          price,
+      )?.toFixed(3);
+    },
+    { immediate: true },
+);
 
 const priceImpactClass = computed(() => {
   return swap.priceImpactState === 'normal'

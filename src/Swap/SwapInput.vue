@@ -89,7 +89,6 @@ import { useStore, useSwapStore, useTokensStore } from '@/store';
 import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { d, decimalsMultiplier } from '@/utils/utils';
-import { providerForToken } from '@/utils/tokens';
 import { InputNumberBlurEvent } from 'primevue/inputnumber';
 import { splitValue } from '@/utils/utils';
 import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
@@ -120,8 +119,6 @@ const secondaryToken = swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurre
 
 const tokenBalance = useCurrentAccountBalance(token, { useSuffix: false });
 
-const isTokenExisted = computed(() => tokenBalance.isExists.value);
-
 const isUpdating = computed(() => {
   return props.mode !== swapStore.interactiveField && swapStore.isUpdatingRate;
 });
@@ -143,7 +140,7 @@ function onBlur(evt: InputNumberBlurEvent) {
 function onInput(evt: KeyboardEvent) {
   swapStore.interactiveField = props.mode;
   const el = evt.target as HTMLInputElement;
-  if (el.value === undefined || el.value === null) {
+  if (el.value === undefined || el.value === null || el.value === '') {
     state.amount = undefined;
     return;
   }
@@ -151,6 +148,17 @@ function onInput(evt: KeyboardEvent) {
   if (spiltValue_[1] && Number(spiltValue_[1][lastIndex]) === 0) {
     return;
   }
+
+  // replace comma with dot for ios
+  if (evt.key === ',' && el.value && !el.value.includes('.')) {
+    el.value += '.';
+  }
+
+  // improve responsiveness when ends with dot
+  if (el.value.slice(-1) === '.') {
+    return;
+  }
+
   state.amount = +d(Number(el.value.replace(/,/g, '')))
     .mul(decimalsMultiplier(tokenDecimals.value))
     .toFixed(0);
@@ -170,7 +178,7 @@ function onClickMaxBalance() {
 const usdEquivalentFixed = computed(() => state.usdEquivalent?.toFixed(4));
 
 const amount = computed(() => {
-  if (state.amount === undefined) {
+  if (state.amount === undefined || !tokenDecimals.value) {
     return undefined;
   }
   return +d(state.amount)
@@ -256,13 +264,6 @@ watchDebounced(
       maxWait: 5000,
     },
 );
-
-const tokenProvider = computed(() => {
-  if (tokenEntity.value?.type.length && tokenEntity.value?.type.length > 0) {
-    return providerForToken(tokenEntity.value);
-  }
-  return '';
-});
 
 const tokenDecimals = computed(() => {
   return tokenEntity.value ? tokenEntity.value.decimals : 8;
