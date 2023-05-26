@@ -29,7 +29,7 @@
         alt="stable curve"
       />
       <p>Stable</p>
-      <ToolTip position="top-left" :tooltipText="'Using formula optimized for stable coins swaps'">
+      <ToolTip position="top-left" :tooltipText="'Using formula optimized for stable tokens swaps'">
         <i class="pi pi-info-circle" :style="{ paddingTop: '2px'}"/>
       </ToolTip>
     </div>
@@ -83,7 +83,7 @@ watch(
         severity: 'warn',
         summary: 'Warning!',
         detail:
-          'If one of the coin in stable swap pair has more than 8 decimals it could bring inaccuracy for swaps logic, be careful.',
+          'If one of the token in stable swap pair has more than 8 decimals it could bring inaccuracy for swaps logic, be careful.',
         life: 3000,
         group: 'tr',
       });

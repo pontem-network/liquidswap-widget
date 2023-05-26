@@ -1,7 +1,7 @@
 <template>
   <div class="dialog-step manage_presets">
     <DialogHeader
-      title="Manage Coin Lists"
+      title="Manage Token Lists"
       :has-back="true"
       @close="onClose"
       @back="onClose"
@@ -27,7 +27,7 @@
     </div>
     <div class="dialog-step__footer">
       <div v-show="manageSwitch === 'coins'" class="coins-info__wrap">
-        <p>Custom coins stored locally in your browser</p>
+        <p>Custom tokens stored locally in your browser</p>
       </div>
     </div>
   </div>
