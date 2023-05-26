@@ -34,8 +34,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
         required: false;
     };
 }>> & {
-    onClose?: ((...args: any[]) => any) | undefined;
     "onUpdate:actionToken"?: ((...args: any[]) => any) | undefined;
+    onClose?: ((...args: any[]) => any) | undefined;
     onNavigate?: ((...args: any[]) => any) | undefined;
     "onUpdate:poolId"?: ((...args: any[]) => any) | undefined;
 }, {}>;

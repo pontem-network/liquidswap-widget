@@ -60,8 +60,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, {
     isLoading: boolean;
     balance: string;
-    showBalance: boolean;
     usdEquivalent: string | undefined;
+    showBalance: boolean;
     usdBenefitPercent: number;
 }>;
 export default _sfc_main;

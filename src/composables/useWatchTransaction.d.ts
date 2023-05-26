@@ -5,8 +5,8 @@ export declare function useWatchTransaction(txHash: MaybeRef<string | undefined>
 }): {
     state: import("vue").Ref<any>;
     isStopped: import("vue").Ref<boolean>;
-    isActive: import("vue").Ref<boolean>;
-    isLoading: import("vue").ComputedRef<false | import("vue").Ref<boolean>>;
+    isActive: Readonly<import("vue").Ref<boolean>>;
+    isLoading: import("vue").ComputedRef<false | Readonly<import("vue").Ref<boolean>>>;
     error: import("vue").Ref<unknown>;
     cancel: () => void;
 };
