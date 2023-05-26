@@ -40,7 +40,7 @@
         <div class="warning-container-content">
           <span>Import at your own risk!</span>
           <span
-            >This coin doesn’t appear on the active token list.<br />
+            >This token doesn’t appear on the active token list.<br />
             Make sure this is the token that you want to trade.</span
           >
         </div>

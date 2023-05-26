@@ -2,7 +2,7 @@
   <ToolTip
       v-if="isNotDefaultCoin"
       position="bottom"
-      :tooltipText="'Warning: This coin may be unaudited or contain critical vulnerabilities'"
+      :tooltipText="'Warning: This token may be unaudited or contain critical vulnerabilities'"
   >
     <img
         class="token-alert"

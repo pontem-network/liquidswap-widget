@@ -4,7 +4,7 @@
     <div class="preset-list__item-content">
       <span>{{ preset.name }}</span>
       <span
-        >{{ preset.tokens?.length || 0 }} coins
+        >{{ preset.tokens?.length || 0 }} tokens
         <i
           class="pi pi-cog"
           aria-haspopup="true"

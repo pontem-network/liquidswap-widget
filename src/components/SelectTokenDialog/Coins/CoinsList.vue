@@ -33,7 +33,7 @@
     </div>
     <div class="dialog-step__divider" />
     <div v-if="importedCoins.length > 0" class="imported-coins">
-      <h2 class="title">Custom coins</h2>
+      <h2 class="title">Custom tokens</h2>
       <div class="list-wrap">
         <div
           v-for="(one, index) in importedCoins"
@@ -69,8 +69,8 @@
       </div>
     </div>
     <div v-else class="no-imported-coins">
-      <h2 class="title">No custom coins</h2>
-      <p class="description">Search by coin contract address</p>
+      <h2 class="title">No custom tokens</h2>
+      <p class="description">Search by token contract address</p>
     </div>
   </div>
   <ImportTokenDialog
