@@ -115,6 +115,7 @@
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
     />
+    <PriceImpactWarningDialog/>
   </div>
 </template>
 
@@ -348,6 +349,15 @@ function toggleSwap() {
 }
 
 function showSwapDialog() {
+  const isShowSwapWarningDialog =
+      swapStore.priceImpactState === 'warning' ||
+      swapStore.priceImpactState === 'alert';
+
+  if (isShowSwapWarningDialog) {
+    mainStore.showDialog('priceImpact');
+    return;
+  }
+
   mainStore.showDialog('swapConfirm');
 }
 

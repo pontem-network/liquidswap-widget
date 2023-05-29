@@ -119,6 +119,7 @@ export const useStore = createGlobalState(() => {
     connectWallet: false,
     invalidNetwork: false,
     swapConfirm: false,
+    priceImpact: false
   });
 
   function resetAccount() {
