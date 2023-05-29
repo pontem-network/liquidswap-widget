@@ -24,7 +24,8 @@
         >Cancel</PButton
         >
         <PButton
-            class="p-button-secondary button button_warning"
+            class="p-button-secondary button"
+            :class="[priceImpactState === 'warning' ? 'button_warning' : 'button_alert']"
             @click="onClickAction('swap')"
         >Swap</PButton
         >
@@ -37,8 +38,6 @@ import { computed } from 'vue';
 import PButton from 'primevue/button';
 import PDialog from 'primevue/dialog';
 import { useSwapStore , useStore} from "@/store";
-import { DialogHeader } from '@/components/DialogHeader';
-
 
 type IProps = {
   visible?: boolean;
@@ -49,6 +48,8 @@ const emits = defineEmits(['update:visible']);
 
 const swapStore = useSwapStore();
 const mainStore = useStore();
+
+const priceImpactState = computed(() => swapStore.priceImpactState);
 
 const priceImpact = computed(() => swapStore.priceImpact ? swapStore.priceImpact.toFixed(2) : '0.00');
 

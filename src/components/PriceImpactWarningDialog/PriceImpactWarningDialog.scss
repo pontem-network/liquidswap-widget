@@ -50,6 +50,13 @@
     width: 170px;
 
     &_warning {
+      background-color: #ee5d0c;
+
+      &:hover {
+        background-color: #ed5c0a !important;
+      }
+    }
+    &_alert {
       background-color: var(--accent-error);
 
       &:hover {
