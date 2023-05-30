@@ -1,0 +1,72 @@
+.price-impact {
+  .p-dialog-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.price-impact-dialog {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .warning-img {
+    margin-bottom: 38px;
+  }
+
+  .title {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 0;
+  }
+
+  .description {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: 0.44px;
+    color: var(--text-color);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    width: 170px;
+
+    &_warning {
+      background-color: #ee5d0c;
+
+      &:hover {
+        background-color: #ed5c0a !important;
+      }
+    }
+    &_alert {
+      background-color: var(--accent-error);
+
+      &:hover {
+        background-color: #d75050 !important;
+      }
+    }
+
+    @media screen and (max-width:768px) {
+      width: 150px;
+    }
+  }
+}
+

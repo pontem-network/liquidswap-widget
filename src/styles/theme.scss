@@ -441,3 +441,206 @@ p {
       rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;
   }
 }
+
+.p-button {
+  color: white;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 100px;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+
+  .p-button-label {
+    font-weight: 500;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &.p-button-secondary {
+    background: #43395b;
+    color: white;
+    border-width: 0px;
+    border-radius: 100px;
+
+    &:enabled:hover {
+      background: #483a6b;
+      color: white;
+    }
+
+    &:enabled:active {
+      background: #3c3257;
+      color: white;
+    }
+
+    &:enabled:focus {
+      box-shadow: none;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+    }
+  }
+
+  &:enabled:hover {
+    color: white;
+  }
+
+  &:enabled:active {
+    color: white;
+  }
+
+  &.p-button-primary {
+    position: relative;
+    border-width: 0px;
+    border-radius: 100px;
+    background-image: linear-gradient(90deg, #6e42ca 0%, #8d29c1 100%);
+    z-index: 1;
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(90deg, #6039b0 0%, #8d29c1 30.44%);
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(90deg, #8d6ad5 0%, #6f42ca 100%);
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &:active::after {
+      opacity: 1;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+
+  &:enabled:hover {
+    color: white;
+    background-color: #8d6ad5;
+  }
+
+  &:enabled:active {
+    color: white;
+    background-color: #8d6ad5;
+  }
+
+  &.p-button-warning_custom {
+    background-color: #ee5d0c;
+    background-image: linear-gradient(89.82deg, #e57106 0.08%, #ee5d0c 99.85%);
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(89.82deg, #e57106 0.08%, #ee5d0c 99.85%);
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(89.82deg, #ee5d0c 99.85%, #e57106 0.08%);
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &:active::after {
+      opacity: 1;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:enabled:hover {
+      color: white;
+      background-image: linear-gradient(89.82deg, #ee5d0c 99.85%, #e57106 0.08%);
+    }
+
+    &:enabled:active {
+      color: white;
+      background-image: linear-gradient(89.82deg, #ee5d0c 99.85%, #e57106 0.08%);
+    }
+  }
+
+  &.p-button-alert {
+    background-color: #C62828;
+    background-image: linear-gradient(89.82deg, #D75050 0.08%, #C62828 99.85%);
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(89.82deg, #D75050 0.08%, #C62828 99.85%);
+    ;
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(89.82deg, #C62828 99.85%, #D75050 0.08%);
+    ;
+      z-index: -1;
+      transition: all 0.25s ease-in-out;
+      opacity: 0;
+    }
+
+    &:active::after {
+      opacity: 1;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:enabled:hover {
+      color: white;
+      background-image: linear-gradient(89.82deg, #C62828 99.85%, #D75050 0.08%);
+    }
+
+    &:enabled:active {
+      color: white;
+      background-image: linear-gradient(89.82deg, #C62828 99.85%, #D75050 0.08%);
+    }
+  }
+}
