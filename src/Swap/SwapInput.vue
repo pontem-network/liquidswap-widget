@@ -47,7 +47,7 @@
             Loading balance ...
           </template>
           <template v-else>
-            <template v-if="tokenBalance.isExists.value">
+            <template v-if="tokenBalance.isExists.value || props.mode === 'from'">
               <InputLabelTemplate
                   :mode="mode"
                   :amount="amount"
@@ -63,6 +63,7 @@
                 v-else
                 position="bottom-left"
                 :tooltipText="'This token is not registered in your account. Before swap, you must register this token.'"
+                class="token-tooltip"
             >
               <span>
                 Token not registered
