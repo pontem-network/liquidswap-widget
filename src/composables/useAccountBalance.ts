@@ -73,6 +73,10 @@ export function useAccountBalance(
           isExists.value = true;
           balance.value = +resource.data.coin.value;
         }
+        else {
+          isExists.value = false;
+          balance.value = 0;
+        }
       }
     } catch (_e) {
       isExists.value = false;
