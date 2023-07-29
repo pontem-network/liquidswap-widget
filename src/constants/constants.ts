@@ -68,7 +68,10 @@ export const NETWORKS: Network[] = [
   },
 ];
 
+//process.env.VUE_APP_CORRECT_CHAIN='testnet';
 export const CORRECT_CHAIN = process.env.VUE_APP_CORRECT_CHAIN || 'mainnet';
+console.log('CORRECT_CHAIN', CORRECT_CHAIN);
+console.log('process.env', process.env);
 
 export const CORRECT_CHAIN_ID =
   process.env.VUE_APP_CORRECT_CHAIN === 'mainnet'

@@ -14,15 +14,7 @@
         !(tokenBalance.isFetching.value && tokenBalance.isFirstFetching.value)
       "
     >
-      <RegisterToken
-        v-if="view === 'register'"
-        :token="swap.toCurrency.token"
-        @close="onClose"
-        @success="onRegisterSuccess"
-        @reject="onRegisterRejected"
-      />
       <SwapConfirm
-        v-if="view === 'swap'"
         @close="onClose"
         @success="onSwapSuccess"
         @reject="onSwapRejected"

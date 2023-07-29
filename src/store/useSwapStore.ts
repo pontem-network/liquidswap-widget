@@ -14,6 +14,9 @@ import { useContractVersion } from '@/composables/useContractVersion';
 import { IStoredToken, TVersionType } from '@/types';
 import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/contracts';
 import { PontemWalletName } from "@pontem/aptos-wallet-adapter";
+import {Factory} from "@/store/ContractFee/lib/factory";
+import {SwapHelper} from "@/store/ContractFee/lib/swap_helper";
+import {CONTRACT_FEE} from "@/store/ContractFee/lib/constants";
 
 
 const DEFAULT_SLIPPAGE = 0.005;
@@ -51,6 +54,9 @@ export const useSwapStore = defineStore('swapStore', () => {
   const fee = ref(0); // integer
   const convertFee = ref(0); // float (in percents)
   const convertFeeAmount = ref(0); // float in from currency
+
+  const contractFee = ref(0); // float (in percents)
+  const contractFeeAmount = ref(0); // float in from currency
   const interactiveField = ref<'from' | 'to'>('from');
   const lastInteractiveField = ref<'from' | 'to'>('from');
   const convertError = ref<string>();
@@ -174,7 +180,9 @@ export const useSwapStore = defineStore('swapStore', () => {
       }
 
       try {
-        rate = await sdk.value.Swap.calculateRates({
+        const factory = new Factory(sdk.value.client);
+        const swapHelper = new SwapHelper(factory.fee_module, factory.swap, factory.sdk);
+        const {result, fee_numerator,} = await swapHelper.calculateRates({
           fromToken: from.token,
           toToken: to.token,
           interactiveToken: mode,
@@ -182,6 +190,8 @@ export const useSwapStore = defineStore('swapStore', () => {
           amount: mode === 'from' ? from.amount! : to.amount!,
           version: version.value as unknown as TVersionType
         });
+        rate = result;
+        contractFee.value = Number(fee_numerator)/100;
       } catch(_e) {
       }
 
@@ -216,10 +226,14 @@ export const useSwapStore = defineStore('swapStore', () => {
           .mul(decimalsMultiplier(tokensStore.tokens[to.token].decimals))
           .toFixed(0),
       );
+      contractFeeAmount.value =
+          from?.amount && from.amount > 0
+              ? from.amount * contractFee.value * 0.01
+              : 0;
       convertFee.value = (fee.value * 100) / DENOMINATOR;
       convertFeeAmount.value =
         from?.amount && from.amount > 0
-          ? from.amount * convertFee.value * 0.01
+          ? (from.amount - contractFeeAmount.value) * convertFee.value * 0.01
           : 0;
       if (!silent) {
         isUpdatingRate.value = false;
@@ -291,6 +305,10 @@ export const useSwapStore = defineStore('swapStore', () => {
     return 0;
   });
 
+  const slippageContractFeeAmount =  computed(() => lastInteractiveField.value === 'from'? contractFeeAmount.value : contractFee.value * slippageAmount.value * 0.01);
+
+  const slippageConvertFeeAmount = computed(() => lastInteractiveField.value === 'from'? convertFeeAmount.value : (slippageAmount.value - slippageContractFeeAmount.value) * convertFee.value * 0.01);
+
   const isPoolAbsence = computed(
     () =>
       !!from.token &&
@@ -306,7 +324,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const priceImpact = computed(() => {
     if (!from?.amount || !from.reserve || !to.reserve) return 0;
     const constantProduct = from.reserve * to.reserve;
-    const reserveToAfter = constantProduct / (from.reserve + from.amount);
+    const reserveToAfter = constantProduct / (from.reserve + from.amount - contractFeeAmount.value);
     const amountOut = to.reserve - reserveToAfter;
     const marketPrice = from.amount / amountOut;
     const midPrice = from.reserve / to.reserve;
@@ -350,6 +368,8 @@ export const useSwapStore = defineStore('swapStore', () => {
     convertRate,
     convertFee,
     convertFeeAmount,
+    contractFee,
+    contractFeeAmount,
     fromCurrency: from,
     interactiveField,
     isUpdatingRate,
@@ -357,6 +377,8 @@ export const useSwapStore = defineStore('swapStore', () => {
     networkId,
     slippage,
     slippageAmount,
+    slippageContractFeeAmount,
+    slippageConvertFeeAmount,
     slippageIsDefault,
     toCurrency: to,
     curve,

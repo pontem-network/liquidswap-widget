@@ -47,7 +47,8 @@
     "vue-tsc": "1.2.0"
   },
   "dependencies": {
-    "@metamask/jazzicon": "2.0.0",
+    "@mavensafe/momentum-safe-sdk": "^0.4.8",
+    "@metamask/jazzicon": "^2.0.0",
     "@pontem/aptos-wallet-adapter": "0.7.2",
     "@pontem/coins-registry": "2.1.8",
     "@pontem/liquidswap-sdk": "0.6.1",

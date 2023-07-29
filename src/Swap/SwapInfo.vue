@@ -50,7 +50,16 @@
           <span v-if="swap.isUpdatingRate"
           ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
           /></span>
-          <span v-else> {{ convertFeeAmount.formatted.value }}</span>
+          <span v-else> {{ slippageConvertFeeAmount.formatted.value }} x</span>
+        </div>
+        <div class="list__item">
+          <span>Contract Fee ({{ contractFee }}%)</span>
+          <span v-if="swap.isUpdatingRate">
+          <i class="pi pi-spin pi-spinner" style="font-size: 12px"/>
+        </span>
+          <span v-else>
+          {{ slippageContractFeeAmount.formatted.value }}
+        </span>
         </div>
       </div>
     </PAccordionTab>
@@ -76,15 +85,27 @@
       </div>
       <div class="list__item">
         <span>Fee ({{ convertFee }}%)</span>
-        <span v-if="swap.isUpdatingRate"
-        ><i class="pi pi-spin pi-spinner" style="font-size: 12px"
-        /></span>
+        <span v-if="swap.isUpdatingRate">
+          <i class="pi pi-spin pi-spinner" style="font-size: 12px"/>
+        </span>
         <span v-else>
           <span v-if="feeUSDEquivalent" class="secondary">
             ~{{ feeUSDEquivalent }}$
           </span>
-          {{ convertFeeAmount.formatted.value }}</span
-        >
+          {{ convertFeeAmount.formatted.value }}
+        </span>
+      </div>
+      <div class="list__item">
+        <span>Contract Fee ({{ contractFee }}%)</span>
+        <span v-if="swap.isUpdatingRate">
+          <i class="pi pi-spin pi-spinner" style="font-size: 12px"/>
+        </span>
+        <span v-else>
+          <span v-if="contractFeeUSDEquivalent" class="secondary">
+            ~{{ contractFeeUSDEquivalent }}$
+          </span>
+          {{ contractFeeAmount.formatted.value }}
+        </span>
       </div>
     </div>
   </div>
@@ -131,12 +152,28 @@ const slippageOutputTokens = useCurrencyFormat(slippageAmount, slippageToken);
 const convertRateTokens = useCurrencyFormat(convertRate, toToken, { useBridge: true });
 const convertFee = computed(() => swap.convertFee);
 const convertFeeAmount = useCurrencyFormat(
-  computed(() => swap.convertFeeAmount),
-  fromToken,
+    computed(() => swap.convertFeeAmount),
+    fromToken,
+);
+const slippageConvertFeeAmount = useCurrencyFormat(
+    computed(() => swap.slippageConvertFeeAmount),
+    fromToken,
+);
+
+const contractFee = computed(() => swap.contractFee);
+const contractFeeAmount = useCurrencyFormat(
+    computed(() => swap.contractFeeAmount),
+    fromToken,
+);
+
+const slippageContractFeeAmount = useCurrencyFormat(
+    computed(() => swap.slippageContractFeeAmount),
+    fromToken,
 );
 
 const feeUSDEquivalent = ref<string | undefined>(undefined);
 
+const contractFeeUSDEquivalent = ref<string | undefined>(undefined);
 
 const isToggled = ref(false);
 const activeIndex = computed({
@@ -159,6 +196,12 @@ watch(
           { useSuffix: false },
       );
 
+      const contractFeeAmountFmt = useCurrencyFormat(
+          computed(() => swap.contractFeeAmount),
+          fromToken,
+          { useSuffix: false },
+      );
+
       const price = await getTokenPrice(feeAmount.symbol.value);
       if (!price) return;
 
@@ -166,6 +209,12 @@ watch(
           +feeAmount.formatted.value,
           price,
       )?.toFixed(3);
+
+      contractFeeUSDEquivalent.value = getUSDEquivalent(
+          +contractFeeAmountFmt.formatted.value,
+          price,
+      )?.toFixed(3);
+
     },
     { immediate: true },
 );
