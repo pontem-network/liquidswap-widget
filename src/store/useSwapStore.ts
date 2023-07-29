@@ -16,7 +16,6 @@ import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/co
 import { PontemWalletName } from "@pontem/aptos-wallet-adapter";
 import {Factory} from "@/store/ContractFee/lib/factory";
 import {SwapHelper} from "@/store/ContractFee/lib/swap_helper";
-import {CONTRACT_FEE} from "@/store/ContractFee/lib/constants";
 
 
 const DEFAULT_SLIPPAGE = 0.005;

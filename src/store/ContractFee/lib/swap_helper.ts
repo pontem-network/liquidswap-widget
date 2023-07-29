@@ -16,12 +16,12 @@ export class SwapHelper {
         let contractFeeAmount = 0n;
         if (isSwapTo) {
             contractFeeAmount = FeeModule.swap_fee(fee_numerator, BigInt(params.amount.toFixed(0)));
-            adjustedparams.amount = new Decimal(params.amount).sub(new Decimal(fee_numerator.toString()));
+            adjustedparams.amount = new Decimal(params.amount).sub(new Decimal(contractFeeAmount.toString()));
         }
         let result = await this.sdk.Swap.calculateRates(adjustedparams);
 
         if(!isSwapTo) { // for swap into
-            contractFeeAmount = FeeModule.swap_into_fee(fee_numerator, BigInt(result));
+            contractFeeAmount = FeeModule.swap_into_fee(BigInt(result), fee_numerator);
             result = (BigInt(result) + contractFeeAmount).toString();
         }
 
