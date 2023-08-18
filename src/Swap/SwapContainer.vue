@@ -41,19 +41,20 @@
           <SwapInput mode="to" />
         </div>
         <div
-            v-if="tokensChosen && !fullCurveOfDefaultPool"
-            class="swap__row"
-            :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']">
+          v-if="tokensChosen && !fullCurveOfDefaultPool"
+          class="swap__row"
+          :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']"
+        >
           <PInlineMessage class="mt-1" :class="'curve-warning'" severity="warn"
-            >Caution: make sure the pair you are trading should be stable or
-            uncorrelated. i.e USDC/USDT is stable and USDC/BTC is
-            uncorrelated</PInlineMessage
+            >Caution: make sure the pair you are trading should be stable or uncorrelated. i.e USDC/USDT
+            is stable and USDC/BTC is uncorrelated</PInlineMessage
           >
         </div>
         <div
-            v-show="tokensChosen && !fullCurveOfDefaultPool"
-            class="swap__row"
-            :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']">
+          v-show="tokensChosen && !fullCurveOfDefaultPool"
+          class="swap__row"
+          :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']"
+        >
           <CurveSwitch />
         </div>
         <div
@@ -68,19 +69,14 @@
           <SwapInfo />
         </div>
         <div v-if="fullCurveOfDefaultPool" class="swap__row">
-          <CurveInfo :type="fullCurveOfDefaultPool" :version="version"/>
+          <CurveInfo :type="fullCurveOfDefaultPool" :version="version" />
         </div>
         <div v-show="canSwitchContract" class="swap__row -version">
           <ContractSwitch type="swap" />
         </div>
         <ReservesContainer type="swap" />
         <div class="swap__row">
-          <p-button
-            v-if="!connected"
-            type="submit"
-            tabindex="5"
-            class="swap__button is-connect"
-          >
+          <p-button v-if="!connected" type="submit" tabindex="5" class="swap__button is-connect">
             <span>Connect Wallet</span>
           </p-button>
           <p-button
@@ -96,14 +92,12 @@
         </div>
       </form>
       <div class="full_version">
-        <h4 class="full_version__header">
-          More features in full-size version
-        </h4>
+        <h4 class="full_version__header">More features in full-size version</h4>
         <p class="full_version__description">
           Go to the web dApp to add liquidity or stake LP tokens in farms
         </p>
         <a class="full_version__link" href="https://liquidswap.com" target="_blank">
-          <img class="full_version__img" src="./../assets/expand.svg">
+          <img class="full_version__img" src="./../assets/expand.svg" />
           <span>liquidswap.com</span>
         </a>
       </div>
@@ -115,7 +109,7 @@
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
     />
-    <PriceImpactWarningDialog/>
+    <PriceImpactWarningDialog />
   </div>
 </template>
 
@@ -131,7 +125,7 @@ import { ReservesContainer } from '@/components/ReservesContainer';
 import { TxSettingsDialog } from '@/components/TxSettingsDialog';
 import { ContractSwitch } from '@/components/ContractSwitch';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
-import { useStore, useSwapStore, useTokensStore, usePoolsStore } from '@/store';
+import { useStore, useSwapStore, usePoolsStore } from '@/store';
 import { d } from '@/utils/utils';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
@@ -141,19 +135,18 @@ import {
   VERSION_0,
   VERSION_0_5,
   CURVE_UNCORRELATED_V05,
-  CURVE_UNCORRELATED
+  CURVE_UNCORRELATED,
 } from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
-import { TVersionType } from "@/types";
+import { TCurveType, TVersionType } from '@/types';
+import { IPersistedPool } from '@/types/pools';
 
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
-const tokensStore = useTokensStore();
 
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
-const insideNativeWallet = computed(() => mainStore.insideNativeWallet.value);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
 const unstableCurve = computed(() => getCurve('uncorrelated', version.value));
@@ -175,46 +168,43 @@ const curveType = computed(() =>
 const fullCurveOfDefaultPool = computed(() => {
   // Now all known pools have version 0
   const isExistsDefaultPoolV0 = poolsStore.getCurveType(
-      swapStore.fromCurrency?.token,
-      swapStore.toCurrency?.token,
-      VERSION_0,
+    swapStore.fromCurrency?.token,
+    swapStore.toCurrency?.token,
+    VERSION_0,
   );
 
   const isExistsDefaultPoolV05 = poolsStore.getCurveType(
-      swapStore.fromCurrency?.token,
-      swapStore.toCurrency?.token,
-      VERSION_0_5,
+    swapStore.fromCurrency?.token,
+    swapStore.toCurrency?.token,
+    VERSION_0_5,
   );
 
   const hasDefaultPoolStableCurveV0 = [CURVE_STABLE, CURVE_STABLE_V05].includes(
-      '' + isExistsDefaultPoolV0,
+    '' + isExistsDefaultPoolV0,
   );
 
-  const hasDefaultPoolStableCurveV05 = [
-    CURVE_STABLE,
-    CURVE_STABLE_V05,
-  ].includes('' + isExistsDefaultPoolV05);
+  const hasDefaultPoolStableCurveV05 = [CURVE_STABLE, CURVE_STABLE_V05].includes(
+    '' + isExistsDefaultPoolV05,
+  );
 
-  const hasDefaultPoolUncorrelatedCurveV0 = [
-    CURVE_UNCORRELATED,
-    CURVE_UNCORRELATED_V05,
-  ].includes('' + isExistsDefaultPoolV0);
+  const hasDefaultPoolUncorrelatedCurveV0 = [CURVE_UNCORRELATED, CURVE_UNCORRELATED_V05].includes(
+    '' + isExistsDefaultPoolV0,
+  );
 
-  const hasDefaultPoolUncorrelatedCurveV05 = [
-    CURVE_UNCORRELATED,
-    CURVE_UNCORRELATED_V05,
-  ].includes('' + isExistsDefaultPoolV05);
+  const hasDefaultPoolUncorrelatedCurveV05 = [CURVE_UNCORRELATED, CURVE_UNCORRELATED_V05].includes(
+    '' + isExistsDefaultPoolV05,
+  );
 
   if (
-      (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
-      (hasDefaultPoolStableCurveV0 || hasDefaultPoolStableCurveV05)
+    (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
+    (hasDefaultPoolStableCurveV0 || hasDefaultPoolStableCurveV05)
   ) {
     return version.value === VERSION_0_5 ? CURVE_STABLE_V05 : CURVE_STABLE;
   }
 
   if (
-      (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
-      (hasDefaultPoolUncorrelatedCurveV0 || hasDefaultPoolUncorrelatedCurveV05)
+    (isExistsDefaultPoolV0 || isExistsDefaultPoolV05) &&
+    (hasDefaultPoolUncorrelatedCurveV0 || hasDefaultPoolUncorrelatedCurveV05)
   ) {
     return version.value === VERSION_0_5 ? CURVE_UNCORRELATED_V05 : CURVE_UNCORRELATED;
   }
@@ -223,41 +213,74 @@ const fullCurveOfDefaultPool = computed(() => {
 });
 
 watch([curveType, stableCurve, unstableCurve], () => {
-    if (curveType.value) {
-      swapStore.curve =
-          curveType.value === stableCurve.value || curveType.value === 'stable'
-          ? stableCurve.value
-          : unstableCurve.value;
-    }
-    else {
-      const shortName = getShortCurveFromFull(swapStore.curve);
-      swapStore.curve = getCurve(shortName, version.value);
-    }
-  },
-)
+  if (curveType.value) {
+    swapStore.curve =
+      curveType.value === stableCurve.value || curveType.value === 'stable'
+        ? stableCurve.value
+        : unstableCurve.value;
+  } else {
+    const shortName = getShortCurveFromFull(swapStore.curve);
+    swapStore.curve = getCurve(shortName, version.value);
+  }
+});
 
-const fromBalance = useCurrentAccountBalance(
-  computed(() => swapStore.fromCurrency?.token),
+watch(
+  () => [swapStore.fromCurrency.token, swapStore.toCurrency.token],
+  async ([newFrom, newTo], [oldFrom, oldTo]) => {
+    if (!newFrom || !newTo) return;
+
+    // If the pair of tokens is the same, we don't need to set the curve
+    if (oldFrom === newTo && oldTo == newFrom) {
+      return;
+    }
+
+    // need to reset the version when changing a pair of tokens
+    swapStore.version = VERSION_0;
+
+    let resultCurve: string | undefined;
+    let resultVersion: number = VERSION_0;
+    let resultPool: IPersistedPool | undefined;
+
+    for (const curveType of ['stable', 'unstable'] as TCurveType[]) {
+      for (const version of [VERSION_0_5, VERSION_0]) {
+        const curve = getCurve(curveType, version);
+        const pool = await poolsStore.getPool(newFrom, newTo, curve, version);
+
+        if (
+          !resultPool ||
+          ((pool?.reserveX ?? 0) > resultPool.reserveX && (pool?.reserveY ?? 0) > resultPool.reserveY)
+        ) {
+          resultPool = pool;
+          resultCurve = curve;
+          resultVersion = version;
+        }
+      }
+    }
+
+    /**
+     * Set uncorrelated pool version 0 as the default value.
+     * In this case, the user chooses the curve and version himself.
+     */
+    swapStore.curve = resultCurve;
+    swapStore.version = resultVersion;
+  },
 );
-const toBalance = useCurrentAccountBalance(
-  computed(() => swapStore.toCurrency?.token),
-);
+
+const fromBalance = useCurrentAccountBalance(computed(() => swapStore.fromCurrency?.token));
+const toBalance = useCurrentAccountBalance(computed(() => swapStore.toCurrency?.token));
 const txSettingsDialog = ref();
 const overlayAnchor = ref();
 
-const tokensChosen = computed(
-  () => !!swapStore.fromCurrency.token && !!swapStore.toCurrency.token,
-);
+const tokensChosen = computed(() => !!swapStore.fromCurrency.token && !!swapStore.toCurrency.token);
 const canSwitchContract = computed(() => {
   const isToTokenChosen = swapStore.toCurrency?.token;
 
   const isDefaultPool = !!fullCurveOfDefaultPool.value;
   const hasDefaultPoolStableCurve = [CURVE_STABLE_V05, CURVE_STABLE].includes(
-      '' + fullCurveOfDefaultPool.value,
+    '' + fullCurveOfDefaultPool.value,
   );
   const isPoolUnknown = fullCurveOfDefaultPool.value === false;
-  const canSwitch =
-      (isDefaultPool && hasDefaultPoolStableCurve) || isPoolUnknown;
+  const canSwitch = (isDefaultPool && hasDefaultPoolStableCurve) || isPoolUnknown;
 
   return isToTokenChosen && canSwitch;
 });
@@ -304,10 +327,7 @@ const buttonState = computed(() => {
     };
   }
 
-  if (
-    !toBalance.isExists.value &&
-    !(toBalance.isFetching.value && toBalance.isFirstFetching.value)
-  ) {
+  if (!toBalance.isExists.value && !(toBalance.isFetching.value && toBalance.isFirstFetching.value)) {
     return {
       disabled: false,
       text: `Register ${toBalance.symbol.value} and Swap`,
@@ -322,18 +342,16 @@ const buttonState = computed(() => {
 
 const priceImpactClass = computed(() => {
   return swapStore.priceImpactState === 'normal'
-      ? 'p-button-primary'
-      : swapStore.priceImpactState === 'warning'
-          ? 'p-button-warning_custom'
-          : 'p-button-alert';
+    ? 'p-button-primary'
+    : swapStore.priceImpactState === 'warning'
+    ? 'p-button-warning_custom'
+    : 'p-button-alert';
 });
 
 function submitForm(e: Event) {
   const isNextButton = (e.target as HTMLElement)?.enterKeyHint === 'next';
   const isSubmitDisabled = buttonState.value.disabled;
-  const cancelEvent = Boolean(
-    (isNextButton || isSubmitDisabled) && connected.value,
-  );
+  const cancelEvent = Boolean((isNextButton || isSubmitDisabled) && connected.value);
   if (cancelEvent) return;
 
   const handler = !connected.value ? onConnectWallet : showSwapDialog;
@@ -350,8 +368,7 @@ function toggleSwap() {
 
 function showSwapDialog() {
   const isShowSwapWarningDialog =
-      swapStore.priceImpactState === 'warning' ||
-      swapStore.priceImpactState === 'alert';
+    swapStore.priceImpactState === 'warning' || swapStore.priceImpactState === 'alert';
 
   if (isShowSwapWarningDialog) {
     mainStore.showDialog('priceImpact');

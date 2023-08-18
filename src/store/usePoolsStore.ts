@@ -9,16 +9,10 @@ import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
 import { IStorageBasic, TVersionType } from '@/types';
 import { getCurve, getResourcesAccount, getContractVersionFromCurve } from '@/utils/contracts';
 
-import {
-  getPoolLpInfoStr,
-  getPoolLpStr,
-  getPoolStr,
-  getTitleForPool,
-  destructCoinStorePoolStr,
-} from '@/utils/pools';
+import { getPoolLpInfoStr, getPoolLpStr, getPoolStr, getTitleForPool, destructCoinStorePoolStr } from '@/utils/pools';
 
 import { useStore } from './useStore';
-import {CurveType} from "@pontem/liquidswap-sdk/dist/tsc/types/aptos";
+import { CurveType } from '@pontem/liquidswap-sdk/dist/tsc/types/aptos';
 
 interface IStorage extends IStorageBasic {
   pools: IPersistedPool[];
@@ -44,12 +38,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   /**
    * To store added reserves
    */
-  const poolsStorage = useStorage<IStorage>(
-    'pontemPools',
-    { pools: [], version: 1 },
-    window.localStorage,
-    { writeDefaults: true },
-  );
+  const poolsStorage = useStorage<IStorage>('pontemPools', { pools: [], version: 1 }, window.localStorage, { writeDefaults: true });
 
   /**
    * Storage for all loaded pools
@@ -58,7 +47,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
   async function fetchPoolsList() {
     const pools = CoinsRegistry.getPoolsFor(CORRECT_CHAIN) as IPoolInfo[];
-    const mappedPools = pools.map(item => ({ ...item, curve: item.curve === 'unstable' ? 'uncorrelated' : item.curve }));
+    const mappedPools = pools.map((item) => ({ ...item, curve: item.curve === 'unstable' ? 'uncorrelated' : item.curve }));
     registerPools(mappedPools);
     fetchAndFillAPRs();
   }
@@ -132,15 +121,9 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     if (!mainStore.account.value?.address) return;
 
     const { networkId } = mainStore;
-    const resources = await aptos.getAccountResources(
-      mainStore.account.value.address,
-    );
+    const resources = await aptos.getAccountResources(mainStore.account.value.address);
     resources.forEach((element: any) => {
-      if (
-        element.type.indexOf('::stake::') !== -1 ||
-        element.type.indexOf('lp_coin') === -1
-      )
-        return;
+      if (element.type.indexOf('::stake::') !== -1 || element.type.indexOf('lp_coin') === -1) return;
       const [coinX, coinY, curveType] = destructCoinStorePoolStr(element.type);
       const lpVersion = getContractVersionFromCurve(curveType);
       const poolStr = getPoolStr(coinX, coinY, curveType, lpVersion);
@@ -170,10 +153,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
    * @param canClean
    * @returns
    */
-  function persistToStorage(
-    _pools: Record<string, IPersistedPool>,
-    canClean?: boolean,
-  ) {
+  function persistToStorage(_pools: Record<string, IPersistedPool>, canClean?: boolean) {
     const persistingKeys = Object.keys(_pools).filter((key) => {
       return _pools[key].addedX > 0 || _pools[key].addedY > 0;
     });
@@ -192,10 +172,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   async function fetchReserves(liquidityPool: string, pool: IPersistedPool, contract?: TVersionType) {
     const resourceAccount = getResourcesAccount(contract);
 
-    const response = await aptos.getAccountResource(
-      resourceAccount,
-      liquidityPool,
-    ) as unknown as Promise<Resource | undefined> | any;
+    const response = (await aptos.getAccountResource(resourceAccount, liquidityPool)) as unknown as Promise<Resource | undefined> | any;
 
     if (!response) return;
 
@@ -206,10 +183,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   async function fetchLp(lpCoin: string, pool: IPersistedPool, contract?: TVersionType) {
     try {
       const resourcesAccount = getResourcesAccount(contract);
-      const response = await aptos.getAccountResource(
-        resourcesAccount,
-        lpCoin,
-      )  as unknown as Promise<Resource | undefined> | any;
+      const response = (await aptos.getAccountResource(resourcesAccount, lpCoin)) as unknown as Promise<Resource | undefined> | any;
 
       if (!response || !response?.data?.supply?.vec[0]) return;
 
@@ -222,24 +196,15 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   const loadPool = async (pool: IPersistedPool) => {
     const { coinX, coinY, curve, contract } = pool;
     const curveStable = getCurve('stable', contract);
-    const curveType =
-      curve === 'stable' || curve === curveStable
-        ? curveStable
-        : getCurve('uncorrelated', contract);
+    const curveType = curve === 'stable' || curve === curveStable ? curveStable : getCurve('uncorrelated', contract);
 
     const liquidityPool = getPoolStr(coinX, coinY, curveType, contract);
     const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType, contract));
-    await Promise.all([
-      fetchReserves(liquidityPool, pool, contract),
-      fetchLp(lpCoinInfo, pool, contract),
-    ]);
+    await Promise.all([fetchReserves(liquidityPool, pool, contract), fetchLp(lpCoinInfo, pool, contract)]);
     return pool;
   };
 
-  async function registerPool(
-    pool: IPoolBase,
-    { rewrite = false, isDefault = false, lazy = true },
-  ) {
+  async function registerPool(pool: IPoolBase, { rewrite = false, isDefault = false, lazy = true }) {
     const { coinX, coinY, curve, networkId, contract } = pool as IPoolInfo;
 
     const isSorted = is_sorted(coinX, coinY);
@@ -255,7 +220,12 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
     let isPoolExist = false;
     try {
-      const response = await sdk.value.Swap.getLiquidityPoolResource({fromToken: sortedX, toToken: sortedY, curveType: curve as CurveType, version: contract});
+      const response = await sdk.value.Swap.getLiquidityPoolResource({
+        fromToken: sortedX,
+        toToken: sortedY,
+        curveType: curve as CurveType,
+        version: contract,
+      });
       if (response && response.liquidityPoolResource) {
         isPoolExist = true;
       }
@@ -275,9 +245,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     }
 
     if (isDefault && ['stable', 'uncorrelated'].includes(curve)) {
-      predefinedCurves[curve as 'stable' | 'uncorrelated'].add(
-        `${sortedX}-${sortedY}-${contract}`,
-      );
+      predefinedCurves[curve as 'stable' | 'uncorrelated'].add(`${sortedX}-${sortedY}-${contract}`);
     }
 
     const title = getTitleForPool(sortedX, sortedY);
@@ -295,7 +263,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       isDefault,
       contract,
     });
-
 
     poolsMap[liquidityPool] = persistedPool;
     const poolTitleKey = `${title}-${curve}-${contract}`;
@@ -345,35 +312,27 @@ export const usePoolsStore = defineStore('poolsStore', () => {
    * @param curve string
    * @returns Promise<IPersistedPool>
    */
-  const getPool = computed(
-    () =>
-      async (
-        coinX: string,
-        coinY: string,
-        curve: string,
-        contract?: TVersionType,
-      ): Promise<IPersistedPool> => {
-        const liquidityPool = getPoolStr(coinX, coinY, curve, contract);
-        let registeredPool = poolsMap[liquidityPool];
-        if (!registeredPool) {
-          const { networkId } = mainStore;
-          registeredPool = await registerPool(
-            {
-              coinX,
-              coinY,
-              curve,
-              networkId: networkId.value,
-              contract,
-            },
-            {
-              rewrite: true,
-              lazy: false,
-            },
-          ) as IPersistedPool;
-        }
-        return registeredPool;
-      },
-  );
+  const getPool = computed(() => async (coinX: string, coinY: string, curve: string, contract?: TVersionType): Promise<IPersistedPool> => {
+    const liquidityPool = getPoolStr(coinX, coinY, curve, contract);
+    let registeredPool = poolsMap[liquidityPool];
+    if (!registeredPool) {
+      const { networkId } = mainStore;
+      registeredPool = (await registerPool(
+        {
+          coinX,
+          coinY,
+          curve,
+          networkId: networkId.value,
+          contract,
+        },
+        {
+          rewrite: true,
+          lazy: false,
+        },
+      )) as IPersistedPool;
+    }
+    return registeredPool;
+  });
 
   const defaultPools = computed(() =>
     Object.keys(poolsMap)
@@ -389,21 +348,15 @@ export const usePoolsStore = defineStore('poolsStore', () => {
    * @param version - version of pools
    * @returns correct curve with correct moduleAddress according to version
    */
-  function getCurveType(
-    coinX?: string,
-    coinY?: string,
-    version?: number,
-  ): string | false {
+  function getCurveType(coinX?: string, coinY?: string, version?: number): string | false {
     if (!coinX || !coinY) return false;
-    const [sortedX, sortedY] = is_sorted(coinX, coinY)
-      ? [coinX, coinY]
-      : [coinY, coinX];
+    const [sortedX, sortedY] = is_sorted(coinX, coinY) ? [coinX, coinY] : [coinY, coinX];
     const tokenPair = `${sortedX}-${sortedY}-${version}`;
     return predefinedCurves.stable.has(tokenPair)
       ? getCurve('stable', version)
       : predefinedCurves.uncorrelated.has(tokenPair)
-        ? getCurve('uncorrelated', version)
-        : false;
+      ? getCurve('uncorrelated', version)
+      : false;
   }
 
   return {
