@@ -8,7 +8,7 @@ import {
   WalletName,
 } from '@pontem/aptos-wallet-adapter';
 
-import { VERSION_0, VERSION_0_5 } from "@/constants/constants";
+import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
 
 export type AptosCoinInfoResource = {
   decimals: string;
@@ -77,9 +77,7 @@ export interface IPoolExist {
   fromCoin: string;
   toCoin: string;
   curve: string;
-  version: TVersionType;
 }
 
-export type TStatusTransaction = "success" | "pending" | "error" | "rejected";
-
+export type TStatusTransaction = 'success' | 'pending' | 'error' | 'rejected';
 
