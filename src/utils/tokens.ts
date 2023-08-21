@@ -16,6 +16,7 @@ const TITLES: Record<string, string> = {
   wormhole: 'Wormhole',
   chainx: 'ChainX',
   celer: 'Celer',
+  multichain: 'Multichain',
 };
 
 export function titleForToken(token: IPersistedToken) {
