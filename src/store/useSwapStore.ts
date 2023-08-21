@@ -240,11 +240,11 @@ export const useSwapStore = defineStore('swapStore', () => {
     const slippagePercent = slippage.value * MULTIPLY;
 
     if (lastInteractiveField.value === 'from' && to.amount !== undefined) {
-      return version.value === VERSION_0_5 || curve.value === getCurve('uncorrelated', version.value)
+      return version.value === VERSION_0_5 || curve.value === getCurve('unstable', version.value)
         ? to.amount - (to.amount * slippagePercent) / MULTIPLY
         : to.amount - 1;
     } else if (lastInteractiveField.value === 'to' && from.amount !== undefined) {
-      return version.value === VERSION_0_5 || curve.value === getCurve('uncorrelated', version.value)
+      return version.value === VERSION_0_5 || curve.value === getCurve('unstable', version.value)
         ? from.amount + (from.amount * slippagePercent) / MULTIPLY
         : from.amount;
     }

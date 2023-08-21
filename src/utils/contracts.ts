@@ -69,7 +69,7 @@ export function getCurve(type: TCurveType, contract?: number): string {
     }
     return CURVE_UNCORRELATED_V05;
   }
-  if (type === 'uncorrelated') {
+  if (type === 'unstable') {
     return CURVE_UNCORRELATED;
   }
   return CURVE_STABLE;
@@ -81,7 +81,7 @@ export function getCurve(type: TCurveType, contract?: number): string {
  * @param type full type of curve
  * @returns short curve name
  */
-export function getShortCurveFromFull(type: string): TCurveType {
+export function getShortCurveFromFull(type: string): 'stable' | 'uncorrelated' {
   if (type === CURVE_STABLE || type === CURVE_STABLE_V05) return 'stable';
   if (type === CURVE_UNCORRELATED || type === CURVE_UNCORRELATED_V05) return 'uncorrelated';
   throw new Error('Wrong curve type passed');

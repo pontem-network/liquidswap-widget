@@ -196,7 +196,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   const loadPool = async (pool: IPersistedPool) => {
     const { coinX, coinY, curve, contract } = pool;
     const curveStable = getCurve('stable', contract);
-    const curveType = curve === 'stable' || curve === curveStable ? curveStable : getCurve('uncorrelated', contract);
+    const curveType = curve === 'stable' || curve === curveStable ? curveStable : getCurve('unstable', contract);
 
     const liquidityPool = getPoolStr(coinX, coinY, curveType, contract);
     const lpCoinInfo = getPoolLpInfoStr(getPoolLpStr(coinX, coinY, curveType, contract));
@@ -213,7 +213,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     const curveType = ['stable', 'uncorrelated'].includes(curve)
       ? curve === 'stable'
         ? getCurve('stable', contract)
-        : getCurve('uncorrelated', contract)
+        : getCurve('unstable', contract)
       : curve;
 
     const liquidityPool = getPoolStr(sortedX, sortedY, curveType, contract);
@@ -355,7 +355,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     return predefinedCurves.stable.has(tokenPair)
       ? getCurve('stable', version)
       : predefinedCurves.uncorrelated.has(tokenPair)
-      ? getCurve('uncorrelated', version)
+      ? getCurve('unstable', version)
       : false;
   }
 
