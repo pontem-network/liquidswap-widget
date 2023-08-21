@@ -55,7 +55,7 @@
           class="swap__row"
           :class="[mainStore.insideNativeWallet.value && 'swap__row--extra-padding']"
         >
-          <CurveSwitch />
+          <CurveSwitch :curve="swapStore.curve" :version="version" />
         </div>
         <div
           v-if="
@@ -149,7 +149,7 @@ const { account } = mainStore;
 const version = computed(() => swapStore.version);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
-const unstableCurve = computed(() => getCurve('uncorrelated', version.value));
+const unstableCurve = computed(() => getCurve('unstable', version.value));
 
 const connected = computed(() => Boolean(account.value));
 
@@ -220,7 +220,8 @@ watch([curveType, stableCurve, unstableCurve], () => {
         : unstableCurve.value;
   } else {
     const shortName = getShortCurveFromFull(swapStore.curve);
-    swapStore.curve = getCurve(shortName, version.value);
+    const adaptedShoerName = shortName === 'uncorrelated' ? 'unstable' : 'stable';
+    swapStore.curve = getCurve(adaptedShoerName, version.value);
   }
 });
 
@@ -244,7 +245,13 @@ watch(
     for (const curveType of ['stable', 'unstable'] as TCurveType[]) {
       for (const version of [VERSION_0_5, VERSION_0]) {
         const curve = getCurve(curveType, version);
-        const pool = await poolsStore.getPool(newFrom, newTo, curve, version);
+
+        let pool = undefined;
+        try {
+          pool = await poolsStore.getPool(newFrom, newTo, curve, version);
+        } catch (error) {
+          console.error('SwapContainer: getPool', error);
+        }
 
         if (
           !resultPool ||
