@@ -3,6 +3,7 @@ import { Ref, reactive, watch } from 'vue';
 import { ICreateToken, IPoolExist, TVersionType } from '@/types';
 import { useStore } from '@/store';
 import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
+import { getShortCurveFromFull } from '@/utils/contracts';
 
 type CurveType = 'stable' | 'uncorrelated';
 
@@ -46,14 +47,14 @@ export function usePoolExistence() {
     }
 
     poolExistenceMap[poolExistenceKey].isFetching = true;
+
+    const shortCurve = getShortCurveFromFull(params.curve);
     const res = await sdk.value.Swap.getLiquidityPoolResource({
       fromToken: params.fromCoin,
       toToken: params.toCoin,
-      curveType: params.curve as CurveType,
+      curveType: shortCurve as CurveType,
       version: contract == VERSION_0 ? VERSION_0 : VERSION_0_5,
     });
-
-    console.log('usePoolExistance: checkExistence:res', res);
 
     poolExistenceMap[poolExistenceKey].isFetching = false;
     return !!res.liquidityPoolResource;
@@ -69,7 +70,6 @@ export function usePoolExistence() {
       };
     }
     const res = await checkExistence(params, contract);
-    console.log('usePoolExistance: check:', poolExistenceMap, poolExistenceMap[poolExistenceKey], res);
     poolExistenceMap[poolExistenceKey].exists = res;
   }
 
@@ -86,7 +86,12 @@ export function usePoolExistence() {
     poolExistenceMap[poolExistenceKey].exists = false;
   }
 
-  function watchChanges(from: ICreateToken, to: ICreateToken, curve: Ref<CurveType>, version: Ref<TVersionType>) {
+  function watchChanges(
+    from: ICreateToken,
+    to: ICreateToken,
+    curve: Ref<CurveType>,
+    version: Ref<TVersionType>,
+  ) {
     watch(
       [from.token, to.token, curve.value, version.value],
       async () => {
