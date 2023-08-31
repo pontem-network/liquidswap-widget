@@ -38,7 +38,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const mainStore = useStore();
   const { sdk } = mainStore;
 
-  const curve = ref<string>();
+  const curve = ref<string>('stable');
 
   const stableSwapType = ref<'high' | 'normal'>('normal');
   const poolExistence = usePoolExistence();
