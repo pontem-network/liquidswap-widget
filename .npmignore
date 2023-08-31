@@ -3,7 +3,7 @@ node_modules
 /dist
 /docs
 /src
-
+/dist/src
 .env
 # local env files
 .env.local

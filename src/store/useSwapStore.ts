@@ -8,13 +8,12 @@ import { useStore } from '@/store/useStore';
 import { is_sorted, d, decimalsMultiplier } from '@/utils/utils';
 import { usePoolsStore, useTokensStore } from '@/store';
 import { getFromCache } from '@/utils/cache';
-import {DENOMINATOR, VERSION_0_5, VERSION_0, CURVE_STABLE, CURVE_STABLE_V05} from '@/constants/constants';
+import { DENOMINATOR, VERSION_0_5, VERSION_0 } from '@/constants/constants';
 import { usePoolExistence } from '@/composables/usePoolExistence';
 import { useContractVersion } from '@/composables/useContractVersion';
 import { IStoredToken, TVersionType } from '@/types';
 import { getCurve, getResourcesAccount, getShortCurveFromFull } from '@/utils/contracts';
-import { PontemWalletName } from "@pontem/aptos-wallet-adapter";
-
+import { PontemWalletName } from '@pontem/aptos-wallet-adapter';
 
 const DEFAULT_SLIPPAGE = 0.005;
 
@@ -31,7 +30,6 @@ export const useSwapStore = defineStore('swapStore', () => {
     amount: undefined,
     reserve: 0,
     usdEquivalent: undefined,
-
   });
 
   const { version } = useContractVersion();
@@ -40,7 +38,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   const mainStore = useStore();
   const { sdk } = mainStore;
 
-  const curve = ref<string>(getCurve('uncorrelated', version.value));
+  const curve = ref<string>('stable');
 
   const stableSwapType = ref<'high' | 'normal'>('normal');
   const poolExistence = usePoolExistence();
@@ -72,8 +70,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   });
 
   watch([tokensStore.tokens], () => {
-    from.token =
-      tokensStore.getToken(from.token)?.type || mainStore.defaultToken.value;
+    from.token = tokensStore.getToken(from.token)?.type || mainStore.defaultToken.value;
     to.token =
       from.token !== tokensStore.getToken(to.token)?.type
         ? tokensStore.getToken(to.token)?.type
@@ -83,7 +80,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   onMounted(() => resetState());
 
   function resetState() {
-    version.value = 0;
+    version.value = VERSION_0;
     from.token = mainStore.defaultToken.value;
     to.token = undefined;
     from.amount = undefined;
@@ -95,11 +92,7 @@ export const useSwapStore = defineStore('swapStore', () => {
     to.usdEquivalent = undefined;
   }
 
-  function convertToDecimals(
-    amt?: number,
-    fromToken?: string,
-    toToken?: string,
-  ) {
+  function convertToDecimals(amt?: number, fromToken?: string, toToken?: string) {
     if (!amt || !fromToken || !toToken) {
       return amt;
     }
@@ -129,7 +122,7 @@ export const useSwapStore = defineStore('swapStore', () => {
   }
 
   async function refetchRates(silent = false): Promise<void> {
-    if (from.token && to.token) {
+    if (from.token && to.token && curve.value) {
       lastInteractiveField.value = interactiveField.value;
       if (!silent) {
         isUpdatingRate.value = true;
@@ -137,9 +130,7 @@ export const useSwapStore = defineStore('swapStore', () => {
       const mode = lastInteractiveField.value;
 
       const isSorted = is_sorted(from.token, to.token);
-      const [fromToken, toToken] = isSorted
-        ? [from.token, to.token]
-        : [to.token, from.token];
+      const [fromToken, toToken] = isSorted ? [from.token, to.token] : [to.token, from.token];
 
       const resourceType = getPoolStr(fromToken, toToken, curve.value, version.value as TVersionType);
 
@@ -156,7 +147,6 @@ export const useSwapStore = defineStore('swapStore', () => {
         fee.value = response.data.fee;
         from.reserve = isSorted ? coinXReserve : coinYReserve;
         to.reserve = isSorted ? coinYReserve : coinXReserve;
-
       } catch (e) {
         from.reserve = 0;
         to.reserve = 0;
@@ -180,15 +170,12 @@ export const useSwapStore = defineStore('swapStore', () => {
           interactiveToken: mode,
           curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
           amount: mode === 'from' ? from.amount! : to.amount!,
-          version: version.value as unknown as TVersionType
+          version: version.value as unknown as TVersionType,
         });
-      } catch(_e) {
-      }
+      } catch (_e) {}
 
       convertError.value =
-        to.amount && to.reserve < to.amount
-          ? 'Insufficient funds in Liquidity Pool'
-          : undefined;
+        to.amount && to.reserve < to.amount ? 'Insufficient funds in Liquidity Pool' : undefined;
       if (d(rate).lessThanOrEqualTo(0) || !isFinite(Number(rate))) {
         if (!silent) {
           isUpdatingRate.value = false;
@@ -203,24 +190,15 @@ export const useSwapStore = defineStore('swapStore', () => {
         from.amount = +Number(Number(rate).toFixed(0));
       }
 
-      const toDec = d(to.amount).div(
-        decimalsMultiplier(tokensStore.tokens[to.token].decimals),
-      );
-      const fromDec = d(from.amount).div(
-        decimalsMultiplier(tokensStore.tokens[from.token].decimals),
-      );
+      const toDec = d(to.amount).div(decimalsMultiplier(tokensStore.tokens[to.token].decimals));
+      const fromDec = d(from.amount).div(decimalsMultiplier(tokensStore.tokens[from.token].decimals));
 
       convertRate.value = +Number(
-        toDec
-          .div(fromDec)
-          .mul(decimalsMultiplier(tokensStore.tokens[to.token].decimals))
-          .toFixed(0),
+        toDec.div(fromDec).mul(decimalsMultiplier(tokensStore.tokens[to.token].decimals)).toFixed(0),
       );
       convertFee.value = (fee.value * 100) / DENOMINATOR;
       convertFeeAmount.value =
-        from?.amount && from.amount > 0
-          ? from.amount * convertFee.value * 0.01
-          : 0;
+        from?.amount && from.amount > 0 ? from.amount * convertFee.value * 0.01 : 0;
       if (!silent) {
         isUpdatingRate.value = false;
       }
@@ -232,33 +210,20 @@ export const useSwapStore = defineStore('swapStore', () => {
 
   async function check() {
     if (!from?.token || !to?.token || !curve.value) return;
-    await poolExistence.check({
-      fromCoin: from.token,
-      toCoin: to.token,
-      curve: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
-      version: version.value as unknown as TVersionType,
-    });
+
+    await poolExistence.check(
+      {
+        fromCoin: from.token,
+        toCoin: to.token,
+        curve: curve.value,
+      },
+      version.value,
+    );
   }
 
   watchDebounced(
-    () => [
-      version,
-      from.amount,
-      from.reserve,
-      from.token,
-      to.amount,
-      to.reserve,
-      to.token,
-      curve
-    ],
-    async (_newState,_oldState) => {
-      // if we switch tokens to a new value
-      if (
-        predefinedCurve.value !== false &&
-        predefinedCurve.value === getCurve('uncorrelated', version.value)
-      ) {
-        version.value = VERSION_0;
-      }
+    () => [version, from.amount, from.reserve, from.token, to.amount, to.reserve, to.token, curve],
+    async (_changed) => {
       await check();
       refetchRates(false);
     },
@@ -275,33 +240,43 @@ export const useSwapStore = defineStore('swapStore', () => {
     const slippagePercent = slippage.value * MULTIPLY;
 
     if (lastInteractiveField.value === 'from' && to.amount !== undefined) {
-      return version.value === VERSION_0_5 ||
-      curve.value === getCurve('uncorrelated', version.value)
+      return version.value === VERSION_0_5 || curve.value === getCurve('unstable', version.value)
         ? to.amount - (to.amount * slippagePercent) / MULTIPLY
         : to.amount - 1;
-    } else if (
-      lastInteractiveField.value === 'to' &&
-      from.amount !== undefined
-    ) {
-      return version.value === VERSION_0_5 ||
-      curve.value === getCurve('uncorrelated', version.value)
+    } else if (lastInteractiveField.value === 'to' && from.amount !== undefined) {
+      return version.value === VERSION_0_5 || curve.value === getCurve('unstable', version.value)
         ? from.amount + (from.amount * slippagePercent) / MULTIPLY
         : from.amount;
     }
     return 0;
   });
 
+  /**
+   * Pool is absence
+   */
   const isPoolAbsence = computed(
-    () =>
+    (): boolean =>
       !!from.token &&
       !!to.token &&
-      !poolExistence.isFetching.value &&
-      !poolExistence.poolExists.value,
+      !poolExistence.isFetching(
+        {
+          fromCoin: from.token,
+          toCoin: to.token,
+          curve: curve.value ?? '',
+        },
+        version.value,
+      ) &&
+      !poolExistence.poolExists(
+        {
+          fromCoin: from.token,
+          toCoin: to.token,
+          curve: curve.value ?? '',
+        },
+        version.value,
+      ),
   );
 
-  const isBusy = computed(
-    () => poolExistence.isFetching || isUpdatingRate.value,
-  );
+  const isBusy = computed(() => poolExistence.isFetching || isUpdatingRate.value);
 
   const priceImpact = computed(() => {
     if (!from?.amount || !from.reserve || !to.reserve) return 0;
@@ -320,14 +295,11 @@ export const useSwapStore = defineStore('swapStore', () => {
     maximumFractionDigits: 2,
   });
 
-  const priceImpactFormatted = computed(() =>
-    formatter.format(priceImpact.value),
-  );
+  const priceImpactFormatted = computed(() => formatter.format(priceImpact.value));
 
   const priceImpactState = computed(() => {
     if (+priceImpactFormatted.value <= 10) return 'normal';
-    if (+priceImpactFormatted.value >= 10 && +priceImpactFormatted.value < 20)
-      return 'warning';
+    if (+priceImpactFormatted.value >= 10 && +priceImpactFormatted.value < 20) return 'warning';
     return 'alert';
   });
 

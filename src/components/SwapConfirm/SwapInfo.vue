@@ -78,7 +78,7 @@ const slippageAmount = computed(() => swapStore.slippageAmount);
 const hasSlippage = computed(
 () =>
     (version.value === VERSION_0 &&
-        swapStore.curve === getCurve('uncorrelated', version.value)) ||
+        swapStore.curve === getCurve('unstable', version.value)) ||
     version.value === VERSION_0_5,
 );
 
