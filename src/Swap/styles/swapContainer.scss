@@ -171,6 +171,7 @@
     font-size: 1.1rem;
     font-weight: 500;
     background: linear-gradient(90deg, #6E42CA 0%, #8D29C1 100%);
+    z-index: 0!important;
 
     &_warning {
       background: linear-gradient(89.82deg, #e57106 0.08%, #ee5d0c 99.85%);
