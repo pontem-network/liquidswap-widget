@@ -18,7 +18,7 @@ export declare function getCurve(type: TCurveType, contract?: number): string;
  * @param type full type of curve
  * @returns short curve name
  */
-export declare function getShortCurveFromFull(type: string): TCurveType;
+export declare function getShortCurveFromFull(type: string): 'stable' | 'uncorrelated';
 /**
  * Get Modules Account Address for a Contract Version
  *
