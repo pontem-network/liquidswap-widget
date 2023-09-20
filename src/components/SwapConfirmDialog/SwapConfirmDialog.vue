@@ -5,7 +5,7 @@
     :modal="true"
     :closable="false"
     :show-header="false"
-    :style="{ width: '400px', marginTop: '61px', marginBottom: 'auto' }"
+    :style="{ width: '400px', marginTop: 'auto', marginBottom: 'auto' }"
     position="top"
     class="stepped-dialog"
   >
