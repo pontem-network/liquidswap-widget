@@ -40,7 +40,7 @@ export const useSwapStore = defineStore('swapStore', () => {
 
   const curve = ref<string>('stable');
 
-  const stableSwapType = ref<'high' | 'normal'>('normal');
+  const stableSwapType = ref<'high' | 'normal'>('high');
   const poolExistence = usePoolExistence();
 
   const slippageIsDefault = ref(true);
