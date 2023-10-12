@@ -33,7 +33,6 @@
           </div>
         </div>
       </div>
-      <SwapGasSwitch />
       <SwapInfo />
     </div>
     <div class="dialog-step__footer mt-3">
@@ -58,7 +57,6 @@ import { useCurrencyFormat } from '@/composables/useCurrencyFormat';
 import { ANIMATION_PAUSE_TIME, LOADING_ANIMATION_TIME } from '@/constants/constants';
 import { useSwapStore, useTokensStore } from '@/store';
 import { computed, ref, watch } from 'vue';
-import SwapGasSwitch from './SwapGasSwitch.vue';
 import SwapInfo from './SwapInfo.vue';
 import { titleForTokenSymbol } from '@/utils/tokens';
 
