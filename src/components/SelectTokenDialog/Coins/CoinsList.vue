@@ -112,9 +112,11 @@ watch(addressImportStr, async () => {
     );
   }
   if (firstPart.split('::').length !== 3) return;
+  const tokenInfo = await tokensStore.getTokenInfo(addressImportStr.value);
+  if (!tokenInfo) return;
   tokenPreview.value = {
-    ...(await tokensStore.getTokenInfo(addressImportStr.value)),
-    logo: tokensStore.getLogoUrl(addressImportStr.value),
+    ...tokenInfo,
+    logo: tokensStore.getLogoUrl(addressImportStr.value, tokenInfo.source),
   };
 });
 

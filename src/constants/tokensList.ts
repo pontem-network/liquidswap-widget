@@ -25,6 +25,8 @@ import DlcLogo from '../assets/tokens/dlc.svg';
 import PontTokenLogo from '../assets/tokens/pont-token.svg';
 import MoveLogo from '../assets/tokens/move.svg';
 import ThlLogo from '../assets/tokens/thl.svg';
+import AmAPTLogo from '../assets/tokens/amamapt.png';
+import stAPTLogo from '../assets/tokens/amstapt.png';
 
 
 export const tokensList = [
@@ -135,7 +137,16 @@ export const tokensList = [
   {
     symbol: "thl",
     logo: ThlLogo
+  },
+  {
+    symbol: "amamapt",
+    logo: AmAPTLogo
+  },
+  {
+    symbol: "amstapt",
+    logo: stAPTLogo
   }
+
 ];
 
 export const knownTokens = [

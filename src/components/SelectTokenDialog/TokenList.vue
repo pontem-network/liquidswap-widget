@@ -260,7 +260,7 @@ watch(search, async (v, _) => {
     const tokenInfo = await tokensStore.getTokenInfo(search.value);
     importTokenPreview.value = tokenInfo && {
       ...tokenInfo,
-      logo: tokensStore.getLogoUrl(search.value),
+      logo: tokensStore.getLogoUrl(search.value, tokenInfo.source),
     };
   } else {
     importTokenPreview.value = null;

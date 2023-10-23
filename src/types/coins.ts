@@ -6,6 +6,7 @@ export type TCoinSource =
   // partners sources
   | 'aptoge'
   | 'argo'
+  | 'amnis'
   | 'celer'
   | 'chainx'
   | 'ditto'

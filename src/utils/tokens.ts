@@ -4,6 +4,7 @@ const PREFIXES: Record<string, string> = {
   // layerzero: 'lz',
   wormhole: 'wh',
   celer: 'cl',
+  amnis: 'am',
 };
 
 export function aliasForToken(token: IPersistedToken) {
@@ -17,6 +18,7 @@ const TITLES: Record<string, string> = {
   chainx: 'ChainX',
   celer: 'Celer',
   multichain: 'Multichain',
+  amnis: 'Amnis',
 };
 
 export function titleForToken(token: IPersistedToken) {
