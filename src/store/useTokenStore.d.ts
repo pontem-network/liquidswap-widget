@@ -19,7 +19,7 @@ export interface IPersistedTokenExtended extends IPersistedToken {
     title: string;
 }
 export declare const useTokensStore: import("pinia").StoreDefinition<"tokensStore", import("pinia")._UnwrapAll<Pick<{
-    getLogoUrl: ComputedRef<(symbol: string) => any>;
+    getLogoUrl: ComputedRef<(symbol: string, source: string | undefined) => any>;
     getToken: (type?: string) => IPersistedTokenExtended | undefined;
     tokens: Record<string, IPersistedTokenExtended>;
     token: ComputedRef<() => IPersistedToken | undefined>;
@@ -40,7 +40,7 @@ export declare const useTokensStore: import("pinia").StoreDefinition<"tokensStor
     isTokenVerified: (type: string) => boolean;
     fetchCoinsList: () => Promise<void>;
 }, "tokens" | "isReady">>, Pick<{
-    getLogoUrl: ComputedRef<(symbol: string) => any>;
+    getLogoUrl: ComputedRef<(symbol: string, source: string | undefined) => any>;
     getToken: (type?: string) => IPersistedTokenExtended | undefined;
     tokens: Record<string, IPersistedTokenExtended>;
     token: ComputedRef<() => IPersistedToken | undefined>;
@@ -61,7 +61,7 @@ export declare const useTokensStore: import("pinia").StoreDefinition<"tokensStor
     isTokenVerified: (type: string) => boolean;
     fetchCoinsList: () => Promise<void>;
 }, "getLogoUrl" | "token" | "importedTokens">, Pick<{
-    getLogoUrl: ComputedRef<(symbol: string) => any>;
+    getLogoUrl: ComputedRef<(symbol: string, source: string | undefined) => any>;
     getToken: (type?: string) => IPersistedTokenExtended | undefined;
     tokens: Record<string, IPersistedTokenExtended>;
     token: ComputedRef<() => IPersistedToken | undefined>;
