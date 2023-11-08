@@ -35,3 +35,19 @@ export function providerForToken(token: IPersistedToken) {
   const provider = TITLES[token.source] ?? '';
   return provider;
 }
+
+const PREFIXES_VALUES = Object.values(PREFIXES);
+
+export function formatAliasForToken(alias: string) {
+  if (!alias) {
+    return '';
+  }
+
+  for (const prefix of PREFIXES_VALUES) {
+    if (alias.startsWith(prefix)) {
+      return alias.substring(prefix.length);
+    }
+  }
+
+  return alias;
+}
