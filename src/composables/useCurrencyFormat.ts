@@ -1,7 +1,7 @@
 import { MaybeRef } from '@vueuse/core';
 import { ref, computed, isRef, unref, watchEffect } from 'vue';
 import { useTokensStore } from '@/store/useTokenStore';
-import {providerForToken} from "@/utils/tokens";
+import { providerForToken, formatAliasForToken } from "@/utils/tokens";
 
 const cutTrailingZerosFromString = (numberAsString: string) => {
   if (numberAsString.length === 1) return numberAsString;
@@ -115,7 +115,7 @@ export function useCurrencyFormat(
       ? tokensStore.getToken(unref(token) as string)
       : undefined;
 
-    return tokenEntity ? tokenEntity.alias : symbol.value;
+    return tokenEntity ? formatAliasForToken(tokenEntity.alias) : symbol.value;
   });
 
   const decimals = computed(() => {
