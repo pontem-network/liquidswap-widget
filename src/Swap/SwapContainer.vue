@@ -450,8 +450,8 @@ watch([curveType, stableCurve, unstableCurve], () => {
             : unstableCurve.value;
   } else {
     const shortName = getShortCurveFromFull(swapStore.curve);
-    const adaptedShoerName = shortName === 'uncorrelated' ? 'unstable' : 'stable';
-    swapStore.curve = getCurve(adaptedShoerName, version.value);
+    const adaptedShortName = shortName === 'uncorrelated' ? 'unstable' : 'stable';
+    swapStore.curve = getCurve(adaptedShortName, version.value);
   }
 });
 
