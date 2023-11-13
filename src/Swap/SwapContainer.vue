@@ -420,6 +420,7 @@ function onConnectWallet() {
 
 function toggleSwap() {
   swapStore.toggleCurrencies();
+  requireUpdateInput.value = undefined;
 }
 
 function showSwapDialog() {
