@@ -1,0 +1,14 @@
+.number-input {
+  position: relative;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  font-size: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  -webkit-appearance: none;
+}

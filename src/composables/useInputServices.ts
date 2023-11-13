@@ -12,6 +12,21 @@ export const getTokenDecimal = (token: string | undefined) => {
   return tokenEntity ? tokenEntity.decimals : 8;
 };
 
+/**
+ * return blockchain format of decimal amount
+ * @param amount
+ * @param decimal
+ * @returns
+ */
+export const getAmountInteger = (
+  amount: number | undefined,
+  decimal: number,
+) => {
+  if (amount === undefined) return;
+
+  return +d(amount).mul(decimalsMultiplier(decimal)).toFixed(0);
+};
+
 export const getAmountWithDecimal = (
   amount: number | undefined,
   decimal: number,

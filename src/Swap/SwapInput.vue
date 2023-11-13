@@ -7,28 +7,25 @@
   >
     <div class="swap-input__row">
       <div class="currency-input" :class="{ 'is-loading': isUpdating }">
-        <InputNumber
-          allow-empty
-          :model-value="amount"
-          :tabindex="isFrom ? 1 : 4"
-          class="currency-input__input"
-          placeholder="0.0"
-          :input-props="{
-            type: 'text',
-            inputmode: 'decimal',
-            pattern: '^[0-9]*[.,]?[0-9]*$',
-            autocomplete: 'off',
-            autocorrect: 'off',
-            spellcheck: 'false',
-          }"
-          locale="en-US"
-          :min="0"
-          :min-fraction-digits="0"
-          :max-fraction-digits="tokenDecimals"
-          @keyup="onInput"
-          @blur="onBlur"
+        <LSNumberInputAutoNumeric
+            :model-value="swapInputModel"
+            :max-decimals="tokenDecimals"
+            :should-be-updated-flag="shouldBeUpdatedFlag"
+            :minimum-value="'0'"
+            placeholder="0.0"
+            class="currency-input__input input-style"
+            inputmode="decimal"
+            pattern="^[0-9]*[.,]?[0-9]*$"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            :data-tid="`swap-input-${isFrom ? 'from' : 'to'}`"
+            @update:model-value="handleUpdateModelValue"
+            @input="handleInput"
+            @focus="handleFocus"
         />
         <ButtonToken
+          :data-tid="`swap-button-${isFrom ? 'from' : 'to'}`"
           :token-entity="tokenEntity"
           :tabindex="isFrom ? 1 : 2"
           @click="showSelectCurrencyModal"
@@ -84,27 +81,45 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, PropType, ref, watch } from 'vue';
 import { watchDebounced } from '@vueuse/core';
+
 import { useStore, useSwapStore, useTokensStore } from '@/store';
-import { SelectTokenDialog } from '@/components/SelectTokenDialog';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
-import { d, decimalsMultiplier } from '@/utils/utils';
-import { InputNumberBlurEvent } from 'primevue/inputnumber';
-import { splitValue } from '@/utils/utils';
-import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
-import InputNumber from 'primevue/inputnumber';
+import { getStoredTokenUsdEquivalent, getAmountWithDecimal, getAmountInteger, getTokenDecimal } from '@/composables/useInputServices';
+import { d } from '@/utils/utils';
+import { TokenFiledType } from '@/types/coins';
+import { IStoredToken } from '@/types';
+
+import { SelectTokenDialog } from '@/components/SelectTokenDialog';
+import { LSNumberInputAutoNumeric } from '@/components/LSNumberInput';
 import ToolTip from '@/components/ToolTip/Tooltip.vue';
 import { ButtonToken } from "@/components/ButtonToken";
 import InputLabelTemplate from "@/Swap/InputLabelTemplate.vue";
-import { getStoredTokenUsdEquivalent } from '@/composables/useInputServices';
+import { UnverifiedTokenDialog } from '@/components/UnverifiedTokenDialog';
 
-interface IProps {
-  mode: 'to' | 'from';
-}
+const props = defineProps({
+  mode: {
+    type: Object as PropType<TokenFiledType>,
+    required: true,
+  },
+  model: {
+    type: Object as PropType<IStoredToken>,
+    default: undefined,
+  },
+  shouldBeUpdatedFlag: {
+    type: Boolean,
+  },
+});
 
-const props = defineProps<IProps>();
-defineEmits(['update:currency', 'update:amount']);
+const emits = defineEmits([
+  'input:custom',
+  'keyup:custom',
+  'focus:custom',
+  'change:decimal-difference',
+  'click:max-balance',
+  'update:model',
+]);
 
 const mainStore = useStore();
 const swapStore = useSwapStore();
@@ -116,7 +131,10 @@ const usdEquivalentLoader = ref(false);
 const dialog = ref();
 const cautionAlert = ref();
 const token = computed(() => state.token);
-const secondaryToken = swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurrency'];
+
+const secondaryToken = computed(
+    () => swapStore[props.mode === 'to' ? 'fromCurrency' : 'toCurrency'],
+);
 
 const tokenBalance = useCurrentAccountBalance(token, { useSuffix: false });
 
@@ -128,64 +146,53 @@ const isFrom = computed(() => {
   return props.mode === 'from';
 });
 
-function onBlur(evt: InputNumberBlurEvent) {
-  const { spiltValue_, lastIndex } = splitValue(evt.value);
-  if (spiltValue_[1] && Number(spiltValue_[1][lastIndex]) === 0) {
-    return (state.amount = +d(Number(evt.value.replace(/,/g, '')))
-      .mul(decimalsMultiplier(tokenDecimals.value))
-      .toFixed(0));
-  }
-  return;
-}
+const amount = computed(() => {
+  if (state.amount === undefined || !tokenDecimals.value) return;
 
-function onInput(evt: KeyboardEvent) {
-  swapStore.interactiveField = props.mode;
-  const el = evt.target as HTMLInputElement;
-  if (el.value === undefined || el.value === null || el.value === '') {
-    state.amount = undefined;
-    return;
-  }
-  const { spiltValue_, lastIndex } = splitValue(el.value);
-  if (spiltValue_[1] && Number(spiltValue_[1][lastIndex]) === 0) {
-    return;
-  }
-
-  // replace comma with dot for ios
-  if (evt.key === ',' && el.value && !el.value.includes('.')) {
-    el.value += '.';
-  }
-
-  // improve responsiveness when ends with dot
-  if (el.value.slice(-1) === '.') {
-    return;
-  }
-
-  state.amount = +d(Number(el.value.replace(/,/g, '')))
-    .mul(decimalsMultiplier(tokenDecimals.value))
-    .toFixed(0);
-}
-
-function onClickMaxBalance() {
-  let balance = tokenBalance.balance.value;
-  if (state.token === mainStore.defaultToken.value) {
-    // Bind 7500 tokens for gas
-    balance = Math.max(balance - 7500, 0);
-  }
-
-  swapStore.interactiveField = props.mode;
-  state.amount = balance;
-}
+  return getAmountWithDecimal(state.amount, tokenDecimals.value);
+});
 
 const usdEquivalentFixed = computed(() => state.usdEquivalent?.toFixed(4));
 
-const amount = computed(() => {
-  if (state.amount === undefined || !tokenDecimals.value) {
-    return undefined;
+const tokenEntity = computed(() => {
+  if (state.token) {
+    return tokensStore.getToken(state.token);
   }
-  return +d(state.amount)
-    .div(decimalsMultiplier(tokenDecimals.value))
-    .toFixed(tokenDecimals.value);
+  return undefined;
 });
+
+const tokenDecimals = computed(() => {
+  if (!tokenEntity.value) return;
+  return getTokenDecimal(state.token);
+});
+
+const swapInputModel = computed({
+  get() {
+    if (
+        props.model?.amount === undefined ||
+        !props.model.token ||
+        !tokenEntity?.value
+    )
+      return 0;
+
+    const res = getAmountWithDecimal(
+        props.model.amount,
+        tokenEntity.value.decimals,
+    );
+
+    return res;
+  },
+  set(newValue: string) {
+    if (!tokenEntity?.value) return;
+
+    const model =
+        props.mode === 'from' ? swapStore.fromCurrency : swapStore.toCurrency;
+    const res = getAmountInteger(+newValue, tokenEntity.value.decimals);
+    model.amount = res;
+  },
+});
+
+//watchers
 
 watch(
   () => state.token,
@@ -207,21 +214,21 @@ watch(
     }
     const diff = currentDecimals - previousDecimals;
 
-    if (diff > 0) {
-      state.amount = +d(state.amount).mul(decimalsMultiplier(diff)).toFixed(0);
-    } else if (diff < 0) {
-      state.amount = +d(state.amount).div(decimalsMultiplier(diff)).toFixed(0);
-    }
+    const data = {
+      value: diff,
+      mode: props.mode,
+    };
+
+    emits('change:decimal-difference', data);
+
+    // if (diff > 0) {
+    //   state.amount = +d(state.amount).mul(decimalsMultiplier(diff)).toFixed(0);
+    // } else if (diff < 0) {
+    //   state.amount = +d(state.amount).div(decimalsMultiplier(diff)).toFixed(0);
+    // }
   },
   { flush: 'pre' },
 );
-
-const tokenEntity = computed(() => {
-  if (state.token) {
-    return tokensStore.getToken(state.token);
-  }
-  return undefined;
-});
 
 watchDebounced(
     () => [swapStore.fromCurrency.amount, swapStore.toCurrency.amount],
@@ -266,12 +273,38 @@ watchDebounced(
     },
 );
 
-const tokenDecimals = computed(() => {
-  return tokenEntity.value ? tokenEntity.value.decimals : 8;
-});
+/**
+ * This watcher is needed to track
+ * the status of the usdEquivalent calculation
+ * and expected rendering of the zone
+ * under the input.
+ */
+const isLabelStateEmpty = ref(true);
+watchDebounced(
+    () => [state.usdEquivalent],
+    () => (isLabelStateEmpty.value = !state.usdEquivalent),
+    {
+      maxWait: 5000,
+      debounce: 850,
+    },
+);
 
 function showSelectCurrencyModal() {
   dialog.value.show();
+}
+
+function onClickMaxBalance() {
+  let balance = tokenBalance.balance.value;
+  if (state.token === mainStore.defaultToken.value) {
+    // Bind 7500 tokens for gas
+    balance = Math.max(balance - 7500, 0);
+  }
+
+  const data = {
+    value: balance,
+    mode: props.mode,
+  };
+  emits('click:max-balance', data);
 }
 
 async function updateUsdEquivalents() {
@@ -302,5 +335,42 @@ async function updateUsdEquivalents() {
   swapStore.fromCurrency.usdEquivalent = await getStoredTokenUsdEquivalent(
       swapStore.fromCurrency,
   );
+}
+
+function handleFocus(event: FocusEvent) {
+  emits('focus:custom', event);
+}
+
+function handleInput(event: number | undefined) {
+  if (event !== undefined && event < 0) {
+    event = Math.abs(event);
+  }
+
+  const data = {
+    value: event,
+    mode: props.mode,
+  };
+
+  if (!props.model || !tokenDecimals.value) return;
+
+  swapInputModel.value = data.value;
+  swapStore.interactiveField = props.mode;
+  emits('input:custom', data);
+}
+
+
+function handleUpdateModelValue(event: number | undefined) {
+  if (event !== undefined && event < 0) {
+    event = Math.abs(event);
+  }
+
+  const data = {
+    value: event,
+    mode: props.mode,
+  };
+
+  if (!props.model || !tokenDecimals.value) return;
+
+  emits('update:model', data);
 }
 </script>

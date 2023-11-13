@@ -14,3 +14,6 @@ export type TCoinSource =
   | 'mojito'
   | 'tortuga'
   | 'wormhole';
+
+export type TokenFiledType = 'from' | 'to';
+

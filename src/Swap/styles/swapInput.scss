@@ -6,18 +6,9 @@
   &:hover {
     border: 1px solid rgba(#e5e4fa, 0.15);
   }
-
-  .balance {
-    color: #9897AC;
-    font-weight: 600;
-  }
-
-  .token-tooltip {
-    margin-left: auto;
-  }
 }
 
-.insufficient-input-reserves {
+.insufficient-reserves {
   border: 1px solid rgba(#e74c3c, 1) !important;
 }
 
@@ -26,11 +17,46 @@
   flex-direction: row;
 
   padding: 0 1rem 1rem;
-  font-size: 14px;
+  font-size: 15px;
   height: 38px;
 
   &__right {
     margin-left: auto;
+  }
+
+  &__both {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__text_secondary {
+    color: var(--text-color-secondary);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  &__text_loaded {
+    opacity: 0;
+    animation: fade 0.75s forwards;
+  }
+
+  &_empty {
+    display: none;
+  }
+
+  &__tooltip-title {
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
 
@@ -41,20 +67,7 @@
   align-items: center;
   justify-content: space-between;
 
-  &.is-loading {
-    .currency-input__input {
-      .p-inputtext {
-        color: var(--surface-400) !important;
-
-        ::placeholder {
-          color: var(--surface-400) !important;
-        }
-      }
-    }
-  }
-
   &__input {
-    display: inline-flex;
     position: relative;
     font-weight: 500;
     outline: none;
@@ -66,37 +79,17 @@
     text-overflow: ellipsis;
     appearance: textfield;
     -webkit-appearance: none;
-
-    .p-inputtext {
-      background: transparent;
-      -webkit-appearance: none;
-      border: 0;
-      padding: 1rem 0 1rem 1rem;
-      font-size: 21px;
-      box-shadow: none;
-      color: var(--surface-0) !important;
-      width: 0;
-      flex: 1 1 auto;
-      letter-spacing: -0.13px;
-      line-height: 33px;
-
-      ::placeholder {
-        color: var(--surface-400);
-      }
-
-      &:focus {
-        box-shadow: none;
-      }
-    }
   }
 
   &__select {
-    font-size: 15px;
-    height: 2.4rem;
+    // .currency-input__select
+    font-size: 16px;
+    height: 3rem;
     padding: 0 12px;
     box-shadow: rgb(0 0 0 / 8%) 0 6px 10px;
     background: linear-gradient(90deg, #016875 0%, #04b78a 100%);
     border: none;
+    border-radius: 12px;
     color: white;
 
     &:hover {
@@ -123,5 +116,24 @@
         background: #16162a !important;
       }
     }
+
+    .pi {
+      margin-left: auto;
+    }
+  }
+}
+
+.input-style {
+  background: transparent;
+  padding: 1rem;
+
+  &:hover {
+    border: none;
+  }
+  &:active {
+    border: none;
+  }
+  &:focus {
+    border: none;
   }
 }
