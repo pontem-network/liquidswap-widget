@@ -34,11 +34,35 @@
           </div>
         </div>
         <div class="swap__row">
-          <SwapInput mode="from" />
+          <SwapInput
+              mode="from"
+              :model="fromCurrency"
+              :should-be-updated-flag="requireUpdateFromInput"
+              @change:decimal-difference="
+                setAmountByDecimalDifference($event, 'from')
+              "
+              @update:model="debouncedUpdateModelValue($event, 'from')"
+              @click:max-balance="handleMaxBalance($event, 'from')"
+              @focus:custom="setLocalLastChanges('from')"
+              @input:custom="handleInput"
+          />
+<!--          <SwapInput mode="from" />-->
         </div>
         <InputToggle :on-click="toggleSwap" />
         <div class="swap__row">
-          <SwapInput mode="to" />
+          <SwapInput
+              mode="to"
+              :model="toCurrency"
+              :should-be-updated-flag="requireUpdateToInput"
+              @change:decimal-difference="
+                setAmountByDecimalDifference($event, 'to')
+              "
+              @update:model="debouncedUpdateModelValue($event, 'to')"
+              @click:max-balance="handleMaxBalance($event, 'to')"
+              @focus:custom="setLocalLastChanges('to')"
+              @input:custom="handleInput"
+          />
+<!--          <SwapInput mode="to" />-->
         </div>
         <div
           v-if="tokensChosen && !fullCurveOfDefaultPool"
@@ -117,6 +141,9 @@
 import { computed, ref, watch } from 'vue';
 import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
+import { storeToRefs } from 'pinia';
+import { useDebounceFn } from '@vueuse/core';
+
 
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
@@ -126,9 +153,10 @@ import { TxSettingsDialog } from '@/components/TxSettingsDialog';
 import { ContractSwitch } from '@/components/ContractSwitch';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
 import { useStore, useSwapStore, usePoolsStore } from '@/store';
-import { d } from '@/utils/utils';
+import { d, decimalsMultiplier } from '@/utils/utils';
 import SwapInfo from './SwapInfo.vue';
 import SwapInput from './SwapInput.vue';
+import { getAmountInteger, getTokenDecimal } from '@/composables/useInputServices';
 import {
   CURVE_STABLE_V05,
   CURVE_STABLE,
@@ -138,20 +166,37 @@ import {
   CURVE_UNCORRELATED,
 } from '@/constants/constants';
 import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
-import { TCurveType, TVersionType } from '@/types';
+import { TokenFiledType } from '@/types/coins';
 import { IPersistedPool } from '@/types/pools';
+import { TCurveType, TVersionType, TCustomEvent } from '@/types';
+
 
 const mainStore = useStore();
 const poolsStore = usePoolsStore();
 const swapStore = useSwapStore();
 
+const requireUpdateInput = ref<TokenFiledType>();
+
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
+const { fromCurrency, toCurrency } = storeToRefs(swapStore);
 
 const stableCurve = computed(() => getCurve('stable', version.value));
 const unstableCurve = computed(() => getCurve('unstable', version.value));
 
 const connected = computed(() => Boolean(account.value));
+
+const requireUpdateFromInput = computed(() => {
+  return (
+      requireUpdateInput.value == 'from' || requireUpdateInput.value == undefined
+  );
+});
+
+const requireUpdateToInput = computed(() => {
+  return (
+      requireUpdateInput.value == 'to' || requireUpdateInput.value == undefined
+  );
+});
 
 const curveType = computed(() =>
   poolsStore.getCurveType(
@@ -212,66 +257,70 @@ const fullCurveOfDefaultPool = computed(() => {
   return false;
 });
 
-watch([curveType, stableCurve, unstableCurve], () => {
-  if (curveType.value) {
-    swapStore.curve =
-      curveType.value === stableCurve.value || curveType.value === 'stable'
-        ? stableCurve.value
-        : unstableCurve.value;
-  } else {
-    const shortName = getShortCurveFromFull(swapStore.curve);
-    const adaptedShoerName = shortName === 'uncorrelated' ? 'unstable' : 'stable';
-    swapStore.curve = getCurve(adaptedShoerName, version.value);
-  }
-});
-
-watch(
-  () => [swapStore.fromCurrency.token, swapStore.toCurrency.token],
-  async ([newFrom, newTo], [oldFrom, oldTo]) => {
-    if (!newFrom || !newTo) return;
-
-    // If the pair of tokens is the same, we don't need to set the curve
-    if (oldFrom === newTo && oldTo == newFrom) {
-      return;
-    }
-
-    // need to reset the version when changing a pair of tokens
-    swapStore.version = VERSION_0;
-
-    let resultCurve: string | undefined;
-    let resultVersion: number = VERSION_0;
-    let resultPool: IPersistedPool | undefined;
-
-    for (const curveType of ['stable', 'unstable'] as TCurveType[]) {
-      for (const version of [VERSION_0_5, VERSION_0]) {
-        const curve = getCurve(curveType, version);
-
-        let pool = undefined;
-        try {
-          pool = await poolsStore.getPool(newFrom, newTo, curve, version);
-        } catch (error) {
-          console.error('SwapContainer: getPool', error);
-        }
-
-        if (
-          !resultPool ||
-          ((pool?.reserveX ?? 0) > resultPool.reserveX && (pool?.reserveY ?? 0) > resultPool.reserveY)
-        ) {
-          resultPool = pool;
-          resultCurve = curve;
-          resultVersion = version;
-        }
-      }
-    }
-
-    /**
-     * Set uncorrelated pool version 0 as the default value.
-     * In this case, the user chooses the curve and version himself.
-     */
-    swapStore.curve = resultCurve;
-    swapStore.version = resultVersion;
-  },
+const fromTokenDecimal = computed(() =>
+    getTokenDecimal(fromCurrency.value.token),
 );
+const toTokenDecimal = computed(() => getTokenDecimal(toCurrency.value.token));
+
+function setAmountByDecimalDifference(
+    event: TCustomEvent,
+    _type: TokenFiledType,
+) {
+  const { value: diff, mode } = event;
+  if (diff === undefined || mode === undefined) return;
+
+  const model = _type == 'from' ? fromCurrency : toCurrency;
+  if (diff > 0) {
+    model.value.amount = +d(model.value.amount)
+        .mul(decimalsMultiplier(diff))
+        .toFixed(0);
+  } else if (diff < 0) {
+    model.value.amount = +d(model.value.amount)
+        .div(decimalsMultiplier(diff))
+        .toFixed(0);
+  }
+}
+
+const debouncedUpdateModelValue = useDebounceFn(handleUpdateModelAmount, 2000);
+
+function handleUpdateModelAmount(event: TCustomEvent, type: TokenFiledType) {
+  swapStore.interactiveField = type;
+
+  const tokenDecimals =
+      type == 'from' ? fromTokenDecimal.value : toTokenDecimal.value;
+  const tokenModel = type == 'from' ? fromCurrency : toCurrency;
+
+  const { value } = event;
+
+  if (!tokenDecimals) return;
+
+  const amount = getAmountInteger(value, tokenDecimals);
+  tokenModel.value.amount = amount;
+}
+
+function handleMaxBalance(event: TCustomEvent, type: TokenFiledType) {
+  requireUpdateInput.value = undefined;
+
+  const { value } = event;
+  const decimal =
+      type == 'from' ? fromTokenDecimal.value : toTokenDecimal.value;
+
+  const formattedBalance = +d(value)
+      .div(decimalsMultiplier(decimal))
+      .toFixed(decimal);
+
+  event.value = formattedBalance;
+
+  handleUpdateModelAmount(event, type);
+}
+
+function setLocalLastChanges(type: TokenFiledType) {
+  requireUpdateInput.value = type;
+}
+
+function handleInput(event: TCustomEvent) {
+  requireUpdateInput.value = event.mode == 'from' ? 'to' : 'from';
+}
 
 const fromBalance = useCurrentAccountBalance(computed(() => swapStore.fromCurrency?.token));
 const toBalance = useCurrentAccountBalance(computed(() => swapStore.toCurrency?.token));
@@ -371,6 +420,7 @@ function onConnectWallet() {
 
 function toggleSwap() {
   swapStore.toggleCurrencies();
+  requireUpdateInput.value = undefined;
 }
 
 function showSwapDialog() {
@@ -390,4 +440,67 @@ function openSettingsDialog() {
 }
 
 swapStore.check();
+
+//watchers
+
+watch([curveType, stableCurve, unstableCurve], () => {
+  if (curveType.value) {
+    swapStore.curve =
+        curveType.value === stableCurve.value || curveType.value === 'stable'
+            ? stableCurve.value
+            : unstableCurve.value;
+  } else {
+    const shortName = getShortCurveFromFull(swapStore.curve);
+    const adaptedShortName = shortName === 'uncorrelated' ? 'unstable' : 'stable';
+    swapStore.curve = getCurve(adaptedShortName, version.value);
+  }
+});
+
+watch(
+    () => [swapStore.fromCurrency.token, swapStore.toCurrency.token],
+    async ([newFrom, newTo], [oldFrom, oldTo]) => {
+      if (!newFrom || !newTo) return;
+
+      // If the pair of tokens is the same, we don't need to set the curve
+      if (oldFrom === newTo && oldTo == newFrom) {
+        return;
+      }
+
+      // need to reset the version when changing a pair of tokens
+      swapStore.version = VERSION_0;
+
+      let resultCurve: string | undefined;
+      let resultVersion: number = VERSION_0;
+      let resultPool: IPersistedPool | undefined;
+
+      for (const curveType of ['stable', 'unstable'] as TCurveType[]) {
+        for (const version of [VERSION_0_5, VERSION_0]) {
+          const curve = getCurve(curveType, version);
+
+          let pool = undefined;
+          try {
+            pool = await poolsStore.getPool(newFrom, newTo, curve, version);
+          } catch (error) {
+            console.error('SwapContainer: getPool', error);
+          }
+
+          if (
+              !resultPool ||
+              ((pool?.reserveX ?? 0) > resultPool.reserveX && (pool?.reserveY ?? 0) > resultPool.reserveY)
+          ) {
+            resultPool = pool;
+            resultCurve = curve;
+            resultVersion = version;
+          }
+        }
+      }
+
+      /**
+       * Set uncorrelated pool version 0 as the default value.
+       * In this case, the user chooses the curve and version himself.
+       */
+      swapStore.curve = resultCurve;
+      swapStore.version = resultVersion;
+    },
+);
 </script>

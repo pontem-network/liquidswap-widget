@@ -307,10 +307,10 @@
     react-dom "^18.X.X || 17.X.X"
     vue "3.2.40"
 
-"@pontem/coins-registry@2.1.24":
-  version "2.1.24"
-  resolved "https://registry.yarnpkg.com/@pontem/coins-registry/-/coins-registry-2.1.24.tgz#b63087217926521c9afa08d8d071b661dcb83a17"
-  integrity sha512-A/FgtPeISsF9KVcbTSGelL2NDFokCci9r1A4U9Zrefjs768qsc1CeZT/IF6CG6CiNdVRnV7S/nEdms/2137DMg==
+"@pontem/coins-registry@2.1.27":
+  version "2.1.27"
+  resolved "https://registry.yarnpkg.com/@pontem/coins-registry/-/coins-registry-2.1.27.tgz#41b533d9c9b0f1d6db32ad8c3607e65894805add"
+  integrity sha512-/NPgSmv0CQkhLkbfQKr2o5iRQDluNbPlHxoR1Z5LXrMoJrBVV/3sdX8JNDou7bdhGE6iMpRXN594kOJyGsAGAQ==
 
 "@pontem/liquidswap-sdk@0.6.1":
   version "0.6.1"
@@ -834,6 +834,11 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
+
+autonumeric@4.10.0:
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/autonumeric/-/autonumeric-4.10.0.tgz#e6eef677ceb2211b72695767c057b3c03e009435"
+  integrity sha512-OtRqsHe+Y/U1Tqga484+FCkFtNixS9XrJBcJkBZzhOyVDGQkZ4aNwTtuAwRTlpFIwEdfgTDE/d0HLwDtWL+9/A==
 
 axios@0.27.2, axios@^0.27.2:
   version "0.27.2"

@@ -9,6 +9,7 @@ import {
 } from '@pontem/aptos-wallet-adapter';
 
 import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
+import { TokenFiledType } from './coins';
 
 export type AptosCoinInfoResource = {
   decimals: string;
@@ -41,8 +42,6 @@ export interface IWallet {
     | typeof MsafeWalletAdapter;
   options?: any;
 }
-
-// export type TCurveType = 'uncorrelated' | 'stable' | 'selectable';
 
 export type TCurveType = 'unstable' | 'stable';
 
@@ -82,4 +81,10 @@ export interface IPoolExist {
 }
 
 export type TStatusTransaction = 'success' | 'pending' | 'error' | 'rejected';
+
+export type TCustomEvent = {
+  value: number | undefined;
+  mode: TokenFiledType;
+  lockForUpdate: boolean;
+};
 
