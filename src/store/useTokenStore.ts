@@ -17,8 +17,6 @@ import { APTOS, CORRECT_CHAIN_ID } from '@/constants/constants';
 import { useStore } from '@/store/useStore';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';
-import { tokensList } from "@/constants/tokensList";
-
 
 export interface IPersistedToken {
   type: string;
@@ -28,10 +26,12 @@ export interface IPersistedToken {
   name: string;
   address?: string;
   logoURI?: string;
+  logo_url?: string;
   verified?: boolean;
   source: TCoinSource;
   order?: number;
   caution?: boolean;
+  unsafe?: boolean;
 }
 
 export interface IPersistedTokenExtended extends IPersistedToken {
@@ -166,7 +166,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
     tokens[token.type].decimals = +resource.data.decimals;
     tokens[token.type].alias = aliasForToken(token);
     tokens[token.type].title = titleForToken(token);
-    tokens[token.type].logo = getLogoUrl.value(resource.data.symbol, resource.data.source);
+    tokens[token.type].logo = token.logo_url || '';
 
     return tokens[token.type];
   };
@@ -174,21 +174,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
   const token: ComputedRef<() => IPersistedToken | undefined> = computed(
     () => (type?: string) => type ? tokens[type] : undefined,
   );
-
-  const getLogoUrl = computed(() => {
-
-    return (symbol: string, source: string | undefined) => {
-
-      const prefix = (source && PROVIDER_TO_SYMBOL_PREFIX[source]) ?? '';
-
-      try {
-        const token = tokensList.find(token => token.symbol === `${prefix}${symbol.toLowerCase()}`);
-        return token?.logo as any;
-      } catch (_e) {
-        return undefined;
-      }
-    };
-  });
 
   /**
    * Get extended token object
@@ -211,6 +196,10 @@ export const useTokensStore = defineStore('tokensStore', () => {
       return tokens[type];
     }
 
+    if (token?.unsafe) {
+      return tokens[type];
+    }
+
     tokens[type] = {
       type,
       chainId: token.chainId, // *
@@ -222,7 +211,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       order: token.order || 1000,
       alias: aliasForToken(token),
       title: titleForToken(token),
-      logo: getLogoUrl.value(token.symbol, token.source),
+      logo: token.logo_url || '',
     };
 
     return tokens[type];
@@ -353,7 +342,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
   );
 
   return {
-    getLogoUrl,
     getToken,
     tokens,
     token,

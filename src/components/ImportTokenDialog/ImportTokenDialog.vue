@@ -119,7 +119,6 @@ async function getToken() {
   const tokenInfo = await tokensStore.getTokenInfo(props.token);
   tokenPreview.value = tokenInfo && {
     ...tokenInfo,
-    logo: await tokensStore.getLogoUrl(props.token, tokenInfo.source),
     address: firstPart.split('::')[0],
   };
 }
