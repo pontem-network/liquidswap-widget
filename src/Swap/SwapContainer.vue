@@ -144,7 +144,6 @@ import PButton from 'primevue/button';
 import { storeToRefs } from 'pinia';
 import { useDebounceFn } from '@vueuse/core';
 
-
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
 import { InputToggle } from '@/components/InputToggle';
@@ -169,6 +168,7 @@ import { getCurve, getShortCurveFromFull } from '@/utils/contracts';
 import { TokenFiledType } from '@/types/coins';
 import { IPersistedPool } from '@/types/pools';
 import { TCurveType, TVersionType, TCustomEvent } from '@/types';
+import { DOODOO } from '@/constants/constants';
 
 
 const mainStore = useStore();
@@ -493,6 +493,15 @@ watch(
             resultVersion = version;
           }
         }
+      }
+
+      // FIXME: need to do LS-1609 - coin registry pool priority
+      if (
+          swapStore.toCurrency?.token === DOODOO ||
+          swapStore.fromCurrency?.token === DOODOO
+      ) {
+        resultCurve = 'unstable';
+        resultVersion = VERSION_0_5;
       }
 
       /**
