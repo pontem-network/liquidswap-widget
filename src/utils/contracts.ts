@@ -69,7 +69,7 @@ export function getCurve(type: TCurveType, contract?: number): string {
     }
     return CURVE_UNCORRELATED_V05;
   }
-  if (type === 'unstable') {
+  if (type === 'unstable' || type === 'uncorrelated') {
     return CURVE_UNCORRELATED;
   }
   return CURVE_STABLE;

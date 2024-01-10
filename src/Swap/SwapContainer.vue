@@ -479,7 +479,7 @@ watch(
 
           let pool = undefined;
           try {
-            pool = await poolsStore.getPool(newFrom, newTo, curve, version);
+            pool = await poolsStore.getPool(newFrom, newTo, curve, version as TVersionType);
           } catch (error) {
             console.error('SwapContainer: getPool', error);
           }
@@ -489,7 +489,7 @@ watch(
               ((pool?.reserveX ?? 0) > resultPool.reserveX && (pool?.reserveY ?? 0) > resultPool.reserveY)
           ) {
             resultPool = pool;
-            resultCurve = curve;
+            resultCurve = curveType;
             resultVersion = version;
           }
         }
@@ -500,7 +500,7 @@ watch(
           swapStore.toCurrency?.token === DOODOO ||
           swapStore.fromCurrency?.token === DOODOO
       ) {
-        resultCurve = 'unstable';
+        resultCurve = getCurve('uncorrelated', VERSION_0_5);
         resultVersion = VERSION_0_5;
       }
 
@@ -508,7 +508,7 @@ watch(
        * Set uncorrelated pool version 0 as the default value.
        * In this case, the user chooses the curve and version himself.
        */
-      swapStore.curve = resultCurve;
+      swapStore.curve = resultCurve as string;
       swapStore.version = resultVersion;
     },
 );
