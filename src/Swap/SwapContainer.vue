@@ -489,7 +489,7 @@ watch(
               ((pool?.reserveX ?? 0) > resultPool.reserveX && (pool?.reserveY ?? 0) > resultPool.reserveY)
           ) {
             resultPool = pool;
-            resultCurve = curveType;
+            resultCurve = getCurve(curveType, version);
             resultVersion = version;
           }
         }
