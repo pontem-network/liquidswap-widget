@@ -76,6 +76,8 @@
     ref="dialog"
     v-model:actionToken="state.token"
     v-model:secondaryToken="secondaryToken.token"
+    :mode="mode"
+    :view="'select-token'"
   />
   <UnverifiedTokenDialog ref="cautionAlert" />
 </template>

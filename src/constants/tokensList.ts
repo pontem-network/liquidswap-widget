@@ -20,5 +20,15 @@ export const knownTokens = [
   'abel',
   'alt',
   'amapt',
+  'mbx',
+  'props',
+  'doodoo',
+  'gari',
+  'returd',
+  'shrimp',
+  'apts',
 ];
+
+export const BRIDGES = ['celer', 'wormhole', 'layerzero'];
+
 

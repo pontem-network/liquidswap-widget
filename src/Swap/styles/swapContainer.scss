@@ -219,11 +219,11 @@
   justify-content: center;
   margin-top: 24px;
   padding-bottom: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.5px;
 
   &__header {
-    font-size: 13px;
-    letter-spacing: -0.5px;
-    line-height: 15px;
     color: white;
     opacity: 0.8;
     margin: 0 0 8px;
@@ -231,9 +231,6 @@
 
   &__description {
     color: #9594AA;
-    font-size: 13px;
-    line-height: 18px;
-    letter-spacing: -0.5px;
     padding: 0 60px;
     margin: 0;
     text-align: center;
@@ -246,12 +243,13 @@
     align-items: center;
     color: #D4C4ED;
     font-weight: 800;
-    font-size: 13px;
-    line-height: 15px;
-    letter-spacing: -0.5px;
 
     img {
       margin-right: 10px;
     }
+  }
+
+  &__app {
+    color: #9594AA;
   }
 }

@@ -8,6 +8,9 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 
 import dts from 'vite-plugin-dts';
 
+import _package from './package.json';
+
+const { version } = _package;
 
 export default defineConfig({
   plugins: [
@@ -58,6 +61,7 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': '"production"',
     'process.env.VUE_APP_CORRECT_CHAIN': '"mainnet"',
+    'process.env.VERSION': `"${version}"`,
     // For testnet environment:
     // 'process.env.VUE_APP_MODULES_ACCOUNT': '"0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12"',
     // 'process.env.VUE_APP_MODULES_V05_ACCOUNT': '"0x45ef7a3a1221e7c10d190a550aa30fa5bc3208ed06ee3661ec0afa3d8b418580"',

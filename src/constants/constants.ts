@@ -72,6 +72,10 @@ export const NETWORKS: Network[] = [
 
 export const CORRECT_CHAIN = process.env.VUE_APP_CORRECT_CHAIN || 'mainnet';
 
+export const REST_URL =
+  process.env.VITE_REST_API_URL ||
+  'https://aptos-mainnet.pontem.network/v1';
+
 export const CORRECT_CHAIN_ID =
   process.env.VUE_APP_CORRECT_CHAIN === 'mainnet'
     ? MAINNET_CHAIN_ID

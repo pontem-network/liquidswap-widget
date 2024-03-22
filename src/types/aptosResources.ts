@@ -19,3 +19,12 @@ export type AptosCreateTx = {
   expiration: string;
   payload: AptosTxPayload;
 };
+
+export type AptosCoinInfoResource = {
+  decimals: string;
+  name: string;
+  supply: {
+    vec: [string];
+  };
+  symbol: string;
+};

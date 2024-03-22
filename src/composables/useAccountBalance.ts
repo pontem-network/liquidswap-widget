@@ -131,6 +131,22 @@ export function useAccountBalance(
   };
 }
 
+// export function useCurrentAccountBalance(
+//   token: MaybeRef<string | undefined>,
+//   options?: { useSuffix?: boolean; _decimals?: number },
+// ) {
+//   const { account } = useStore();
+//   const address = computed(() => account.value?.address);
+//
+//   const balance = useAccountBalance(address as unknown as string, token);
+//   const currencyFormat = useCurrencyFormat(balance.balance, token, options);
+//
+//   return {
+//     ...balance,
+//     ...currencyFormat,
+//   };
+// }
+
 export function useCurrentAccountBalance(
   token: MaybeRef<string | undefined>,
   options?: { useSuffix?: boolean; _decimals?: number },

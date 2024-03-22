@@ -7,8 +7,8 @@ const cache = new Map<string, CacheItem>();
 
 export async function getFromCache(
   key: string,
-  getter: () => Promise<any>,
-  options?: { time?: number },
+  getter: (() => Promise<any>) | ((...args: any[]) => Promise<any>),
+  options?: { time?: number; args?: any[] },
 ): Promise<any> {
   const maxTime = options?.time || 0;
 
@@ -18,6 +18,12 @@ export async function getFromCache(
     if (Date.now() - item.time < maxTime) {
       return item.promise;
     }
+  }
+
+  if (options?.args) {
+    const { args } = options;
+    cache.set(key, { time: Date.now(), promise: getter(...args) });
+    return (cache.get(key) as CacheItem).promise;
   }
 
   cache.set(key, { time: Date.now(), promise: getter() });
