@@ -1,8 +1,6 @@
-import { APTOS, COIN_INFO, CORRECT_CHAIN, CORRECT_CHAIN_ID } from '@/constants/constants';
-import { IStorageBasic } from '@/types';
+import { APTOS, CORRECT_CHAIN, CORRECT_CHAIN_ID } from '@/constants/constants';
+import { IStorageBasic, Resource } from '@/types';
 import { TCoinSource } from '@/types/coins';
-import { useAptosClient } from '@/composables/useAptosClient';
-import { Resource } from '@/libs/aptos';
 import { useStore } from '@/store';
 import { AptosCoinInfoResource } from '@/types/aptosResources';
 import { nope } from '@/utils/utils';
@@ -44,7 +42,8 @@ const PERSISTING_SOURCES = ['import', 'pool'];
 
 export const useTokensStore = defineStore('tokensStore', () => {
   const mainStore = useStore();
-  const aptos = useAptosClient();
+
+  const { client, modules } =  useStore();
 
   const tokens = reactive<Record<string, IPersistedTokenExtended>>({});
   const isReady = ref(false);
@@ -151,12 +150,12 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
   const loadToken = async (token: IPersistedToken) => {
     // - - fetch coinInfo from URL
-    const coinInfo = composeType(COIN_INFO, [token.type]);
+    const coinInfo = composeType(modules.CoinInfo, [token.type]);
     const resource =
-      await aptos.client.getAccountResource<AptosCoinInfoResource>(
+      await client.getAccountResource(
         extractAddressFromType(token.type),
         coinInfo,
-      );
+      ) as unknown as Promise<Resource | undefined> | any;
 
     if (!resource) {
       // TODO: Process error
@@ -247,13 +246,10 @@ export const useTokensStore = defineStore('tokensStore', () => {
         : Promise.resolve(tokens[type]);
     }
 
-    const promise = aptos.client.getAccountResource(
+    const promise = client.getAccountResource(
       extractAddressFromType(type),
-      composeType(COIN_INFO, [type]),
-      {
-        cancelToken: !!withCancel,
-      },
-    );
+      composeType(modules.CoinInfo, [type]),
+    )as unknown as any;
     const request = withCancel ? promise.request : promise;
 
     request.then((resource?: Resource<AptosCoinInfoResource>) => {
@@ -299,12 +295,12 @@ export const useTokensStore = defineStore('tokensStore', () => {
       return tokens[token];
     }
 
-    const coinInfo = composeType(COIN_INFO, [token]);
+    const coinInfo = composeType(modules.CoinInfo, [token]);
     const resource =
-      await aptos.client.getAccountResource<AptosCoinInfoResource>(
+      await client.getAccountResource(
         extractAddressFromType(token),
         coinInfo,
-      );
+      ) as unknown as any;
 
     if (!resource) {
       return undefined;
