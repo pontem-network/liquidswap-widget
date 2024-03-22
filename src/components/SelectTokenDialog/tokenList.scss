@@ -213,7 +213,7 @@
 
 .filter-buttons {
   margin-bottom: 1rem;
-  // filter-buttons__item
+
   &__item {
     height: 32px;
     font-weight: 500;
@@ -226,7 +226,7 @@
     }
 
     &_selected {
-      background-color: var(--primary-color);
+      background-color: var(--primary-color) !important;
 
       &:hover {
         background-color: var(--primary-color) !important;

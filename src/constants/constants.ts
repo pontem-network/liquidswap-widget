@@ -33,7 +33,7 @@ export const CURVE_UNCORRELATED_V05 = `${MODULES_V05_ACCOUNT}::curves::Uncorrela
 export const CURVE_STABLE = `${MODULES_ACCOUNT}::curves::Stable`;
 export const CURVE_STABLE_V05 = `${MODULES_V05_ACCOUNT}::curves::Stable`;
 
-export const RECALCULATION_BALANCE_TIME = 5000;
+export const RECALCULATION_BALANCE_TIME = 7000;
 
 export const NETWORKS_MODULES = {
   Scripts: `${MODULES_ACCOUNT}::scripts_v2`,

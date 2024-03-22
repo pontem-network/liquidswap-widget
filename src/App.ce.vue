@@ -25,7 +25,7 @@ const props = defineProps<{
 // initialize stores
 (async () => {
   const tokensStore = useTokensStore();
-  await tokensStore.fetchCoinsList();
+  await tokensStore.fetchCoinsData();
   const poolsStore = usePoolsStore();
   await poolsStore.fetchPoolsList();
   useStore();

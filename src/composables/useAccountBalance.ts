@@ -65,7 +65,7 @@ export function useAccountBalance(
             composeType(modules.CoinStore, [fnToken]),
           ) as unknown as Promise<AptosCoinInfoResource>;
         },
-        { time: 5000 },
+        { time: RECALCULATION_BALANCE_TIME },
       );
 
       if (cacheKey === `${unref(address)}-${unref(token)}`) {

@@ -8,13 +8,14 @@
     class="stepped-dialog stepped-dialog--panel"
     :dismissableMask="true"
   >
-    <TokenList2
-      v-if="props.view === 'select-token'"
-      v-model:actionToken="actionToken"
-      v-model:secondaryToken="secondaryToken"
+    <TokenList
+      v-if="view === 'root'"
+      v-model:actionToken="localActionToken"
+      v-model:secondaryToken="localSecondaryToken"
       class="stepped-dialog__item"
       @navigate="onNavigate"
-      @cancel="$emit('cancel')"
+      @back="onBack"
+      @close="onClose"
     />
     <ManagePresets
       v-if="view === 'manage-presets'"
@@ -27,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import TokenList2 from './TokenList2.vue';
+import TokenList from './TokenList.vue';
 import { ref, computed } from 'vue';
 import PDialog from 'primevue/dialog';
 import ManagePresets from './ManagePresets.vue';
