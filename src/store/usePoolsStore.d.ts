@@ -24,6 +24,7 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
     defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
+    poolsMapAsArray: import("vue").ComputedRef<IPersistedPool[]>;
 }, "isReady" | "isLoading" | "pools" | "poolsMap" | "poolsTitleMap">>, Pick<{
     isLoading: import("vue").Ref<boolean>;
     isReady: import("vue").Ref<boolean>;
@@ -48,7 +49,8 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
     defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
-}, "getPool" | "defaultPools">, Pick<{
+    poolsMapAsArray: import("vue").ComputedRef<IPersistedPool[]>;
+}, "getPool" | "defaultPools" | "poolsMapAsArray">, Pick<{
     isLoading: import("vue").Ref<boolean>;
     isReady: import("vue").Ref<boolean>;
     getPool: import("vue").ComputedRef<(coinX: string, coinY: string, curve: string, contract?: TVersionType) => Promise<IPersistedPool>>;
@@ -72,4 +74,5 @@ export declare const usePoolsStore: import("pinia").StoreDefinition<"poolsStore"
     poolsMap: Record<string, IPersistedPool>;
     poolsTitleMap: Record<string, string>;
     defaultPools: import("vue").ComputedRef<IPersistedPool[]>;
+    poolsMapAsArray: import("vue").ComputedRef<IPersistedPool[]>;
 }, "getCurveType" | "fetchPoolsList">>;

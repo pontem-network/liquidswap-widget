@@ -1,5 +1,6 @@
 import { AptosWalletAdapter, MartianWalletAdapter, PontemWalletAdapter, FewchaWalletAdapter, RiseWalletAdapter, MsafeWalletAdapter, WalletName } from '@pontem/aptos-wallet-adapter';
 import { VERSION_0, VERSION_0_5 } from '../constants/constants';
+import { TokenFiledType } from './coins';
 export type AptosCoinInfoResource = {
     decimals: string;
     name: string;
@@ -22,7 +23,7 @@ export interface IWallet {
     adapter: typeof PontemWalletAdapter | typeof AptosWalletAdapter | typeof MartianWalletAdapter | typeof FewchaWalletAdapter | typeof RiseWalletAdapter | typeof MsafeWalletAdapter;
     options?: any;
 }
-export type TCurveType = 'unstable' | 'stable';
+export type TCurveType = 'unstable' | 'stable' | 'uncorrelated';
 export type TStableSwapType = 'normal' | 'high';
 export type Network = {
     id: number;
@@ -53,3 +54,8 @@ export interface IPoolExist {
     curve: string;
 }
 export type TStatusTransaction = 'success' | 'pending' | 'error' | 'rejected';
+export type TCustomEvent = {
+    value: number | undefined;
+    mode: TokenFiledType;
+    lockForUpdate: boolean;
+};

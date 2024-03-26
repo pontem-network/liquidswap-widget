@@ -21,3 +21,4 @@ export declare const splitValue: (value: string) => {
 };
 export declare function camelCaseKeysToUnderscore(obj: any): any;
 export declare function getFormattedValidationCode(error: Error): any;
+export declare function nope(): void;
