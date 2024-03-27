@@ -29,6 +29,11 @@
         text-transform: uppercase;
       }
     }
+
+    &__copy-button {
+      background: transparent;
+      border: none;
+    }
   }
 
   .tx-hash {

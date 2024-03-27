@@ -11,7 +11,7 @@ liquidswap-widget {
   -webkit-tap-highlight-color: transparent;
   font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
   position: relative;
-  font-family: var(--font-family),
+  font-family: var(--ls-font-family),
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -66,179 +66,181 @@ liquidswap-widget {
 :root {
   --ls-text-color: #e5e4fa;
   --ls-text-color-secondary: #6c757d; //9292A8
-  --primary-color: #6e42ca;
-  --primary-color-text: #ffffff;
-  --accent-success: #039581;
-  --accent-warning: #E67106;
-  --accent-error: #c62828;
-  --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  --ls-primary-color: #6e42ca;
+  --ls-primary-color-text: #ffffff;
+  --ls-accent-success: #039581;
+  --ls-accent-warning: #E67106;
+  --ls-accent-error: #c62828;
+  --ls-font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol';
-  --surface-0: #ffffff;
-  --surface-50: #fafafa;
-  --surface-100: #f5f5f5;
+  --ls-surface-0: #ffffff;
+  --ls-surface-50: #fafafa;
+  --ls-surface-100: #f5f5f5;
   --ls-surface-200: #eeeeee;
-  --surface-300: #e0e0e0;
-  --surface-400: #bdbdbd;
-  --surface-500: #9e9e9e;
-  --surface-600: #757575;
-  --surface-700: #616161;
-  --surface-800: #424242;
-  --surface-900: #212121;
-  --surface-ground: #212429;
-  --surface-section: #ffffff;
-  --surface-card: #16162d;
-  --surface-overlay: #16162d;
-  --surface-border: #dee2e6;
-  --content-padding: 1rem;
-  --inline-spacing: 0.5rem;
-  --border-radius: 14px;
-  --blue-50: #f4fafe;
-  --blue-100: #cae6fc;
-  --blue-200: #a0d2fa;
-  --blue-300: #75bef8;
-  --blue-400: #4baaf5;
-  --blue-500: #2196f3;
-  --blue-600: #1c80cf;
-  --blue-700: #1769aa;
-  --blue-800: #125386;
-  --blue-900: #0d3c61;
-  --green-50: #f6fbf6;
-  --green-100: #d4ecd5;
-  --green-200: #b2ddb4;
-  --green-300: #90cd93;
-  --green-400: #6ebe71;
-  --green-500: #4caf50;
-  --green-600: #419544;
-  --green-700: #357b38;
-  --green-800: #2a602c;
-  --green-900: #1e4620;
-  --yellow-50: #fffcf5;
-  --yellow-100: #fef0cd;
-  --yellow-200: #fde4a5;
-  --yellow-300: #fdd87d;
-  --yellow-400: #fccc55;
-  --yellow-500: #fbc02d;
-  --yellow-600: #d5a326;
-  --yellow-700: #b08620;
-  --yellow-800: #8a6a19;
-  --yellow-900: #644d12;
-  --cyan-50: #f2fcfd;
-  --cyan-100: #c2eff5;
-  --cyan-200: #91e2ed;
-  --cyan-300: #61d5e4;
-  --cyan-400: #30c9dc;
-  --cyan-500: #00bcd4;
-  --cyan-600: #00a0b4;
-  --cyan-700: #008494;
-  --cyan-800: #006775;
-  --cyan-900: #004b55;
-  --pink-50: #fef4f7;
-  --pink-100: #fac9da;
-  --pink-200: #f69ebc;
-  --pink-300: #f1749e;
-  --pink-400: #ed4981;
-  --pink-500: #e91e63;
-  --pink-600: #c61a54;
-  --pink-700: #a31545;
-  --pink-800: #801136;
-  --pink-900: #5d0c28;
-  --indigo-50: #f5f6fb;
-  --indigo-100: #d1d5ed;
-  --indigo-200: #acb4df;
-  --indigo-300: #8893d1;
-  --indigo-400: #6372c3;
-  --indigo-500: #3f51b5;
-  --indigo-600: #36459a;
-  --indigo-700: #2c397f;
-  --indigo-800: #232d64;
-  --indigo-900: #192048;
-  --teal-50: #f2faf9;
-  --teal-100: #c2e6e2;
-  --teal-200: #91d2cc;
-  --teal-300: #61beb5;
-  --teal-400: #30aa9f;
-  --teal-500: #009688;
-  --teal-600: #008074;
-  --teal-700: #00695f;
-  --teal-800: #00534b;
-  --teal-900: #003c36;
-  --orange-50: #fff8f2;
-  --orange-100: #fde0c2;
-  --orange-200: #fbc791;
-  --orange-300: #f9ae61;
-  --orange-400: #f79530;
-  --orange-500: #f57c00;
-  --orange-600: #d06900;
-  --orange-700: #ac5700;
-  --orange-800: #874400;
-  --orange-900: #623200;
-  --bluegray-50: #f7f9f9;
-  --bluegray-100: #d9e0e3;
-  --bluegray-200: #bbc7cd;
-  --bluegray-300: #9caeb7;
-  --bluegray-400: #7e96a1;
-  --bluegray-500: #607d8b;
-  --bluegray-600: #526a76;
-  --bluegray-700: #435861;
-  --bluegray-800: #35454c;
-  --bluegray-900: #263238;
-  --purple-50: #faf4fb;
-  --purple-100: #e7cbec;
-  --purple-200: #d4a2dd;
-  --purple-300: #c279ce;
-  --purple-400: #af50bf;
-  --purple-500: #9c27b0;
-  --purple-600: #852196;
-  --purple-700: #6d1b7b;
-  --purple-800: #561561;
-  --purple-900: #3e1046;
-  --gray-50: #fafafa;
-  --gray-100: #f5f5f5;
-  --gray-200: #eeeeee;
-  --gray-300: #e0e0e0;
-  --gray-400: #bdbdbd;
-  --gray-500: #9e9e9e;
-  --gray-600: #757575;
-  --gray-700: #616161;
-  --gray-800: #424242;
-  --gray-900: #212121;
-  --red-50: #fff5f5;
-  --red-100: #ffd1ce;
-  --red-200: #ffada7;
-  --red-300: #ff8980;
-  --red-400: #ff6459;
-  --red-500: #ff4032;
-  --red-600: #d9362b;
-  --red-700: #b32d23;
-  --red-800: #8c231c;
-  --red-900: #661a14;
-  --primary-50: #f4fafe;
-  --primary-100: #cae6fc;
-  --primary-200: #a0d2fa;
-  --primary-300: #75bef8;
-  --primary-400: #4baaf5;
-  --primary-500: #2196f3;
-  --primary-600: #1c80cf;
-  --primary-700: #1769aa;
-  --primary-800: #125386;
-  --primary-900: #0d3c61;
+  --ls-surface-300: #e0e0e0;
+  --ls-surface-400: #bdbdbd;
+  --ls-surface-500: #9e9e9e;
+  --ls-surface-600: #757575;
+  --ls-surface-700: #616161;
+  --ls-surface-800: #424242;
+  --ls-surface-900: #212121;
+  --ls-surface-ground: #212429;
+  --ls-surface-section: #ffffff;
+  --ls-surface-card: #16162d;
+  --ls-surface-overlay: #16162d;
+  --ls-surface-border: #dee2e6;
+  --ls-content-padding: 1rem;
+  --ls-inline-spacing: 0.5rem;
+  --ls-border-radius: 14px;
+  --ls-border-color-invalid: #ca4242;
+  --ls-blue-50: #f4fafe;
+  --ls-blue-100: #cae6fc;
+  --ls-blue-200: #a0d2fa;
+  --ls-blue-300: #75bef8;
+  --ls-blue-400: #4baaf5;
+  --ls-blue-500: #2196f3;
+  --ls-blue-600: #1c80cf;
+  --ls-blue-700: #1769aa;
+  --ls-blue-800: #125386;
+  --ls-blue-900: #0d3c61;
+  --ls-green-50: #f6fbf6;
+  --ls-green-100: #d4ecd5;
+  --ls-green-200: #b2ddb4;
+  --ls-green-300: #90cd93;
+  --ls-green-400: #6ebe71;
+  --ls-green-500: #4caf50;
+  --ls-green-600: #419544;
+  --ls-green-700: #357b38;
+  --ls-green-800: #2a602c;
+  --ls-green-900: #1e4620;
+  --ls-yellow-50: #fffcf5;
+  --ls-yellow-100: #fef0cd;
+  --ls-yellow-200: #fde4a5;
+  --ls-yellow-300: #fdd87d;
+  --ls-yellow-400: #fccc55;
+  --ls-yellow-500: #fbc02d;
+  --ls-yellow-600: #d5a326;
+  --ls-yellow-700: #b08620;
+  --ls-yellow-800: #8a6a19;
+  --ls-yellow-900: #644d12;
+  --ls-cyan-50: #f2fcfd;
+  --ls-cyan-100: #c2eff5;
+  --ls-cyan-200: #91e2ed;
+  --ls-cyan-300: #61d5e4;
+  --ls-cyan-400: #30c9dc;
+  --ls-cyan-500: #00bcd4;
+  --ls-cyan-600: #00a0b4;
+  --ls-cyan-700: #008494;
+  --ls-cyan-800: #006775;
+  --ls-cyan-900: #004b55;
+  --ls-pink-50: #fef4f7;
+  --ls-pink-100: #fac9da;
+  --ls-pink-200: #f69ebc;
+  --ls-pink-300: #f1749e;
+  --ls-pink-400: #ed4981;
+  --ls-pink-500: #e91e63;
+  --ls-pink-600: #c61a54;
+  --ls-pink-700: #a31545;
+  --ls-pink-800: #801136;
+  --ls-pink-900: #5d0c28;
+  --ls-indigo-50: #f5f6fb;
+  --ls-indigo-100: #d1d5ed;
+  --ls-indigo-200: #acb4df;
+  --ls-indigo-300: #8893d1;
+  --ls-indigo-400: #6372c3;
+  --ls-indigo-500: #3f51b5;
+  --ls-indigo-600: #36459a;
+  --ls-indigo-700: #2c397f;
+  --ls-indigo-800: #232d64;
+  --ls-indigo-900: #192048;
+  --ls-teal-50: #f2faf9;
+  --ls-teal-100: #c2e6e2;
+  --ls-teal-200: #91d2cc;
+  --ls-teal-300: #61beb5;
+  --ls-teal-400: #30aa9f;
+  --ls-teal-500: #009688;
+  --ls-teal-600: #008074;
+  --ls-teal-700: #00695f;
+  --ls-teal-800: #00534b;
+  --ls-teal-900: #003c36;
+  --ls-orange-50: #fff8f2;
+  --ls-orange-100: #fde0c2;
+  --ls-orange-200: #fbc791;
+  --ls-orange-300: #f9ae61;
+  --ls-orange-400: #f79530;
+  --ls-orange-500: #f57c00;
+  --ls-orange-600: #d06900;
+  --ls-orange-700: #ac5700;
+  --ls-orange-800: #874400;
+  --ls-orange-900: #623200;
+  --ls-bluegray-50: #f7f9f9;
+  --ls-bluegray-100: #d9e0e3;
+  --ls-bluegray-200: #bbc7cd;
+  --ls-bluegray-300: #9caeb7;
+  --ls-bluegray-400: #7e96a1;
+  --ls-bluegray-500: #607d8b;
+  --ls-bluegray-600: #526a76;
+  --ls-bluegray-700: #435861;
+  --ls-bluegray-800: #35454c;
+  --ls-bluegray-900: #263238;
+  --ls-purple-50: #faf4fb;
+  --ls-purple-100: #e7cbec;
+  --ls-purple-200: #d4a2dd;
+  --ls-purple-300: #c279ce;
+  --ls-purple-400: #af50bf;
+  --ls-purple-500: #9c27b0;
+  --ls-purple-600: #852196;
+  --ls-purple-700: #6d1b7b;
+  --ls-purple-800: #561561;
+  --ls-purple-900: #3e1046;
+  --ls-gray-50: #fafafa;
+  --ls-gray-100: #f5f5f5;
+  --ls-gray-200: #eeeeee;
+  --ls-gray-300: #e0e0e0;
+  --ls-gray-400: #bdbdbd;
+  --ls-gray-500: #9e9e9e;
+  --ls-gray-600: #757575;
+  --ls-gray-700: #616161;
+  --ls-gray-800: #424242;
+  --ls-gray-900: #212121;
+  --ls-red-50: #fff5f5;
+  --ls-red-100: #ffd1ce;
+  --ls-red-200: #ffada7;
+  --ls-red-300: #ff8980;
+  --ls-red-400: #ff6459;
+  --ls-red-500: #ff4032;
+  --ls-red-600: #d9362b;
+  --ls-red-700: #b32d23;
+  --ls-red-800: #8c231c;
+  --ls-red-900: #661a14;
+  --ls-primary-10: #24243a;
+  --ls-primary-50: #f4fafe;
+  --ls-primary-100: #cae6fc;
+  --ls-primary-200: #a0d2fa;
+  --ls-primary-300: #75bef8;
+  --ls-primary-400: #4baaf5;
+  --ls-primary-500: #2196f3;
+  --ls-primary-600: #1c80cf;
+  --ls-primary-700: #1769aa;
+  --ls-primary-800: #125386;
+  --ls-primary-900: #0d3c61;
 }
 
 #nprogress {
   .bar {
-    background: #6E42CA;
+    background: var(--ls-primary-color);
   }
 
   .peg {
-    box-shadow: 0 0 10px #6E42CA, 0 0 5px #6E42CA;
+    box-shadow: 0 0 10px var(--ls-primary-color), 0 0 5px var(--ls-primary-color);
   }
 
 }
 
 .p-dialog-mask.p-component-overlay, .swap__container {
   .p-component {
-    font-family: var(--font-family);
+    font-family: var(--ls-font-family);
   }
 
   .p-overlaypanel {
@@ -258,7 +260,7 @@ liquidswap-widget {
     rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;
 
     .p-dialog-header {
-      background: var(--surface-card);
+      background: var(--ls-surface-card);
       color: var(--ls-text-color);
       border: none;
       border-top-left-radius: 24px !important;
@@ -266,7 +268,7 @@ liquidswap-widget {
     }
 
     .p-dialog-content {
-      background: var(--surface-card);
+      background: var(--ls-surface-card);
       border: none;
       border-bottom-left-radius: 24px !important;
       border-bottom-right-radius: 24px !important;
@@ -280,23 +282,23 @@ liquidswap-widget {
       border: 0;
       border-radius: 24px;
       min-width: 230px !important;
-      background: var(--surface-card);
+      background: var(--ls-surface-card);
       box-shadow: rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px,
       rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;
     }
   }
 
   .p-inputtext {
-    background: #24243a;
+    background: var(--ls-primary-10);
     padding: 0.75rem 0.75rem;
-    border: 1px solid var(--surface-card);
+    border: 1px solid var(--ls-surface-card);
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
     box-shadow 0.2s;
     appearance: none;
     border-radius: 6px;
 
     &.p-invalid.p-component {
-      border-color: #ca4242 !important;
+      border-color: var(--ls-border-color-invalid) !important;
     }
   }
   .p-inputtext:enabled:hover {
@@ -329,8 +331,8 @@ liquidswap-widget {
     border-radius: 16px;
     font-weight: 400;
     &.p-inline-message-error {
-      background: rgba(#ca4242, 0.2);
-      border-color: #ca4242;
+      background: rgba(var(--ls-border-color-invalid), 0.2);
+      border-color: var(--ls-border-color-invalid);
     }
 
     &.p-inline-message-warn {
@@ -363,7 +365,7 @@ liquidswap-widget {
 
     &.p-message-info {
       background: #262647;
-      border: solid var(--primary-color);
+      border: solid var(--ls-primary-color);
       border-width: 0 0 0 6px;
       color: var(--ls-text-color);
 
@@ -375,8 +377,8 @@ liquidswap-widget {
 
   .p-button {
     color: white;
-    background: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    background: var(--ls-primary-color);
+    border: 1px solid var(--ls-primary-color);
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
@@ -389,11 +391,11 @@ liquidswap-widget {
     &.p-button-secondary {
       background: #1c1c33;
       border-color: #1c1c33;
-      color: var(--gray-300);
+      color: var(--ls-gray-300);
       &:enabled:hover {
         background: lighten(#1c1c33, 5%);
         border-color: #1c1c33;
-        color: var(--gray-50);
+        color: var(--ls-gray-50);
       }
       &:enabled:focus {
         box-shadow: none;
@@ -434,8 +436,8 @@ liquidswap-widget {
 
   .p-button {
     color: white;
-    background: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    background: var(--ls-primary-color);
+    border: 1px solid var(--ls-primary-color);
     border-radius: 100px;
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
@@ -635,8 +637,3 @@ liquidswap-widget {
     }
   }
 }
-
-//coin list
-//swap confirm
-//transaction submitted
-//copie

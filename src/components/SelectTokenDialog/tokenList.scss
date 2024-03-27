@@ -43,7 +43,7 @@
   }
 
   .search {
-    background: var(--surface-card);
+    background: var(--ls-surface-card);
     left: 0;
     padding: 0px 0px 20px 0px;
     margin: 0px -4px;
@@ -203,7 +203,7 @@
   }
 
   .pool__address {
-    font-family: var(--font-family);
+    font-family: var(--ls-font-family);
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -227,10 +227,10 @@
       }
 
       &_selected {
-        background-color: var(--primary-color) !important;
+        background-color: var(--ls-primary-color) !important;
 
         &:hover {
-          background-color: var(--primary-color) !important;
+          background-color: var(--ls-primary-color) !important;
         }
       }
     }

@@ -1,4 +1,4 @@
-$gray: var(--surface-card);
+$gray: var(--ls-surface-card);
 
 .swap__container, .p-dialog-mask.p-component-overlay {
   [tooltip] {
@@ -28,7 +28,7 @@ $gray: var(--surface-card);
       text-align: center;
 
       z-index: 1000;
-      color: var(--surface-300);
+      color: var(--ls-surface-300);
       line-height: 1.4;
       background: $gray;
       font-size: 0.875rem;

@@ -61,13 +61,13 @@
   .p-inputswitch.p-inputswitch-checked {
     &.p-inputswitch-checked {
       .p-inputswitch-slider {
-        background-color: var(--primary-color);
+        background-color: var(--ls-primary-color);
       }
 
       &:not(.p-disabled) {
         &:hover {
           .p-inputswitch-slider {
-            background-color: var(--primary-color);
+            background-color: var(--ls-primary-color);
           }
         }
       }

@@ -86,7 +86,7 @@
 
       &__row {
         p {
-          font-family: var(--font-family);
+          font-family: var(--ls-font-family);
           font-style: normal;
           font-weight: 400;
           font-size: 13px;
@@ -172,7 +172,7 @@
       transition: all 0.25s linear;
 
       p {
-        font-family: var(--font-family);
+        font-family: var(--ls-font-family);
         font-style: normal;
         font-weight: 500;
         font-size: 15px;
@@ -189,7 +189,7 @@
   }
 
   .address-import {
-    background: var(--surface-card);
+    background: var(--ls-surface-card);
     width: 100%;
     display: flex;
     padding: 16px 0;

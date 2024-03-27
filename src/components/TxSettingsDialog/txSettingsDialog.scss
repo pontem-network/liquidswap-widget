@@ -69,7 +69,7 @@
       &:after {
         content: '%';
         font-weight: 600;
-        color: var(--surface-600);
+        color: var(--ls-surface-600);
         font-size: 1rem;
         position: absolute;
         right: 0;
@@ -96,13 +96,13 @@
     }
 
     & > div {
-      color: var(--surface-600);
+      color: var(--ls-surface-600);
       font-size: 0.8rem;
 
       margin-left: 5px;
       cursor: pointer;
       &:hover {
-        color: var(--surface-500);
+        color: var(--ls-surface-500);
       }
     }
   }
@@ -110,7 +110,7 @@
   .slippage-label {
     background: #24243a;
     padding: 0.75rem 0.75rem;
-    border: 1px solid var(--surface-card);
+    border: 1px solid var(--ls-surface-card);
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
     box-shadow 0.2s;
     -webkit-appearance: none;
@@ -133,11 +133,11 @@
     padding-top: 6px;
 
     &.is-error {
-      color: var(--pink-600);
+      color: var(--ls-pink-600);
     }
 
     &.is-warning {
-      color: var(--orange-600);
+      color: var(--ls-orange-600);
     }
   }
 }

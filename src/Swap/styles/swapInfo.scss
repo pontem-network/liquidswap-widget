@@ -21,15 +21,15 @@
       color: white;
 
       &_success {
-        background-color: var(--accent-success);
+        background-color: var(--ls-accent-success);
       }
 
       &_warning {
-        background-color: var(--accent-warning);
+        background-color: var(--ls-accent-warning);
       }
 
       &_alert {
-        background-color: var(--accent-error);
+        background-color: var(--ls-accent-error);
       }
     }
   }

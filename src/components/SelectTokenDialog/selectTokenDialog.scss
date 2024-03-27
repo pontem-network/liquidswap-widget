@@ -1,6 +1,6 @@
 .p-dialog-mask.p-component-overlay {
   .search {
-    background: var(--surface-card);
+    background: var(--ls-surface-card);
     left: 0;
     padding: 10px 0px 20px 0px;
     margin: 0px -4px;
@@ -124,7 +124,7 @@
   }
 
   .pool__address {
-    font-family: var(--font-family);
+    font-family: var(--ls-font-family);
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
