@@ -1,9 +1,11 @@
-.dialog-step__title--position {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
+.p-dialog-mask.p-component-overlay {
+  .dialog-step__title--position {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
 
-.dialog-step__back-btn-placeholder {
-  width: 22px;
+  .dialog-step__back-btn-placeholder {
+    width: 22px;
+  }
 }

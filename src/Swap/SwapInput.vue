@@ -58,7 +58,7 @@
             </template>
             <ToolTip
                 v-else
-                position="bottom-left"
+                position="bottom-right"
                 :tooltipText="'This token is not registered in your account. Before swap, you must register this token.'"
                 class="token-tooltip"
             >

@@ -22,14 +22,20 @@ const props = defineProps<{
   dataNetwork?: string; // { name?: string; chainId?: string } as JSON
   dataTransaction?: string; // { status: 'pending' | 'success' | 'error' | 'rejected'; hash: string | null } as JSON
 }>();
+
 // initialize stores
 (async () => {
   const tokensStore = useTokensStore();
-  await tokensStore.fetchCoinsData();
   const poolsStore = usePoolsStore();
-  await poolsStore.fetchPoolsList();
-  useStore();
+
+  await Promise.all([
+    tokensStore.fetchCoinsData(),
+    poolsStore.fetchPoolsList()
+  ]).catch((err) => {
+    console.error('Error during stores initialization', err);
+  })
 })();
+
 const mainStore = useStore();
 
 function checkNativeWallet (){

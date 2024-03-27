@@ -32,6 +32,3 @@ const isNotDefaultCoin = computed<boolean>(
   () => !tokensStore.isTokenVerified(type.value),
 );
 </script>
-<style lang="scss" scoped>
-
-</style>

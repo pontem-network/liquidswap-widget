@@ -1,56 +1,58 @@
-.button-token {
-  min-width: 140px;
-  font-size: 15px;
-  height: 3rem;
-  padding: 0 12px;
-  box-shadow: rgb(0 0 0 / 8%) 0 6px 10px;
-  background: linear-gradient(90deg, #016875 0%, #04b78a 100%);
-  border: none;
-  border-radius: 12px!important;
-  color: white;
-
-  &:hover {
-    background: linear-gradient(90deg, #015c68 0%, #04a57d 100%) !important;
+.swap__container {
+  .button-token {
+    min-width: 140px;
+    font-size: 15px;
+    height: 3rem;
+    padding: 0 12px;
+    box-shadow: rgb(0 0 0 / 8%) 0 6px 10px;
+    background: linear-gradient(90deg, #016875 0%, #04b78a 100%)!important;
+    border: none;
+    border-radius: 12px!important;
     color: white;
-  }
-
-  span {
-    white-space: nowrap;
-    font-weight: normal !important;
-  }
-
-  img, .img {
-    width: 24px;
-    height: 24px;
-    margin-right: 0.5rem;
-  }
-
-  &.is-selected {
-    color: var(--surface-0) !important;
-    background: #1c1c33 !important;
-    border-color: transparent !important;
 
     &:hover {
-      background: #16162a !important;
+      background: linear-gradient(90deg, #015c68 0%, #04a57d 100%) !important;
+      color: white;
+    }
+
+    span {
+      white-space: nowrap;
+      font-weight: normal !important;
+    }
+
+    img, .img {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.5rem;
+    }
+
+    &.is-selected {
+      color: var(--surface-0) !important;
+      background: #1c1c33 !important;
+      border-color: transparent !important;
+
+      &:hover {
+        background: #16162a !important;
+      }
     }
   }
-}
 
-.token-title {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  margin-right: auto;
+  .token-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-right: auto;
 
-  .token-name {
-    font-size: 15px;
-  }
+    .token-name {
+      font-size: 15px;
+    }
 
-  > .token-provider {
-    color: #9594aa;
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 12px;
+    > .token-provider {
+      color: #9594aa;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 12px;
+    }
   }
 }

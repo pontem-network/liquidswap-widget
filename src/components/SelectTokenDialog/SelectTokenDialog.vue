@@ -36,7 +36,7 @@ import ManagePresets from './ManagePresets.vue';
 interface IProps {
   actionToken?: string;
   secondaryToken?: string;
-  view: 'select-token' | 'manage-presets' | undefined;
+  view: 'select-token' | 'manage-presets';
   mode: 'from' | 'to';
 }
 

@@ -32,7 +32,7 @@
       > Bridged
       </PButton>
     </div>
-    <template v-if="adapter.connected">
+    <template v-if="address">
       <div class="divider" />
       <div class="tvl-sort">
         <span class="tvl-sort__title">Token</span>
@@ -171,7 +171,6 @@ import { getTokenPrice, getUSDEquivalent } from '@/composables/useCoinPrice';
 import { getAmountWithDecimal } from '@/composables/useInputServices';
 import { BRIDGES } from '@/constants/tokensList';
 import { getFromCache } from '@/utils/cache';
-import { useWalletProviderStore } from '@pontem/aptos-wallet-adapter';
 
 
 interface IProps {
@@ -205,6 +204,7 @@ const emits = defineEmits([
 ]);
 
 const poolsStore = usePoolsStore();
+const store = useStore();
 
 // states
 const rawTokenList_ = ref<TTokenInList[]>();
@@ -221,13 +221,11 @@ const isBalanceSortedDesc = ref(true);
 const isSortedByTvlInUsd = ref(false);
 const isFilteredByConditions = ref(false);
 
-const adapter = useWalletProviderStore();
-
 const { account } = useStore();
 const address = computed(() => account.value?.address);
 
 onBeforeMount(() => {
-  if (!adapter.connected) {
+  if (!address.value) {
     selectFilter('top');
   }
 });
@@ -256,7 +254,7 @@ const rawTokenList = async () => {
   const alreadySelected: string[] = [];
 
   // avoid displaying balances when the wallet is disconnected
-  if (adapter.connected) {
+  if (address.value) {
     const cacheKey = `${address.value}-tokens-balance`;
 
     //Cache to avoid loading every time you open the sidebar

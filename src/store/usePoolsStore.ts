@@ -359,9 +359,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       : false;
   }
 
-  const poolsMapAsArray = computed(() =>
-    Object.keys(poolsMap).map((key) => poolsMap[key]),
-  );
+  const poolsMapAsArray = computed(() => Object.values(poolsMap));
 
   return {
     isLoading,

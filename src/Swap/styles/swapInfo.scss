@@ -1,118 +1,120 @@
-.swap-info__info {
-  margin: 8px 0 8px;
+.swap__container {
+  .swap-info__info {
+    margin: 8px 0 8px;
 
-  .list__item {
-    &:not(:last-child) {
-      margin-bottom: 8px;
+    .list__item {
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
     }
   }
-}
 
-.swap-info {
-  &__price-impact-wrapper {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 18px;
-    padding: 8px;
-    border-radius: 7px;
-    color: white;
+  .swap-info {
+    &__price-impact-wrapper {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 18px;
+      padding: 8px;
+      border-radius: 7px;
+      color: white;
 
-    &_success {
-      background-color: var(--accent-success);
-    }
+      &_success {
+        background-color: var(--accent-success);
+      }
 
-    &_warning {
-      background-color: var(--accent-warning);
-    }
+      &_warning {
+        background-color: var(--accent-warning);
+      }
 
-    &_alert {
-      background-color: var(--accent-error);
+      &_alert {
+        background-color: var(--accent-error);
+      }
     }
   }
-}
 
-.swap-info-tab {
-  .p-accordion-tab {
-    margin-bottom: 0;
+  .swap-info-tab {
+    .p-accordion-tab {
+      margin-bottom: 0;
 
-    &.p-accordion-tab-active {
+      &.p-accordion-tab-active {
+        .p-accordion-header-link {
+          background: #24243a !important;
+        }
+      }
+
       .p-accordion-header-link {
-        background: #24243a !important;
-      }
-    }
-
-    .p-accordion-header-link {
-      width: 100%;
-      background: transparent !important;
-      border: 0;
-      min-height: 40px;
-      box-shadow: none !important;
-      padding: 0;
-      border-radius: 0;
-
-      &:focus {
+        width: 100%;
+        background: transparent !important;
+        border: 0;
+        min-height: 40px;
         box-shadow: none !important;
+        padding: 0;
+        border-radius: 0;
+
+        &:focus {
+          box-shadow: none !important;
+        }
+
+        .p-accordion-toggle-icon {
+          display: none;
+        }
       }
 
-      .p-accordion-toggle-icon {
-        display: none;
+      .p-accordion-content {
+        margin-top: 8px;
+        background: transparent !important;
+        padding: 0;
+        border: none;
       }
     }
 
-    .p-accordion-content {
-      margin-top: 8px;
-      background: transparent !important;
-      padding: 0;
-      border: none;
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0 16px;
+
+      span:first-child {
+        font-size: 13px;
+        font-weight: 500 !important;
+      }
+
+      span:last-child {
+        padding-right: 5px;
+      }
+    }
+    .p-accordion-header-action {
+      display: flex;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
-  &__header {
+  .list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
+    row-gap: 8px;
     padding: 0 16px;
 
-    span:first-child {
-      font-size: 13px;
-      font-weight: 500 !important;
+    &--bottom-border {
+      border-bottom: 1px solid #2d2942;
+      padding-bottom: 8px;
     }
 
-    span:last-child {
-      padding-right: 5px;
-    }
-  }
-  .p-accordion-header-action {
-    display: flex;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
+    &__item {
+      display: flex;
+      font-weight: 400;
+      font-size: 14px;
+      align-items: center;
 
-.list {
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-  padding: 0 16px;
-
-  &--bottom-border {
-    border-bottom: 1px solid #2d2942;
-    padding-bottom: 8px;
-  }
-
-  &__item {
-    display: flex;
-    font-weight: 400;
-    font-size: 14px;
-    align-items: center;
-
-    span:last-child {
-      margin-left: auto;
-      text-align: right;
+      span:last-child {
+        margin-left: auto;
+        text-align: right;
+      }
     }
   }
 }

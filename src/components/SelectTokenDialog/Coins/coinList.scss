@@ -1,129 +1,131 @@
-.coins-list {
-  position: relative;
-  max-height: calc(100% - 80px);
-  overflow: hidden;
-  height: fill-available;
-}
+.p-dialog-mask.p-component-overlay {
+  .coins-list {
+    position: relative;
+    max-height: calc(100% - 80px);
+    overflow: hidden;
+    height: fill-available;
+  }
 
-.address-import {
-  background: var(--surface-card);
-  width: 100%;
-  display: flex;
-  padding: 16px 0;
-  flex-direction: column;
-
-  &__input {
-    min-width: 100%;
+  .address-import {
+    background: var(--surface-card);
+    width: 100%;
     display: flex;
-    border-radius: 16px;
-    background: transparent;
-    border: 1px solid #36354b;
-  }
+    padding: 16px 0;
+    flex-direction: column;
 
-  &__label {
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 34px;
-    letter-spacing: 0.44px;
-    color: #e5e4fa;
-  }
-}
+    &__input {
+      min-width: 100%;
+      display: flex;
+      border-radius: 16px;
+      background: transparent;
+      border: 1px solid #36354b;
+    }
 
-.coin-wrap {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 16px;
-  background: #28253e;
-  padding: 12px;
-
-  &.-nobg {
-    background: transparent;
-  }
-  .img {
-    width: 32px;
-    height: 32px;
-    margin-right: 12px;
-  }
-  .coin-wrap__labels {
-    display: block;
-    margin-right: auto;
-
-    .coin-symbol {
-      margin: 0 0 1px;
+    &__label {
       font-weight: 500;
       font-size: 15px;
-      line-height: 21px;
-      letter-spacing: 0.03em;
+      line-height: 34px;
+      letter-spacing: 0.44px;
       color: #e5e4fa;
     }
+  }
 
-    .coin-name {
+  .coin-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 16px;
+    background: #28253e;
+    padding: 12px;
+
+    &.-nobg {
+      background: transparent;
+    }
+    .img {
+      width: 32px;
+      height: 32px;
+      margin-right: 12px;
+    }
+    .coin-wrap__labels {
+      display: block;
+      margin-right: auto;
+
+      .coin-symbol {
+        margin: 0 0 1px;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 21px;
+        letter-spacing: 0.03em;
+        color: #e5e4fa;
+      }
+
+      .coin-name {
+        margin: 0;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 18px;
+        letter-spacing: -0.0008em;
+        color: #e5e4fa;
+        opacity: 0.6;
+      }
+    }
+
+    .coin-import {
+      border-radius: 70px;
+    }
+  }
+
+  .no-imported-coins {
+    height: calc(100% - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
       margin: 0;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 18px;
-      letter-spacing: -0.0008em;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      letter-spacing: 0.15px;
       color: #e5e4fa;
-      opacity: 0.6;
+    }
+    .description {
+      min-height: 60px;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 24px;
+      text-align: center;
+      letter-spacing: 0.44px;
+      color: #77768c;
     }
   }
 
-  .coin-import {
-    border-radius: 70px;
-  }
-}
-
-.no-imported-coins {
-  height: calc(100% - 90px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .title {
-    margin: 0;
+  .dialog-step__divider {
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
+    display: flex;
+    align-items: center;
     letter-spacing: 0.15px;
     color: #e5e4fa;
   }
-  .description {
-    min-height: 60px;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 24px;
-    text-align: center;
-    letter-spacing: 0.44px;
-    color: #77768c;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 95px;
   }
-}
 
-.dialog-step__divider {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.15px;
-  color: #e5e4fa;
-}
+  ::-webkit-scrollbar-thumb {
+    background-color: #e5e4fa30;
+    opacity: 0.3;
+    border-radius: 40px;
+  }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 95px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #e5e4fa30;
-  opacity: 0.3;
-  border-radius: 40px;
-}
-
-.imported-coins {
-  position: relative;
-  max-height: calc(100% - 75px);
-  overflow-x: hidden;
-  overflow-y: auto;
+  .imported-coins {
+    position: relative;
+    max-height: calc(100% - 75px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
