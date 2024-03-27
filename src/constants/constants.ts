@@ -33,7 +33,7 @@ export const CURVE_UNCORRELATED_V05 = `${MODULES_V05_ACCOUNT}::curves::Uncorrela
 export const CURVE_STABLE = `${MODULES_ACCOUNT}::curves::Stable`;
 export const CURVE_STABLE_V05 = `${MODULES_V05_ACCOUNT}::curves::Stable`;
 
-export const RECALCULATION_BALANCE_TIME = 5000;
+export const RECALCULATION_BALANCE_TIME = 7000;
 
 export const NETWORKS_MODULES = {
   Scripts: `${MODULES_ACCOUNT}::scripts_v2`,
@@ -71,6 +71,10 @@ export const NETWORKS: Network[] = [
 ];
 
 export const CORRECT_CHAIN = process.env.VUE_APP_CORRECT_CHAIN || 'mainnet';
+
+export const REST_URL =
+  process.env.VITE_REST_API_URL ||
+  'https://aptos-mainnet.pontem.network/v1';
 
 export const CORRECT_CHAIN_ID =
   process.env.VUE_APP_CORRECT_CHAIN === 'mainnet'

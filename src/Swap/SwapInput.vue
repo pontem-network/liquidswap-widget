@@ -58,7 +58,7 @@
             </template>
             <ToolTip
                 v-else
-                position="bottom-left"
+                position="bottom-right"
                 :tooltipText="'This token is not registered in your account. Before swap, you must register this token.'"
                 class="token-tooltip"
             >
@@ -76,6 +76,8 @@
     ref="dialog"
     v-model:actionToken="state.token"
     v-model:secondaryToken="secondaryToken.token"
+    :mode="mode"
+    :view="'select-token'"
   />
   <UnverifiedTokenDialog ref="cautionAlert" />
 </template>

@@ -124,6 +124,7 @@
           <img class="full_version__img" src="./../assets/expand.svg" />
           <span>liquidswap.com</span>
         </a>
+        <span class="full_version__app">version {{ versionApp }}</span>
       </div>
     </div>
     <TxSettingsDialog
@@ -133,7 +134,6 @@
       :to-token="swapStore.toCurrency.token"
       :from-token="swapStore.fromCurrency.token"
     />
-    <PriceImpactWarningDialog />
   </div>
 </template>
 
@@ -177,6 +177,7 @@ const swapStore = useSwapStore();
 
 const requireUpdateInput = ref<TokenFiledType>();
 
+const versionApp = computed(() => process.env.VERSION);
 const { account } = mainStore;
 const version = computed(() => swapStore.version);
 const { fromCurrency, toCurrency } = storeToRefs(swapStore);

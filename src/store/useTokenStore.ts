@@ -1,22 +1,16 @@
-import { useStorage } from '@vueuse/core';
-import { defineStore } from 'pinia';
-import {
-  computed,
-  ComputedRef,
-  onBeforeMount,
-  reactive,
-  ref,
-  watch,
-} from 'vue';
-import { isNumber } from 'lodash';
-import CoinsRegistry from '@pontem/coins-registry';
-
-import { IStorageBasic, Resource, AptosCoinInfoResource } from '@/types';
+import { APTOS, CORRECT_CHAIN, CORRECT_CHAIN_ID } from '@/constants/constants';
+import { IStorageBasic, Resource } from '@/types';
 import { TCoinSource } from '@/types/coins';
-import { APTOS, CORRECT_CHAIN_ID } from '@/constants/constants';
-import { useStore } from '@/store/useStore';
+import { useStore } from '@/store';
+import { AptosCoinInfoResource } from '@/types/aptosResources';
+import { nope } from '@/utils/utils';
 import { composeType, extractAddressFromType } from '@/utils/contracts';
 import { aliasForToken, titleForToken } from '@/utils/tokens';
+import { useStorage } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { computed, ComputedRef, reactive, ref, watch } from 'vue';
+import isNumber from 'lodash/isNumber';
+import CoinsRegistry from '@pontem/coins-registry';
 
 export interface IPersistedToken {
   type: string;
@@ -25,7 +19,7 @@ export interface IPersistedToken {
   symbol: string;
   name: string;
   address?: string;
-  logoURI?: string;
+  logo?: string;
   logo_url?: string;
   verified?: boolean;
   source: TCoinSource;
@@ -44,14 +38,11 @@ interface IStorage extends IStorageBasic {
   tokens: IPersistedToken[];
 }
 
-const PROVIDER_TO_SYMBOL_PREFIX: Record<string, string> = {
-  amnis: 'am',
-};
-
 const PERSISTING_SOURCES = ['import', 'pool'];
 
 export const useTokensStore = defineStore('tokensStore', () => {
   const mainStore = useStore();
+
   const { client, modules } =  useStore();
 
   const tokens = reactive<Record<string, IPersistedTokenExtended>>({});
@@ -87,7 +78,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
     if (!item?.caution) {
       verifiedTokensTypes.add(item.type);
     }
-    return item;
   }
 
   /**
@@ -101,12 +91,18 @@ export const useTokensStore = defineStore('tokensStore', () => {
   }
 
   async function fetchCoinsList() {
-    const { coins } = CoinsRegistry;
+    const coins = CoinsRegistry.getCoinsFor(CORRECT_CHAIN);
     coins.forEach(processFetchedCoin);
-    return registerCoins(coins, mainStore.network.value?.id);
+    return await registerCoins(coins, mainStore.network.value?.id);
   }
 
-  onBeforeMount(() => loadFromLocalStorage());
+  async function fetchCoinsData() {
+    const result = await Promise.all([
+      loadFromLocalStorage(),
+      fetchCoinsList(),
+    ]);
+    return result;
+  }
 
   async function loadFromLocalStorage() {
     if (customTokensStorage.value) {
@@ -114,14 +110,17 @@ export const useTokensStore = defineStore('tokensStore', () => {
         const { tokens } = customTokensStorage.value;
         if (!tokens) return;
 
-        for (const token of tokens) {
-          // load only coins which can be persisted
-          if (PERSISTING_SOURCES.includes(token.source)) {
-            await loadToken(token);
-          }
-        }
+        const tokensCandidates = tokens.filter((token) => {
+          return PERSISTING_SOURCES.includes(token.source);
+        });
+
+        return await Promise.all(
+          tokensCandidates.map((token) => {
+            return loadToken(token);
+          }),
+        );
       } catch (_e) {
-        //
+        console.error('tokensStore:loadFromLocalStorage', _e);
       } finally {
         isReady.value = true;
       }
@@ -145,7 +144,9 @@ export const useTokensStore = defineStore('tokensStore', () => {
     };
   }
 
-  watch(tokens, (_tokens) => persistCustomToStorage(_tokens));
+  watch(tokens, (_tokens) => {
+    persistCustomToStorage(_tokens);
+  });
 
   const loadToken = async (token: IPersistedToken) => {
     // - - fetch coinInfo from URL
@@ -154,21 +155,24 @@ export const useTokensStore = defineStore('tokensStore', () => {
       await client.getAccountResource(
         extractAddressFromType(token.type),
         coinInfo,
-      )  as unknown as Promise<Resource | undefined> | any;
+      ) as unknown as Promise<Resource | undefined> | any;
 
     if (!resource) {
       // TODO: Process error
       return undefined;
     }
 
-    tokens[token.type].name = resource.data.name;
-    tokens[token.type].symbol = resource.data.symbol;
-    tokens[token.type].decimals = +resource.data.decimals;
-    tokens[token.type].alias = aliasForToken(token);
-    tokens[token.type].title = titleForToken(token);
-    tokens[token.type].logo = token.logo_url || '';
+    const loadingToken: IPersistedToken = {
+      type: token.type,
+      name: resource.data.name,
+      symbol: resource.data.symbol,
+      decimals: +resource.data.decimals,
+      chainId: token.chainId,
+      source: token.source,
+      order: token.order,
+    };
 
-    return tokens[token.type];
+    return registerToken(loadingToken, { rewrite: true });
   };
 
   const token: ComputedRef<() => IPersistedToken | undefined> = computed(
@@ -176,8 +180,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
   );
 
   /**
-   * Get extended token object
-   *
+   * Get an extended token object.
+   * The list of tokens is formed from coins-registry/coins and tokens from local storage.
    * @param type token type
    * @returns
    */
@@ -185,7 +189,10 @@ export const useTokensStore = defineStore('tokensStore', () => {
     return type && tokens[type] ? tokens[type] : undefined;
   }
 
-  function registerToken(token: IPersistedToken, { rewrite = false }) {
+  async function registerToken(
+    token: IPersistedToken,
+    { rewrite = false },
+  ): Promise<IPersistedTokenExtended> {
     const { type } = token;
 
     // TODO: Check try to register a duplicate
@@ -209,6 +216,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       symbol: token.symbol, // *
       source: token.source,
       order: token.order || 1000,
+      caution: token.caution || false,
       alias: aliasForToken(token),
       title: titleForToken(token),
       logo: token.logo_url || '',
@@ -217,17 +225,22 @@ export const useTokensStore = defineStore('tokensStore', () => {
     return tokens[type];
   }
 
-  function searchToken(type: string, withCancel?: false): Promise<any>;
-
+  function searchToken(
+    type: string,
+    withCancel?: false,
+  ): Promise<IPersistedTokenExtended>;
   function searchToken(
     type: string,
     withCancel: true,
-  ): { request: Promise<any>; cancel: (message?: string) => void };
-  function searchToken(type: string, withCancel: any): any {
+  ): {
+    request: Promise<IPersistedTokenExtended>;
+    cancel: (message?: string) => void;
+  };
+  function searchToken(type: string, withCancel?: boolean): any {
     if (tokens[type]) {
       return withCancel
         ? {
-          cancel: () => {},
+          cancel: nope,
           request: Promise.resolve(tokens[type]),
         }
         : Promise.resolve(tokens[type]);
@@ -236,27 +249,26 @@ export const useTokensStore = defineStore('tokensStore', () => {
     const promise = client.getAccountResource(
       extractAddressFromType(type),
       composeType(modules.CoinInfo, [type]),
-    ) as unknown as any;
+    )as unknown as any;
+    const request = withCancel ? promise.request : promise;
 
-    const request = withCancel ? promise?.request : promise;
-
-    request?.then((resource?: Resource<AptosCoinInfoResource>) => {
+    request.then((resource?: Resource<AptosCoinInfoResource>) => {
       if (!resource) {
         return;
       }
 
-      const data = resource.data;
+      const { data } = resource;
 
       return registerToken(
         {
+          type,
           name: data.name,
           symbol: data.symbol,
           decimals: +data.decimals,
           chainId: mainStore.networkId.value,
-          source: 'import',
           caution: true,
-          order: 1,
-          type,
+          source: 'import',
+          order: 1000,
         },
         {
           rewrite: false,
@@ -266,14 +278,15 @@ export const useTokensStore = defineStore('tokensStore', () => {
 
     if (withCancel) {
       return {
-        request: promise?.request,
-        cancel: promise?.cancel,
+        request: promise.request,
+        cancel: promise.cancel,
       };
     }
 
     return promise;
   }
 
+  //TODO: APT-420 getTokenInfo func could save received token to store immediately
   async function getTokenInfo(
     token: string,
     remote?: boolean,
@@ -287,7 +300,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       await client.getAccountResource(
         extractAddressFromType(token),
         coinInfo,
-      )  as unknown as any;
+      ) as unknown as any;
 
     if (!resource) {
       return undefined;
@@ -299,6 +312,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
       name: resource.data.name,
       symbol: resource.data.symbol,
       decimals: +resource.data.decimals,
+      caution: true,
       source: 'import',
     };
 
@@ -318,8 +332,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
     persistCustomToStorage(tokens, true);
   }
 
-  function registerCoins(list: IPersistedToken[], networkId: number): void {
-    list
+  function registerCoins(list: IPersistedToken[], networkId: number) {
+    const registerQueries = list
       .filter((token: IPersistedToken) => token.chainId === networkId)
       .map((token: IPersistedToken) =>
         registerToken(token, {
@@ -327,6 +341,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
           rewrite: true,
         }),
       );
+
+    return Promise.all(registerQueries);
   }
 
   watch(
@@ -335,8 +351,11 @@ export const useTokensStore = defineStore('tokensStore', () => {
       if (!network) {
         return;
       }
+      // isLoading.value = true;
       // TODO: Check tokens not valid for network
-      registerCoins(coins.value, network.id);
+      await registerCoins(coins.value, network.id);
+      // isLoading.value = false;
+      // isReady.value = true;
     },
     { immediate: true },
   );
@@ -353,5 +372,6 @@ export const useTokensStore = defineStore('tokensStore', () => {
     isReady,
     isTokenVerified,
     fetchCoinsList,
+    fetchCoinsData,
   };
 });

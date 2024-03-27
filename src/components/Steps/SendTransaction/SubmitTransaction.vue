@@ -41,7 +41,7 @@
                   <ToolTip position="left" :tooltipText="'Click to copy'">
                     <PButton
                         icon="pi pi-copy"
-                        class="p-button-sm p-button-rounded p-button-text"
+                        class="p-button-sm p-button-rounded p-button-text submit__copy-button"
                         @click="copyAddress"
                     />
                   </ToolTip>

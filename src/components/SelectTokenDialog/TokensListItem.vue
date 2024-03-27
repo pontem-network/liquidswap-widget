@@ -1,70 +1,56 @@
 <template>
-  <div class="preset-list__item">
-    <img :src="preset?.logo" alt="" />
-    <div class="preset-list__item-content">
-      <span>{{ preset.name }}</span>
-      <span
-        >{{ preset.tokens?.length || 0 }} tokens
-        <i
-          class="pi pi-cog"
-          aria-haspopup="true"
-          aria-controls="preset_menu"
-          @click="toggle"
-        />
-        <p-menu id="preset_menu" ref="menu" :model="items" :popup="true" />
-      </span>
-    </div>
-    <p-input-switch
-      v-model="enabled"
-      :disabled="!preset.options?.switchable"
-      class="switch ml-auto"
-    />
+  <div class="tokens-container">
+    <template v-for="token in tokensEntities" :key="token?.type">
+      <ToolTip
+          position="top"
+          :tooltipText="token?.symbol"
+          class="token-icon-tooltip"
+      >
+        <i class="pi pi-info-circle info-circle" />
+      </ToolTip>
+      <TokenIcon
+          class="tokens-container__icon"
+          :class="{
+          'tokens-container__icon_inactive': activeToken !== token?.type,
+        }"
+          :type="token?.type"
+          :logo="token?.logo"
+          @click="handleIconClick(token)"
+      />
+    </template>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed, ref, toRefs } from 'vue';
-import PMenu from 'primevue/menu';
-import PInputSwitch from 'primevue/inputswitch';
+<script setup lang="ts">
+import { computed } from 'vue';
 
+import { TokenIcon } from '../TokenIcon';
+import ToolTip from '@/components/ToolTip/Tooltip.vue';
+import { useTokensStore } from '@/store';
+import { IPersistedTokenExtended } from '@/store/useTokenStore';
 
-interface IProps {
-  preset: {
-    logo: string;
-    name: string;
-    tokens: string[];
-    enabled: boolean;
-    options: {
-      switchable: boolean;
-    };
-  };
-}
+const tokensStore = useTokensStore();
 
-const props = defineProps<IProps>();
-const { preset } = toRefs<IProps>(props);
-
-const enabled = computed({
-  get: () => preset.value.enabled,
-  set(value) {
-    console.debug(value);
+const props = defineProps({
+  tokens: {
+    type: Array<string>,
+    default: () => [],
+  },
+  activeToken: {
+    type: String,
+    required: false,
+    default: () => undefined,
   },
 });
 
-const menu = ref();
-const items = ref([
-  {
-    label: 'View List',
-    command: () => {
-      // TODO: View list action
-    },
-  },
-  {
-    label: 'Remove List',
-    command: () => {
-      // TODO: Remove list action
-    },
-  },
-]);
+const emits = defineEmits(['click:icon']);
 
+const tokensEntities = computed(() => {
+  return props.tokens.map((type) => tokensStore.getToken(type));
+});
+
+function handleIconClick(token?: IPersistedTokenExtended) {
+  emits('click:icon', token);
+}
 </script>
 

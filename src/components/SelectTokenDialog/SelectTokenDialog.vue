@@ -12,10 +12,9 @@
       v-if="view === 'root'"
       v-model:actionToken="localActionToken"
       v-model:secondaryToken="localSecondaryToken"
-      :field="props.field"
       class="stepped-dialog__item"
-      @back="onBack"
       @navigate="onNavigate"
+      @back="onBack"
       @close="onClose"
     />
     <ManagePresets
@@ -34,15 +33,23 @@ import { ref, computed } from 'vue';
 import PDialog from 'primevue/dialog';
 import ManagePresets from './ManagePresets.vue';
 
-
 interface IProps {
   actionToken?: string;
   secondaryToken?: string;
-  field?: 'to' | 'from' | 'none';
+  view: 'select-token' | 'manage-presets';
+  mode: 'from' | 'to';
 }
 
-const emits = defineEmits(['update:actionToken', 'update:secondaryToken']);
+const emits = defineEmits([
+  'update:actionToken',
+  'update:secondaryToken',
+  'navigate',
+  'cancel',
+]);
+
 const props = defineProps<IProps>();
+
+const mode = computed(() => props.mode);
 
 const display = ref(false);
 const view = ref<'root' | 'mange-presets'>('root');

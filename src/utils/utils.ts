@@ -222,3 +222,6 @@ export function getFormattedValidationCode(error: Error) {
     .join(' ')
     .toLowerCase();
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export function nope() {}

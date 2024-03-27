@@ -359,6 +359,8 @@ export const usePoolsStore = defineStore('poolsStore', () => {
       : false;
   }
 
+  const poolsMapAsArray = computed(() => Object.values(poolsMap));
+
   return {
     isLoading,
     isReady,
@@ -371,5 +373,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
     poolsMap,
     poolsTitleMap,
     defaultPools,
+    poolsMapAsArray,
   };
 });
