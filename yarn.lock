@@ -307,10 +307,10 @@
     react-dom "^18.X.X || 17.X.X"
     vue "3.2.40"
 
-"@pontem/coins-registry@2.1.64":
-  version "2.1.64"
-  resolved "https://registry.yarnpkg.com/@pontem/coins-registry/-/coins-registry-2.1.64.tgz#7714e2be66122f3073b7b94860b07ac0a698cffe"
-  integrity sha512-yrDco9ckmCjcqlSDM40zTPtj97QZguRCJH0fBpj3HgfDkf3wpUNBryBg/n3W/qNMomeY2xrzy93OtfXR++jHKA==
+"@pontem/coins-registry@2.1.67":
+  version "2.1.67"
+  resolved "https://registry.yarnpkg.com/@pontem/coins-registry/-/coins-registry-2.1.67.tgz#255d1956876712e77efb395c1dcb2fdde894dd22"
+  integrity sha512-joidJZaMvHFLs5yD4ztE4Bzm3pz19I3YZfUDDswPEh2i1fAS//bvLCUT3bMSsmZuweSCvuM7W451bKtTUvz/aw==
 
 "@pontem/liquidswap-sdk@0.6.1":
   version "0.6.1"
