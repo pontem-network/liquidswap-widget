@@ -143,6 +143,7 @@ import PInlineMessage from 'primevue/inlinemessage';
 import PButton from 'primevue/button';
 import { storeToRefs } from 'pinia';
 import { useDebounceFn } from '@vueuse/core';
+import isNil from 'lodash/isNil';
 
 import { CurveInfo } from '@/components/CurveInfo';
 import { CurveSwitch } from '@/components/CurveSwitch';
@@ -293,7 +294,7 @@ function handleUpdateModelAmount(event: TCustomEvent, type: TokenFiledType) {
 
   const { value } = event;
 
-  if (!tokenDecimals) return;
+  if (isNil(tokenDecimals)) return;
 
   const amount = getAmountInteger(value, tokenDecimals);
   tokenModel.value.amount = amount;

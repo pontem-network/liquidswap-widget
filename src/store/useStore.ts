@@ -41,6 +41,7 @@ export const useStore = createGlobalState(() => {
   const insideNativeWallet = ref(false);
   const dappStatusTransaction = ref<TStatusTransaction>("pending");
   const dappTransactionHash = ref(null);
+  const promotedToken = ref<string | null>(null);
 
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
@@ -242,6 +243,7 @@ export const useStore = createGlobalState(() => {
     dappNetworkData,
     dappStatusTransaction,
     dappTransactionHash,
-    walletName
+    walletName,
+    promotedToken
   }
 });
