@@ -21,6 +21,7 @@ const props = defineProps<{
   dataAccount?: string; // account address like 0x....da14
   dataNetwork?: string; // { name?: string; chainId?: string } as JSON
   dataTransaction?: string; // { status: 'pending' | 'success' | 'error' | 'rejected'; hash: string | null } as JSON
+  dataPromoted?: string; // token address to show on top of token list menu
 }>();
 
 // initialize stores
@@ -45,6 +46,10 @@ function checkNativeWallet (){
     mainStore.dappNetworkData.value = JSON.parse(props.dataNetwork);
     mainStore.dappStatusTransaction.value = props?.dataTransaction && JSON.parse(props.dataTransaction).status;
     mainStore.dappTransactionHash.value = props?.dataTransaction && JSON.parse(props.dataTransaction)?.hash;
+  }
+
+  if (props.dataPromoted) {
+    mainStore.promotedToken.value = props.dataPromoted;
   }
 }
 

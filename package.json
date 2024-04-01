@@ -1,8 +1,8 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
-  "description": "LiquidSwap widget as custom web component",
+  "description": "Liquidswap widget as custom web component",
   "files": [
     "src",
     "dist"
@@ -49,7 +49,7 @@
   "dependencies": {
     "@metamask/jazzicon": "2.0.0",
     "@pontem/aptos-wallet-adapter": "0.7.2",
-    "@pontem/coins-registry": "2.1.64",
+    "@pontem/coins-registry": "2.1.67",
     "@pontem/liquidswap-sdk": "0.6.1",
     "@tsconfig/recommended": "1.0.2",
     "@types/lodash": "4.14.182",

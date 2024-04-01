@@ -27,6 +27,8 @@ export const knownTokens = [
   'returd',
   'shrimp',
   'apts',
+  'uptos',
+  // 'chewy', need to wait for listing chewy on CMC. right now API return incorrect price from aptostop.
 ];
 
 export const BRIDGES = ['celer', 'wormhole', 'layerzero'];

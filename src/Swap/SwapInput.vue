@@ -85,6 +85,7 @@
 <script setup lang="ts">
 import { computed, PropType, ref, watch } from 'vue';
 import { watchDebounced } from '@vueuse/core';
+import isNil from 'lodash/isNil';
 
 import { useStore, useSwapStore, useTokensStore } from '@/store';
 import { useCurrentAccountBalance } from '@/composables/useAccountBalance';
@@ -149,7 +150,7 @@ const isFrom = computed(() => {
 });
 
 const amount = computed(() => {
-  if (state.amount === undefined || !tokenDecimals.value) return;
+  if (state.amount === undefined || isNil(tokenDecimals.value)) return;
 
   return getAmountWithDecimal(state.amount, tokenDecimals.value);
 });
@@ -353,7 +354,7 @@ function handleInput(event: number | undefined) {
     mode: props.mode,
   };
 
-  if (!props.model || !tokenDecimals.value) return;
+  if (!props.model || isNil(tokenDecimals.value)) return;
 
   swapInputModel.value = data.value;
   swapStore.interactiveField = props.mode;
@@ -371,7 +372,7 @@ function handleUpdateModelValue(event: number | undefined) {
     mode: props.mode,
   };
 
-  if (!props.model || !tokenDecimals.value) return;
+  if (!props.model || isNil(tokenDecimals.value)) return;
 
   emits('update:model', data);
 }

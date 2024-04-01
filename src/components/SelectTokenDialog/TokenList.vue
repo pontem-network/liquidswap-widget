@@ -189,6 +189,7 @@ interface IExtendedTokenInList extends IPersistedTokenExtended {
 type TTokenInList = {
   token: IExtendedTokenInList;
   selected: boolean;
+  promoted: boolean;
   command: (...args: any[]) => void;
 };
 type TTokensBalance = { amount: number | undefined; token: string };
@@ -242,6 +243,8 @@ const searchRegexp = computed(() => {
   return new RegExp(escapeRegExp(search.value), 'gi');
 });
 
+const promotedToken = computed(() => store.promotedToken.value);
+
 const rawTokenList = async () => {
   let tokens: ComputedRef<IExtendedTokenInList>[] = [];
 
@@ -284,6 +287,8 @@ const rawTokenList = async () => {
 
   const mappedTokensList = tokens.map((tokenRef: any) => {
     let selected = false;
+    let promoted = false;
+
     if (
         selectedTokens.value.length &&
         tokenRef &&
@@ -292,11 +297,16 @@ const rawTokenList = async () => {
       selected = true;
     }
 
+    if (promotedToken.value && tokenRef && promotedToken.value === tokenRef.value.type) {
+      promoted = true;
+    }
+
     _calculateTvl(tokenRef);
 
     return {
       token: tokenRef,
       selected,
+      promoted,
       command: () => {
         if (!selected) {
           selectToken(tokenRef.value.type);
@@ -324,8 +334,8 @@ const rawTokenList = async () => {
 
   return orderBy(
       filteredList,
-      ['selected', 'token.caution', 'token.order', 'token.alias'],
-      ['desc', 'asc', 'asc', 'asc'],
+      ['selected', 'promoted', 'token.caution', 'token.order', 'token.alias'],
+      ['desc', 'desc', 'asc', 'asc', 'asc'],
   );
 };
 
