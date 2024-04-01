@@ -48,8 +48,6 @@ function checkNativeWallet (){
     mainStore.dappTransactionHash.value = props?.dataTransaction && JSON.parse(props.dataTransaction)?.hash;
   }
 
-  console.log('!!props', props);
-
   if (props.dataPromoted) {
     mainStore.promotedToken.value = props.dataPromoted;
   }
