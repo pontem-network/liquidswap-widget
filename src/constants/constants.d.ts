@@ -31,7 +31,6 @@ export declare const APTOS = "0x1::aptos_coin::AptosCoin";
 export declare const DOODOO = "0x73eb84966be67e4697fc5ae75173ca6c35089e802650f75422ab49a8729704ec::coin::DooDoo";
 export declare const NETWORKS: Network[];
 export declare const CORRECT_CHAIN: string;
-export declare const REST_URL: string;
 export declare const CORRECT_CHAIN_ID: number;
 export declare const VERSION_0 = 0;
 export declare const VERSION_0_5 = 0.5;
