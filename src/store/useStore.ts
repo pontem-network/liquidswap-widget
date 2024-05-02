@@ -13,7 +13,7 @@ import {
   RESOURCES_V05_ACCOUNT,
   MODULES_V05_ACCOUNT,
 } from "@/constants/constants";
-import { Network, TStatusTransaction } from '@/types';
+import { IDataFee, Network, TStatusTransaction} from '@/types';
 import { restUrl } from '@/utils/networkData';
 
 type GlobalCachebleState = {
@@ -42,6 +42,7 @@ export const useStore = createGlobalState(() => {
   const dappStatusTransaction = ref<TStatusTransaction>("pending");
   const dappTransactionHash = ref(null);
   const promotedToken = ref<string | null>(null);
+  const feeData = ref<IDataFee | null>(null);
 
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
@@ -244,6 +245,7 @@ export const useStore = createGlobalState(() => {
     dappStatusTransaction,
     dappTransactionHash,
     walletName,
-    promotedToken
+    promotedToken,
+    feeData,
   }
 });

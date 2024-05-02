@@ -88,3 +88,17 @@ export type TCustomEvent = {
   lockForUpdate: boolean;
 };
 
+interface IFeeStruct {
+  'scripts::swap': string;
+  'scripts_v2::swap': string;
+  'scripts::swap_into': string;
+  'scripts_v2::swap_into': string;
+}
+
+export interface IDataFee {
+  feePercent: string;
+  feeStruct: IFeeStruct;
+}
+
+
+

@@ -22,6 +22,20 @@ const props = defineProps<{
   dataNetwork?: string; // { name?: string; chainId?: string } as JSON
   dataTransaction?: string; // { status: 'pending' | 'success' | 'error' | 'rejected'; hash: string | null } as JSON
   dataPromoted?: string; // token address to show on top of token list menu
+  dataFee?: string;
+  /* dataFee JSON struct:
+  *
+  * {
+  *   feePercent: "10",
+  *   feeStruct: {
+  *     'scripts::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v05',
+  *     'scripts_v2::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v0',
+  *     'scripts::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v05',
+  *     'scripts_v2::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v0',
+  *   }
+  * }
+  *
+  * */
 }>();
 
 // initialize stores
@@ -50,6 +64,10 @@ function checkNativeWallet (){
 
   if (props.dataPromoted) {
     mainStore.promotedToken.value = props.dataPromoted;
+  }
+
+  if (props.dataFee) {
+    mainStore.feeData.value = JSON.parse(props.dataFee);
   }
 }
 

@@ -45,7 +45,8 @@ import { getCurve, getShortCurveFromFull } from "@/utils/contracts";
 const emits = defineEmits(['success', 'reject', 'back', 'close']);
 
 const swapStore = useSwapStore();
-const { sdk } = useStore();
+const mainStore = useStore();
+const { sdk } = mainStore;
 
 const curveType = getShortCurveFromFull(swapStore.curve);
 
@@ -55,17 +56,40 @@ const view = ref<'root' | 'tx'>('root');
 const ratesHasChanged = ref(false);
 const cachedPayload = ref<AptosTxPayload>();
 
-const payload = computed<AptosTxPayload>(() => sdk.value.Swap.createSwapTransactionPayload({
-  fromToken: swapStore.fromCurrency.token as string,
-  toToken: swapStore.toCurrency.token as string,
-  fromAmount: swapStore.fromCurrency.amount as number,
-  toAmount: swapStore.toCurrency.amount as number,
-  interactiveToken: swapStore.lastInteractiveField,
-  slippage: swapStore.slippage,
-  stableSwapType: swapStore.stableSwapType,
-  curveType: curveType as 'stable' | 'uncorrelated',
-  version: swapStore.version as TVersionType,
-}));
+const feeData = computed(() => mainStore.feeData.value);
+
+const feePercent = computed( () => {
+  if (feeData.value) {
+    return feeData.value.feePercent;
+  }
+  return null;
+})
+
+const payload = computed<AptosTxPayload>(() => {
+  const _payload = sdk.value.Swap.createSwapTransactionPayload({
+    fromToken: swapStore.fromCurrency.token as string,
+    toToken: swapStore.toCurrency.token as string,
+    fromAmount: swapStore.fromCurrency.amount as number,
+    toAmount: swapStore.toCurrency.amount as number,
+    interactiveToken: swapStore.lastInteractiveField,
+    slippage: feePercent.value ? +feePercent.value : swapStore.slippage,
+    stableSwapType: swapStore.stableSwapType,
+    curveType: curveType as 'stable' | 'uncorrelated',
+    version: swapStore.version as TVersionType,
+  })
+
+  const clonedPayload = cloneDeep(_payload);
+
+  if (feeData.value) {
+      const [, router, fn] = clonedPayload.function.split('::');
+      const key = `${router}::${fn}`;
+      //@ts-ignore
+      const struct = feeData.value?.feeStruct[key];
+      clonedPayload.function = struct;
+  }
+
+  return clonedPayload;
+});
 
 watch(
   [cachedPayload, payload],
