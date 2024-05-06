@@ -58,9 +58,9 @@ const cachedPayload = ref<AptosTxPayload>();
 
 const feeData = computed(() => mainStore.feeData.value);
 
-const feePercent = computed( () => {
+const feeBasisPoint = computed( () => {
   if (feeData.value) {
-    return feeData.value.feePercent;
+    return feeData.value.feeBasisPoint;
   }
   return null;
 })
@@ -72,7 +72,7 @@ const payload = computed<AptosTxPayload>(() => {
     fromAmount: swapStore.fromCurrency.amount as number,
     toAmount: swapStore.toCurrency.amount as number,
     interactiveToken: swapStore.lastInteractiveField,
-    slippage: feePercent.value ? +feePercent.value : swapStore.slippage,
+    slippage: swapStore.slippage,
     stableSwapType: swapStore.stableSwapType,
     curveType: curveType as 'stable' | 'uncorrelated',
     version: swapStore.version as TVersionType,

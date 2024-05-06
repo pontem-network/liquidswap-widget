@@ -58,6 +58,8 @@ export const useSwapStore = defineStore('swapStore', () => {
   const tokensStore = useTokensStore();
   const aptos = mainStore.client;
 
+  const feeBasisPoint = computed(() => (mainStore.feeData.value?.feeBasisPoint));
+
   const networkId = computed(() => mainStore.networkId);
   const predefinedCurve = computed(() => {
     return poolsStore.getCurveType(from.token, to.token, version.value as unknown as TVersionType);
@@ -163,16 +165,31 @@ export const useSwapStore = defineStore('swapStore', () => {
         return;
       }
 
-      try {
-        rate = await sdk.value.Swap.calculateRates({
-          fromToken: from.token,
-          toToken: to.token,
-          interactiveToken: mode,
-          curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
-          amount: mode === 'from' ? from.amount! : to.amount!,
-          version: version.value as unknown as TVersionType,
-        });
-      } catch (_e) {}
+      if (feeBasisPoint.value && getShortCurveFromFull(curve.value) === 'stable') {
+        fee.value = d(feeBasisPoint.value).plus(fee.value).toNumber();
+        try {
+          rate = await sdk.value.Swap.calculateRates({
+            fromToken: from.token,
+            toToken: to.token,
+            interactiveToken: mode,
+            curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
+            amount: mode === 'from' ? from.amount! : to.amount!,
+            version: version.value as unknown as TVersionType,
+            customFee: fee.value,
+          });
+        } catch(_e) {}
+      } else {
+        try {
+          rate = await sdk.value.Swap.calculateRates({
+            fromToken: from.token,
+            toToken: to.token,
+            interactiveToken: mode,
+            curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
+            amount: mode === 'from' ? from.amount! : to.amount!,
+            version: version.value as unknown as TVersionType,
+          });
+        } catch (_e) {}
+      }
 
       convertError.value =
         to.amount && to.reserve < to.amount ? 'Insufficient funds in Liquidity Pool' : undefined;

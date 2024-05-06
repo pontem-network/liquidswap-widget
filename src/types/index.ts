@@ -96,7 +96,7 @@ interface IFeeStruct {
 }
 
 export interface IDataFee {
-  feePercent: string;
+  feeBasisPoint: string;
   feeStruct: IFeeStruct;
 }
 
