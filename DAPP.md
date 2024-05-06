@@ -20,6 +20,19 @@ interface ITransactionStatus {
 };
 const transactionStatus: ITransactionStatus = { status: 'pending', hash: null };
 ```
+Optional:
+* Custom Fee to set up widget with fee swap;
+```typescript
+const dataFee = {
+ feeBasisPoint: "10",
+ feeStruct: {
+   'scripts::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v05',
+   'scripts_v2::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v0',
+   'scripts::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v05',
+   'scripts_v2::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v0'
+ }
+}
+```
 
 Properties are passed as strings (data-attributes), so to pass Object you need to use JSON.stringify();
 They will be extruded with JSON.parse();
@@ -31,6 +44,7 @@ Properties are reactive, so any change to props will update widget's internal st
     data-network={JSON.stringify(dataNetwork)}
     data-account={dataAccount}
     data-transaction={JSON.stringify(transactionStatus)}
+    data-fee={JSON.stringify(dataFee)} // optional
 />
 ```
 
