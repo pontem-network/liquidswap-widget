@@ -58,13 +58,6 @@ const cachedPayload = ref<AptosTxPayload>();
 
 const feeData = computed(() => mainStore.feeData.value);
 
-const feeBasisPoint = computed( () => {
-  if (feeData.value) {
-    return feeData.value.feeBasisPoint;
-  }
-  return null;
-})
-
 const payload = computed<AptosTxPayload>(() => {
   const _payload = sdk.value.Swap.createSwapTransactionPayload({
     fromToken: swapStore.fromCurrency.token as string,
