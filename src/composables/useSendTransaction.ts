@@ -25,6 +25,7 @@ export function useSendTransaction() {
       if (insideNativeWallet.value) {
 
         //TODO: move from 'fee_on' to mapping function name from payload.
+        // Only for wallet integration to show fee on trx
         if (feeValue.value && payload.function.includes('fee_on')) {
           Object.assign(payload, { totalFee: feeValue.value })
         }
