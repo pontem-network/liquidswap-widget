@@ -147,6 +147,9 @@ export const useSwapStore = defineStore('swapStore', () => {
         const coinXReserve = +response.data.coin_x_reserve.value;
         const coinYReserve = +response.data.coin_y_reserve.value;
         fee.value = response.data.fee;
+        if (feeBasisPoint.value) {
+          fee.value = d(response.data.fee).plus(feeBasisPoint.value).toNumber();
+        }
         from.reserve = isSorted ? coinXReserve : coinYReserve;
         to.reserve = isSorted ? coinYReserve : coinXReserve;
       } catch (e) {
@@ -165,8 +168,7 @@ export const useSwapStore = defineStore('swapStore', () => {
         return;
       }
 
-      if (feeBasisPoint.value && getShortCurveFromFull(curve.value) === 'stable') {
-        fee.value = d(feeBasisPoint.value).plus(fee.value).toNumber();
+      if (feeBasisPoint.value) {
         try {
           rate = await sdk.value.Swap.calculateRates({
             fromToken: from.token,
@@ -175,7 +177,7 @@ export const useSwapStore = defineStore('swapStore', () => {
             curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
             amount: mode === 'from' ? from.amount! : to.amount!,
             version: version.value as unknown as TVersionType,
-            customFee: fee.value,
+            additionalFee: +feeBasisPoint.value,
           });
         } catch(_e) {}
       } else {

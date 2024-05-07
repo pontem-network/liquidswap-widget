@@ -28,10 +28,10 @@ const props = defineProps<{
   * {
   *   feeBasisPoint: "100",
   *   feeStruct: {
-  *     'scripts::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v05',
-  *     'scripts_v2::swap': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_exact_coin_for_coin_v0',
-  *     'scripts::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v05',
-  *     'scripts_v2::swap_into': '0x57d91c5fbebfdc3d0f42490db87e317c700e1248db8d46f1a8c7e735e835ba0b::fee_on::wallet_swap_coin_for_exact_coin_v0',
+  *     'scripts::swap': 'address::module::function',
+  *     'scripts_v2::swap': 'address::module::function',
+  *     'scripts::swap_into': 'address::module::function',
+  *     'scripts_v2::swap_into': 'address::module::function',
   *   }
   * }
   *
