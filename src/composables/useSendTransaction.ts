@@ -23,13 +23,12 @@ export function useSendTransaction() {
       const unrefTx = unref(txParams) as AptosCreateTx;
       const payload = camelCaseKeysToUnderscore(unrefTx.payload);
       if (insideNativeWallet.value) {
-        const feeEvent = new CustomEvent('poolFeeWithAdditionalFeeInPercents', {
-          detail: feeValue,
-          composed: true,
-          bubbles: true,
-        });
 
-        document.querySelector('liquidswap-widget')?.dispatchEvent(feeEvent);
+        let totalFee = undefined;
+
+        if (feeValue.value && payload.function.includes('fee_on')) {
+          Object.assign(payload, { totalFee: feeValue.value })
+        }
 
         const event = new CustomEvent('signAndSubmitTransaction', {
             detail: payload,
