@@ -58,6 +58,8 @@ export const useSwapStore = defineStore('swapStore', () => {
   const tokensStore = useTokensStore();
   const aptos = mainStore.client;
 
+  const feeBasisPoint = computed(() => (mainStore.feeData.value?.feeBasisPoint));
+
   const networkId = computed(() => mainStore.networkId);
   const predefinedCurve = computed(() => {
     return poolsStore.getCurveType(from.token, to.token, version.value as unknown as TVersionType);
@@ -145,6 +147,9 @@ export const useSwapStore = defineStore('swapStore', () => {
         const coinXReserve = +response.data.coin_x_reserve.value;
         const coinYReserve = +response.data.coin_y_reserve.value;
         fee.value = response.data.fee;
+        if (feeBasisPoint.value) {
+          fee.value = d(response.data.fee).plus(feeBasisPoint.value).toNumber();
+        }
         from.reserve = isSorted ? coinXReserve : coinYReserve;
         to.reserve = isSorted ? coinYReserve : coinXReserve;
       } catch (e) {
@@ -163,16 +168,30 @@ export const useSwapStore = defineStore('swapStore', () => {
         return;
       }
 
-      try {
-        rate = await sdk.value.Swap.calculateRates({
-          fromToken: from.token,
-          toToken: to.token,
-          interactiveToken: mode,
-          curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
-          amount: mode === 'from' ? from.amount! : to.amount!,
-          version: version.value as unknown as TVersionType,
-        });
-      } catch (_e) {}
+      if (feeBasisPoint.value) {
+        try {
+          rate = await sdk.value.Swap.calculateRates({
+            fromToken: from.token,
+            toToken: to.token,
+            interactiveToken: mode,
+            curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
+            amount: mode === 'from' ? from.amount! : to.amount!,
+            version: version.value as unknown as TVersionType,
+            additionalFee: +feeBasisPoint.value,
+          });
+        } catch(_e) {}
+      } else {
+        try {
+          rate = await sdk.value.Swap.calculateRates({
+            fromToken: from.token,
+            toToken: to.token,
+            interactiveToken: mode,
+            curveType: getShortCurveFromFull(curve.value) as 'stable' | 'uncorrelated',
+            amount: mode === 'from' ? from.amount! : to.amount!,
+            version: version.value as unknown as TVersionType,
+          });
+        } catch (_e) {}
+      }
 
       convertError.value =
         to.amount && to.reserve < to.amount ? 'Insufficient funds in Liquidity Pool' : undefined;

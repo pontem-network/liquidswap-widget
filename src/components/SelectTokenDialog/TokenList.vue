@@ -32,7 +32,7 @@
       > Bridged
       </PButton>
     </div>
-    <template v-if="address">
+    <template v-if="address && !disableBalances">
       <div class="divider" />
       <div class="tvl-sort">
         <span class="tvl-sort__title">Token</span>
@@ -204,6 +204,8 @@ const emits = defineEmits([
   'update:poolId',
 ]);
 
+const disableBalances = true;
+
 const poolsStore = usePoolsStore();
 const store = useStore();
 
@@ -257,7 +259,7 @@ const rawTokenList = async () => {
   const alreadySelected: string[] = [];
 
   // avoid displaying balances when the wallet is disconnected
-  if (address.value) {
+  if (address.value && !disableBalances) {
     const cacheKey = `${address.value}-tokens-balance`;
 
     //Cache to avoid loading every time you open the sidebar

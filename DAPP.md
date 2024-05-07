@@ -20,6 +20,19 @@ interface ITransactionStatus {
 };
 const transactionStatus: ITransactionStatus = { status: 'pending', hash: null };
 ```
+Optional:
+* Custom Fee to set up widget with fee swap;
+```typescript
+const dataFee = {
+ feeBasisPoint: "10",
+ feeStruct: {
+   'scripts::swap': 'address::module::function',
+   'scripts_v2::swap': 'address::module::function',
+   'scripts::swap_into': 'address::module::function',
+   'scripts_v2::swap_into': 'address::module::function',
+ }
+}
+```
 
 Properties are passed as strings (data-attributes), so to pass Object you need to use JSON.stringify();
 They will be extruded with JSON.parse();
@@ -31,6 +44,7 @@ Properties are reactive, so any change to props will update widget's internal st
     data-network={JSON.stringify(dataNetwork)}
     data-account={dataAccount}
     data-transaction={JSON.stringify(transactionStatus)}
+    data-fee={JSON.stringify(dataFee)} // optional
 />
 ```
 

@@ -22,6 +22,20 @@ const props = defineProps<{
   dataNetwork?: string; // { name?: string; chainId?: string } as JSON
   dataTransaction?: string; // { status: 'pending' | 'success' | 'error' | 'rejected'; hash: string | null } as JSON
   dataPromoted?: string; // token address to show on top of token list menu
+  dataFee?: string;
+  /* dataFee JSON struct:
+  *
+  * {
+  *   feeBasisPoint: "100",
+  *   feeStruct: {
+  *     'scripts::swap': 'address::module::function',
+  *     'scripts_v2::swap': 'address::module::function',
+  *     'scripts::swap_into': 'address::module::function',
+  *     'scripts_v2::swap_into': 'address::module::function',
+  *   }
+  * }
+  *
+  * */
 }>();
 
 // initialize stores
@@ -50,6 +64,10 @@ function checkNativeWallet (){
 
   if (props.dataPromoted) {
     mainStore.promotedToken.value = props.dataPromoted;
+  }
+
+  if (props.dataFee) {
+    mainStore.feeData.value = JSON.parse(props.dataFee);
   }
 }
 
