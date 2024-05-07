@@ -24,8 +24,6 @@ export function useSendTransaction() {
       const payload = camelCaseKeysToUnderscore(unrefTx.payload);
       if (insideNativeWallet.value) {
 
-        let totalFee = undefined;
-
         if (feeValue.value && payload.function.includes('fee_on')) {
           Object.assign(payload, { totalFee: feeValue.value })
         }
