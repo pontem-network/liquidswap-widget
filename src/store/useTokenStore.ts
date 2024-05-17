@@ -1,4 +1,4 @@
-import { APTOS, CORRECT_CHAIN, CORRECT_CHAIN_ID } from '@/constants/constants';
+import { APTOS, CORRECT_CHAIN_ID } from '@/constants/constants';
 import { IStorageBasic, Resource } from '@/types';
 import { TCoinSource } from '@/types/coins';
 import { useStore } from '@/store';
@@ -10,7 +10,7 @@ import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, ComputedRef, reactive, ref, watch } from 'vue';
 import isNumber from 'lodash/isNumber';
-import CoinsRegistry from '@pontem/coins-registry';
+import { getRegisteredCoins } from "@/api/helpers";
 
 export interface IPersistedToken {
   type: string;
@@ -91,7 +91,8 @@ export const useTokensStore = defineStore('tokensStore', () => {
   }
 
   async function fetchCoinsList() {
-    const coins = CoinsRegistry.getCoinsFor(CORRECT_CHAIN);
+    const coins = await getRegisteredCoins({ networkId: CORRECT_CHAIN_ID })
+
     coins.forEach(processFetchedCoin);
     return await registerCoins(coins, mainStore.network.value?.id);
   }
@@ -125,6 +126,7 @@ export const useTokensStore = defineStore('tokensStore', () => {
         isReady.value = true;
       }
     }
+    return;
   }
 
   function persistCustomToStorage(

@@ -1,4 +1,4 @@
-import { TCurveType, TVersionType } from './index';
+import { TVersionType } from './index';
 
 export interface IPoolInfo {
   coinX: string;

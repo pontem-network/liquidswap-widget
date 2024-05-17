@@ -8,7 +8,13 @@ import {
   WalletName,
 } from '@pontem/aptos-wallet-adapter';
 
-import { VERSION_0, VERSION_0_5 } from '@/constants/constants';
+import {
+  APTOS_TESTNET_CHAIN_ID,
+  MAINNET_CHAIN_ID,
+  PONTEM_TESTNET_CHAIN_ID,
+  VERSION_0,
+  VERSION_0_5
+} from '@/constants/constants';
 import { TokenFiledType } from './coins';
 
 export type AptosCoinInfoResource = {
@@ -100,5 +106,9 @@ export interface IDataFee {
   feeStruct: IFeeStruct;
 }
 
+export type ChainId =
+  | typeof MAINNET_CHAIN_ID
+  | typeof APTOS_TESTNET_CHAIN_ID
+  | typeof PONTEM_TESTNET_CHAIN_ID
 
 
