@@ -16,15 +16,15 @@ interface PoolCoin {
 }
 
 export interface Pool {
-  type: string; // '0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12::liquidity_pool::LiquidityPool<0xf22bede237a07e121b56d91a491eb7bcdfd1f5907926a9e58338f964a01b17fa::asset::USDT,0x1::aptos_coin::AptosCoin,0x190d44266241744264b964a37b8f09863167a12d3e70cda39376cfb4e3561e12::curves::Uncorrelated>'
+  type: string;
   version: 0 | 0.5;
   curve: 'stable' | 'unstable';
-  tvl: string; // '3238480.9261110977523'
+  tvl: string;
   coinX: PoolCoin;
   coinY: PoolCoin;
   networkId: number;
-  fee: string; // '30'
-  lastBlockTimestamp: string; // '1713173856'
+  fee: string;
+  lastBlockTimestamp: string;
   exceptional?: boolean;
 }
 

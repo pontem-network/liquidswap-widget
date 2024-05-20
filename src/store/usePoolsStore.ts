@@ -301,7 +301,7 @@ export const usePoolsStore = defineStore('poolsStore', () => {
           coinY: coinY.type,
           curve,
           networkId: networkId.value,
-          contract: version,
+          contract: Number(version),
         } as IPoolBase,
         registerPoolOptions,
       );
