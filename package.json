@@ -30,11 +30,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf dist; vite build",
-    "build:gh-pages": "rm -rf docs; vite build -c 'vite.github.config.js'",
+    "build": "rm -rf dist && vite build",
+    "build:gh-pages": "rm -rf docs && vite build -c 'vite.github.config.js'",
     "serve": "vite preview",
-    "build:serve": "yarn build; yarn serve",
-    "deploy": "yarn build:gh-pages; gh-pages -d docs"
+    "build:serve": "yarn build && yarn serve",
+    "deploy": "yarn build:gh-pages && gh-pages -d docs"
   },
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "1.0.3",
