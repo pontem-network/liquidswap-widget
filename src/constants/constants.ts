@@ -43,6 +43,19 @@ export const NETWORKS_MODULES = {
   CoinStore: `${COIN_STORE}`,
 };
 
+export const SHORT_LIQUIDSWAP_DEMO_TAG = 'devops.mom';
+
+const LIQUIDSWAP_API_URL_PROD =
+  import.meta.env.VITE_LIQUIDSWAP_API_URL_PROD || 'https://api.liquidswap.com';
+const LIQUIDSWAP_API_URL_DEMO =
+  import.meta.env.VITE_LIQUIDSWAP_API_URL_DEMO ||
+  'https://liquidswap-api.dev.devops.mom';
+export const LIQUIDSWAP_API_URL = window.location.host.endsWith(
+  SHORT_LIQUIDSWAP_DEMO_TAG,
+)
+  ? LIQUIDSWAP_API_URL_DEMO
+  : LIQUIDSWAP_API_URL_PROD;
+
 export const MAINNET_CHAIN_ID = 1;
 export const APTOS_TESTNET_CHAIN_ID = 2;
 export const PONTEM_TESTNET_CHAIN_ID = 4;
