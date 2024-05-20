@@ -1,6 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "description": "Liquidswap widget as custom web component",
   "files": [
