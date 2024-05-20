@@ -2,8 +2,7 @@ import { ref, reactive, onBeforeMount, watch, computed, unref } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { STATS_URL, CORRECT_CHAIN, VERSION_0, VALID_VERSIONS } from '@/constants/constants';
-import CoinsRegistry from '@pontem/coins-registry';
+import { STATS_URL, CORRECT_CHAIN_ID, VALID_VERSIONS } from '@/constants/constants';
 import { is_sorted } from '@/utils/utils';
 import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
 import { IStorageBasic, TVersionType } from '@/types';
@@ -13,6 +12,8 @@ import { getPoolLpInfoStr, getPoolLpStr, getPoolStr, getTitleForPool, destructCo
 
 import { useStore } from './useStore';
 import { CurveType } from '@pontem/liquidswap-sdk/dist/tsc/types/aptos';
+import { getRegisteredPools } from '@/api/helpers';
+import {Pool} from "@/api/types";
 
 interface IStorage extends IStorageBasic {
   pools: IPersistedPool[];
@@ -46,9 +47,14 @@ export const usePoolsStore = defineStore('poolsStore', () => {
   const pools = ref<IPersistedPool[]>([]);
 
   async function fetchPoolsList() {
-    const pools = CoinsRegistry.getPoolsFor(CORRECT_CHAIN) as IPoolInfo[];
-    const mappedPools = pools.map((item) => ({ ...item, curve: item.curve === 'unstable' ? 'uncorrelated' : item.curve }));
-    registerPools(mappedPools);
+    const pools = await getRegisteredPools({ networkId: CORRECT_CHAIN_ID });
+
+    if (!pools) {
+      return;
+    }
+
+    registerPools(pools);
+
     fetchAndFillAPRs();
   }
 
@@ -281,21 +287,21 @@ export const usePoolsStore = defineStore('poolsStore', () => {
    *
    * @param list
    */
-  function registerPools(list: IPoolInfo[]): void {
+  function registerPools(list: Pool[]): void {
     if (!list || !Array.isArray(list)) return;
     const registerPoolOptions = { rewrite: true, isDefault: true };
     const { networkId } = mainStore;
 
     // pools has 'stable' and remapped 'uncorrelated' curve from coin-registry
-    list.map((poolInfo: IPoolInfo) => {
-      const { coinX, coinY, curve, contract } = poolInfo;
+    list.map((poolInfo: Pool) => {
+      const { coinX, coinY, curve, version } = poolInfo;
       registerPool(
         {
-          coinX,
-          coinY,
+          coinX: coinX.type,
+          coinY: coinY.type,
           curve,
           networkId: networkId.value,
-          contract,
+          contract: Number(version),
         } as IPoolBase,
         registerPoolOptions,
       );
