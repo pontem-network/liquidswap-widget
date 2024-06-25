@@ -2,7 +2,7 @@ import { ref, reactive, onBeforeMount, watch, computed, unref } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { STATS_URL, CORRECT_CHAIN_ID, VALID_VERSIONS } from '@/constants/constants';
+import { CORRECT_CHAIN_ID } from '@/constants/constants';
 import { is_sorted } from '@/utils/utils';
 import { IPoolBase, IPersistedPool, IPoolInfo } from '@/types/pools';
 import { IStorageBasic, TVersionType } from '@/types';
@@ -55,46 +55,6 @@ export const usePoolsStore = defineStore('poolsStore', () => {
 
     registerPools(pools);
 
-    fetchAndFillAPRs();
-  }
-
-  async function fetchAndFillAPRs() {
-    const response = await fetch(`${STATS_URL}/api/apr`);
-    let json;
-    try {
-      json = await response.json();
-    } catch (e) {
-      throw new Error('Bad json');
-    }
-    for (let index = 0; index < json.data?.length; index++) {
-      const one = json.data[index] as {
-        alias: { pair: string; curve: string };
-        apr: number;
-      };
-      const { pair } = one.alias;
-      let { curve } = one.alias;
-      curve = curve.toLowerCase();
-      const coins = pair.split('-');
-      for (let i = 0; i < 2; i++) {
-        if (['USDT', 'USDC', 'BTC', 'WETH', 'SOL'].includes(coins[i])) {
-          coins[i] = `wh${coins[i]}`;
-        }
-        if (coins[i].indexOf('z') === 0) {
-          coins[i] = coins[i].substring(1);
-        }
-      }
-      const directTitle = `${coins[0]}/${coins[1]}-${curve}`;
-      const reverseTitle = `${coins[1]}/${coins[0]}-${curve}`;
-      const { apr } = one;
-      [directTitle, reverseTitle].forEach((start) => {
-        VALID_VERSIONS.forEach((end) => {
-          const poolTitleKey = `${start}-${end}`;
-          if (poolsTitleMap[poolTitleKey] !== undefined) {
-            poolsMap[poolsTitleMap[poolTitleKey]].apr = apr;
-          }
-        });
-      });
-    }
   }
 
   onBeforeMount(() => loadFromLocalStorage());
