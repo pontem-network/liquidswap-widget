@@ -1,7 +1,5 @@
 import { Network } from '@/types';
 
-export const STATS_URL = 'https://sentrio-api.pontem.network';
-
 export const DENOMINATOR = 10000;
 
 export const RECALCULATION_TX_TIME = 1000;
