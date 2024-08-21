@@ -43,6 +43,7 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': '"production"',
     'process.env.VUE_APP_CORRECT_CHAIN': '"mainnet"',
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
   },
 
   base: '/liquidswap-widget/',
