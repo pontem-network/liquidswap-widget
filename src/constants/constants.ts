@@ -101,4 +101,4 @@ export const WALLET_CHROME_STORE_URL =
 
 export const PONTEM_API_URL = 'https://control.pontem.network/api';
 
-export const API_KEY = process.env.VUE_APP_APTOS_NODE_API_TOKEN || ''
+export const API_KEY = import.meta.env.VITE_APP_APTOS_NODE_API_TOKEN || ''
