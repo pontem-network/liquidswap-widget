@@ -1,5 +1,4 @@
 import { Network } from '../types';
-export declare const STATS_URL = "https://sentrio-api.pontem.network";
 export declare const DENOMINATOR = 10000;
 export declare const RECALCULATION_TX_TIME = 1000;
 export declare const RECALCULATION_TIME = 2000;
@@ -24,6 +23,8 @@ export declare const NETWORKS_MODULES: {
     CoinInfo: string;
     CoinStore: string;
 };
+export declare const SHORT_LIQUIDSWAP_DEMO_TAG = "devops.mom";
+export declare const LIQUIDSWAP_API_URL: any;
 export declare const MAINNET_CHAIN_ID = 1;
 export declare const APTOS_TESTNET_CHAIN_ID = 2;
 export declare const PONTEM_TESTNET_CHAIN_ID = 4;
@@ -38,3 +39,4 @@ export declare const VALID_VERSIONS: number[];
 export declare const WALLET_GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.pontemmobilewallet&hl=en&gl=US";
 export declare const WALLET_CHROME_STORE_URL = "https://chrome.google.com/webstore/detail/pontem-aptos-wallet/phkbamefinggmakgklpkljjmgibohnba";
 export declare const PONTEM_API_URL = "https://control.pontem.network/api";
+export declare const API_KEY: any;

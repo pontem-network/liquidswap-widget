@@ -1,5 +1,5 @@
 import { AptosWalletAdapter, MartianWalletAdapter, PontemWalletAdapter, FewchaWalletAdapter, RiseWalletAdapter, MsafeWalletAdapter, WalletName } from '@pontem/aptos-wallet-adapter';
-import { VERSION_0, VERSION_0_5 } from '../constants/constants';
+import { APTOS_TESTNET_CHAIN_ID, MAINNET_CHAIN_ID, PONTEM_TESTNET_CHAIN_ID, VERSION_0, VERSION_0_5 } from '../constants/constants';
 import { TokenFiledType } from './coins';
 export type AptosCoinInfoResource = {
     decimals: string;
@@ -59,3 +59,15 @@ export type TCustomEvent = {
     mode: TokenFiledType;
     lockForUpdate: boolean;
 };
+interface IFeeStruct {
+    'scripts::swap': string;
+    'scripts_v2::swap': string;
+    'scripts::swap_into': string;
+    'scripts_v2::swap_into': string;
+}
+export interface IDataFee {
+    feeBasisPoint: string;
+    feeStruct: IFeeStruct;
+}
+export type ChainId = typeof MAINNET_CHAIN_ID | typeof APTOS_TESTNET_CHAIN_ID | typeof PONTEM_TESTNET_CHAIN_ID;
+export {};
