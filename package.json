@@ -30,7 +30,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development vite --open --mode development",
-    "build": "rm -rf dist && vite build",
+    "build": "rm -rf dist && vite build --mode production",
     "build:gh-pages": "rm -rf docs && vite build -c 'vite.github.config.js'",
     "serve": "vite preview",
     "build:serve": "yarn build && yarn serve",
