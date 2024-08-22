@@ -11,7 +11,7 @@ import {
   APTOS_TESTNET_CHAIN_ID,
   APTOS,
   RESOURCES_V05_ACCOUNT,
-  MODULES_V05_ACCOUNT,
+  MODULES_V05_ACCOUNT, API_KEY,
 } from "@/constants/constants";
 import { IDataFee, Network, TStatusTransaction} from '@/types';
 import { restUrl } from '@/utils/networkData';
@@ -28,10 +28,11 @@ const handleMobileScreen = () => {
   return mediaQueryList.matches;
 };
 
-const createSDK = ({ nodeUrl, networkOptions }: SdkOptions) => {
+const createSDK = ({ nodeUrl, nodeOptions, networkOptions }: SdkOptions) => {
 
   const sdk = new SDK({
     nodeUrl: nodeUrl,
+    nodeOptions: nodeOptions,
     networkOptions: networkOptions,
   });
   return sdk;
@@ -46,6 +47,13 @@ export const useStore = createGlobalState(() => {
 
   const sdk = ref(createSDK({
     nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
+    nodeOptions: {
+      TOKEN: API_KEY,
+      WITH_CREDENTIALS: true,
+      HEADERS: {
+        API_KEY: API_KEY,
+      }
+    },
     networkOptions: {
       resourceAccount: RESOURCES_ACCOUNT,
       moduleAccount: MODULES_ACCOUNT,
@@ -137,6 +145,13 @@ export const useStore = createGlobalState(() => {
           networkId.value = CORRECT_CHAIN_ID;
           sdk.value = createSDK({
             nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
+            nodeOptions: {
+              TOKEN: API_KEY,
+              WITH_CREDENTIALS: true,
+              HEADERS: {
+                API_KEY: API_KEY,
+              }
+            },
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
               moduleAccount: MODULES_ACCOUNT,
@@ -152,6 +167,13 @@ export const useStore = createGlobalState(() => {
           networkId.value = APTOS_TESTNET_CHAIN_ID;
           sdk.value = createSDK({
             nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
+            nodeOptions: {
+              TOKEN: API_KEY,
+              WITH_CREDENTIALS: true,
+              HEADERS: {
+                API_KEY: API_KEY,
+              }
+            },
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
               moduleAccount: MODULES_ACCOUNT,
@@ -172,6 +194,13 @@ export const useStore = createGlobalState(() => {
           networkId.value = APTOS_TESTNET_CHAIN_ID;
           sdk.value = createSDK({
             nodeUrl: restUrl(`${APTOS_TESTNET_CHAIN_ID}`),
+            nodeOptions: {
+              TOKEN: API_KEY,
+              WITH_CREDENTIALS: true,
+              HEADERS: {
+                API_KEY: API_KEY,
+              }
+            },
             networkOptions: {
               resourceAccount: RESOURCES_ACCOUNT,
               moduleAccount: MODULES_ACCOUNT,
@@ -188,6 +217,13 @@ export const useStore = createGlobalState(() => {
           if (parseInt(chainId.value) === CORRECT_CHAIN_ID) {
             sdk.value = createSDK({
               nodeUrl: restUrl(`${CORRECT_CHAIN_ID}`),
+              nodeOptions: {
+                TOKEN: API_KEY,
+                WITH_CREDENTIALS: true,
+                HEADERS: {
+                  API_KEY: API_KEY,
+                }
+              },
               networkOptions: {
                 resourceAccount: RESOURCES_ACCOUNT,
                 moduleAccount: MODULES_ACCOUNT,

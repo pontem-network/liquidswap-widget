@@ -100,3 +100,5 @@ export const WALLET_CHROME_STORE_URL =
   'https://chrome.google.com/webstore/detail/pontem-aptos-wallet/phkbamefinggmakgklpkljjmgibohnba';
 
 export const PONTEM_API_URL = 'https://control.pontem.network/api';
+
+export const API_KEY = process.env.VUE_APP_APTOS_NODE_API_TOKEN || ''
