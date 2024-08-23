@@ -67,7 +67,7 @@ export const NETWORKS: Network[] = [
     id: MAINNET_CHAIN_ID,
     title: 'Aptos Mainnet',
     shortTitle: 'Aptos',
-    restUrl: 'https://aptos-mainnet.pontem.network/v1',
+    restUrl: 'https://api.mainnet.aptoslabs.com/v1',
     defaultToken: '0x1::aptos_coin::AptosCoin',
     modules: NETWORKS_MODULES,
   },
@@ -75,7 +75,7 @@ export const NETWORKS: Network[] = [
     id: APTOS_TESTNET_CHAIN_ID,
     title: 'Aptos Testnet',
     shortTitle: 'Aptos',
-    restUrl: 'https://aptos-testnet.pontem.network/v1',
+    restUrl: 'https://api.testnet.aptoslabs.com/v1',
     defaultToken: '0x1::aptos_coin::AptosCoin',
     modules: NETWORKS_MODULES,
   },
@@ -101,4 +101,4 @@ export const WALLET_CHROME_STORE_URL =
 
 export const PONTEM_API_URL = 'https://control.pontem.network/api';
 
-export const API_KEY = process.env.VUE_APP_APTOS_NODE_API_TOKEN || ''
+export const API_KEY = import.meta.env.VITE_APP_APTOS_NODE_API_TOKEN || ''

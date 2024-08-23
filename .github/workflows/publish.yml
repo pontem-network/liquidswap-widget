@@ -45,7 +45,7 @@ jobs:
       if: steps.npm_version_check.outputs.version_exists == 'false'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
-        VUE_APP_APTOS_NODE_API_TOKEN: ${{ secrets.API_KEY }}
+        VITE_APP_APTOS_NODE_API_TOKEN: ${{ secrets.API_KEY }}
       run: |
         yarn
         yarn build
@@ -55,7 +55,7 @@ jobs:
       if: steps.npm_version_check.outputs.version_exists == 'false'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VUE_APP_APTOS_NODE_API_TOKEN: ${{ secrets.API_KEY }}
+        VITE_APP_APTOS_NODE_API_TOKEN: ${{ secrets.API_KEY }}
       run: |
         current_version=${{ steps.version_check.outputs.current_version }}
         gh release create "v$current_version" \

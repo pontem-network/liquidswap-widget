@@ -1,6 +1,6 @@
 {
   "name": "@pontem/liquidswap-widget",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "homepage": "https://github.com/pontem-network/liquidswap-widget#readme",
   "description": "Liquidswap widget as custom web component",
   "files": [
@@ -29,8 +29,8 @@
     "./dist/style.css": "./dist/style.css"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "rm -rf dist && vite build",
+    "dev": "NODE_ENV=development vite --open --mode development",
+    "build": "rm -rf dist && vite build --mode production",
     "build:gh-pages": "rm -rf docs && vite build -c 'vite.github.config.js'",
     "serve": "vite preview",
     "build:serve": "yarn build && yarn serve",
